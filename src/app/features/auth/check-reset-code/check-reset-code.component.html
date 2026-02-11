@@ -1,0 +1,100 @@
+ <!-- <div class="reset-code-wrapper">
+  <div class="reset-code-container">
+    <h2>Restablecer Contraseña</h2>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" class="auth-form">
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Código de verificación</mat-label>
+        <input #codeInput matInput formControlName="code" type="text" placeholder="Ingresa el código" maxlength="6"
+               (focus)="onFocus('code')" />
+        <ng-container *ngIf="showError('code')">
+          <mat-error *ngFor="let err of codeErrors()">{{ err }}</mat-error>
+        </ng-container>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Nueva contraseña</mat-label>
+        <input matInput formControlName="newPassword" type="password" placeholder="Ingresa la nueva contraseña" 
+               (focus)="onFocus('newPassword')" />
+        <ng-container *ngIf="showError('newPassword')">
+          <mat-error *ngFor="let err of getControlErrors('newPassword')">{{ err }}</mat-error>
+        </ng-container>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Confirmar contraseña</mat-label>
+        <input matInput formControlName="confirmPassword" type="password" placeholder="Confirma la contraseña" 
+               (focus)="onFocus('confirmPassword')" />
+        <ng-container *ngIf="showError('confirmPassword')">
+          <mat-error *ngFor="let err of getControlErrors('confirmPassword')">{{ err }}</mat-error>
+        </ng-container>
+      </mat-form-field>
+
+      <div *ngIf="errorMessage()" class="server-error-message">
+        {{ errorMessage() }}
+      </div>
+      <div *ngIf="successMessage()" class="success-message">
+        {{ successMessage() }}
+      </div>
+
+      <div class="countdown-timer" [class.low]="isTimeLow()">
+        Tiempo restante: <strong>{{ timeDisplay() }}</strong>
+      </div>
+
+      <div class="button-group">
+        <button mat-raised-button type="submit" class="login-submit-btn" [disabled]="loading() || form.invalid">
+          {{ loading() ? 'Restableciendo…' : 'Restablecer contraseña' }}
+        </button>
+        <button mat-raised-button type="button" class="cancel-btn" (click)="cancel()">
+          Cancelar
+        </button>
+      </div>
+
+      <div class="login-options">
+        <button type="button" (click)="goToLogin()">
+          Volver al inicio de sesión
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div> -->
+
+
+<div class="reset-code-wrapper">
+  <div class="reset-code-container">
+    <h2>Verificar Cuenta</h2>
+    <p class="subtitle">Introduce el código de 6 dígitos enviado a tu correo</p>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" class="auth-form">
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Código de verificación</mat-label>
+        <input #codeInput matInput formControlName="code" type="text" 
+               placeholder="000000" maxlength="6" (focus)="onFocus('code')" />
+        <mat-error *ngIf="showError('code')">{{ codeErrors()[0] }}</mat-error>
+      </mat-form-field>
+
+      <div *ngIf="errorMessage()" class="server-error-message">{{ errorMessage() }}</div>
+      <div *ngIf="successMessage()" class="success-message">{{ successMessage() }}</div>
+
+      <div class="countdown-timer" [class.low]="isTimeLow()">
+        El código expira en: <strong>{{ timeDisplay() }}</strong>
+      </div>
+
+      <div class="button-group">
+        <button mat-raised-button type="submit" class="login-submit-btn" [disabled]="loading() || form.invalid">
+          {{ loading() ? 'Verificando...' : 'Confirmar Registro' }}
+        </button>
+        <button mat-raised-button type="button" class="cancel-btn" (click)="cancel()">
+          Cancelar
+        </button>
+      </div>
+
+      <div class="login-options">
+        <button type="button" (click)="goToLogin()">Volver al inicio de sesión</button>
+      </div>
+    </form>
+  </div>
+</div>

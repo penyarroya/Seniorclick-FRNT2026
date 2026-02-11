@@ -1,0 +1,253 @@
+<!-- <div class="page-container">
+  <header class="header academic-toolbar">
+    <div class="header-nav">
+      <button mat-icon-button (click)="goBack()" class="back-btn" matTooltip="Volver a Inicio">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <span class="breadcrumb-badge">Mi Aprendizaje</span>
+    </div>
+    
+    <div class="header-main-row">
+      <div class="title-group">
+        <h1>
+          <mat-icon class="title-icon">auto_stories</mat-icon> 
+          Mis Inscripciones
+          @if (myEnrollments().length > 0) {
+            <span class="count-badge">{{ myEnrollments().length }}</span>
+          }
+        </h1>
+        <p class="subtitle">Gestiona tus suscripciones y continúa tus proyectos activos.</p>
+      </div>
+
+      <div class="header-search">
+        <mat-form-field appearance="fill" class="search-field modern-search">
+          <mat-icon matPrefix>search</mat-icon>
+          <input matInput 
+                 [ngModel]="filterText()" 
+                 (ngModelChange)="filterText.set($event)" 
+                 placeholder="Buscar proyecto..."
+                 [disabled]="isLoading()"> 
+          
+          @if (filterText()) {
+            <button matSuffix mat-icon-button (click)="filterText.set('')" class="clear-btn">
+              <mat-icon>close</mat-icon>
+            </button>
+          }
+        </mat-form-field>
+      </div>
+    </div>
+  </header>
+
+  <div class="scroll-content">
+    <main class="main-content">
+      
+      @if (isLoading()) {
+        <div class="loading-container">
+          <mat-spinner diameter="50"></mat-spinner>
+          <p>Sincronizando con Universilabs...</p>
+        </div>
+      } 
+      
+      @else {
+        <div class="enrollments-grid">
+          @for (enroll of filteredEnrollments(); track enroll.id) {
+            <mat-card class="project-card" [class.is-completed]="enroll.progressPercentage === 100">
+              <mat-card-header>
+                <div class="header-content">
+                  <div class="role-label">{{ enroll.roleInCourse }}</div>
+                  <mat-card-title>{{ enroll.projectTitle || 'Proyecto sin título' }}</mat-card-title>
+                </div>
+                
+                @if (enroll.progressPercentage === 100) {
+                  <span class="completed-badge">
+                    <mat-icon>check_circle</mat-icon>
+                    LISTO
+                  </span>
+                }
+              </mat-card-header>
+              
+              <mat-card-content>
+                <div class="progress-section">
+                  <div class="progress-info">
+                    <span class="label">Tu progreso</span>
+                    <span class="percent">{{ enroll.progressPercentage || 0 }}%</span>
+                  </div>
+                  <mat-progress-bar 
+                    mode="determinate" 
+                    [value]="enroll.progressPercentage || 0">
+                  </mat-progress-bar>
+                </div>
+
+                <p class="card-description">Accede a materiales, laboratorios y recursos de este proyecto.</p> 
+                
+                <div class="date-info">
+                  <mat-icon>calendar_today</mat-icon>
+                  <span>Inscrito: {{ enroll.createdAt | date:'dd/MM/yyyy' }}</span>
+                </div>
+              </mat-card-content>
+
+              <mat-card-actions class="card-footer">
+                <button mat-button color="warn" (click)="confirmDelete(enroll.id)" class="delete-btn-explicit">
+                  <mat-icon>delete_sweep</mat-icon>
+                  <span>BAJA</span>
+                </button>
+
+                <span class="spacer"></span>
+
+                <button mat-flat-button class="continue-btn" (click)="continuarProyecto(enroll)">
+                    {{ enroll.progressPercentage === 100 ? 'REVISAR' : 'CONTINUAR' }}
+                    <mat-icon>chevron_right</mat-icon>
+                </button>
+              </mat-card-actions>
+            </mat-card>
+          } 
+          
+          @empty {
+            <div class="empty-state">
+              <mat-icon class="large-icon">{{ filterText() ? 'filter_list_off' : 'upcoming' }}</mat-icon>
+              <h3>{{ filterText() ? 'Sin resultados' : 'Comienza tu viaje' }}</h3>
+              <p>{{ filterText() ? 'No hay resultados para "' + filterText() + '"' : 'No tienes inscripciones activas.' }}</p>
+              
+              <div class="empty-actions">
+                @if (!filterText()) {
+                  <button mat-raised-button color="accent" routerLink="/inicio/proyectos">EXPLORAR CATÁLOGO</button>
+                } @else {
+                  <button mat-button (click)="filterText.set('')" color="primary">LIMPIAR BÚSQUEDA</button>
+                }
+              </div>
+            </div>
+          }
+        </div>
+      }
+    </main>
+  </div>
+</div> -->
+
+<div class="page-container">
+  <header class="header academic-toolbar">
+    <div class="header-nav">
+      <button mat-icon-button (click)="goBack()" class="back-btn" matTooltip="Volver a Inicio">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <span class="breadcrumb-badge">Mi Aprendizaje</span>
+    </div>
+    
+    <div class="header-main-row">
+      <div class="title-group">
+        <h1>
+          <mat-icon class="title-icon">auto_stories</mat-icon> 
+          Mis Inscripciones
+          @if (myEnrollments().length > 0) {
+            <span class="count-badge">{{ myEnrollments().length }}</span>
+          }
+        </h1>
+        <p class="subtitle">Gestiona tus suscripciones y continúa tus proyectos activos.</p>
+      </div>
+
+      <div class="header-search">
+        <mat-form-field appearance="fill" class="search-field modern-search">
+          <mat-icon matPrefix>search</mat-icon>
+          <input matInput 
+                 [ngModel]="filterText()" 
+                 (ngModelChange)="filterText.set($event)" 
+                 placeholder="Buscar proyecto..."
+                 [disabled]="isLoading()"> 
+          
+          @if (filterText()) {
+            <button matSuffix mat-icon-button (click)="filterText.set('')" class="clear-btn">
+              <mat-icon>close</mat-icon>
+            </button>
+          }
+        </mat-form-field>
+      </div>
+    </div>
+  </header>
+
+  <div class="scroll-content">
+    <main class="main-content">
+      
+      @if (isLoading()) {
+        <div class="loading-container">
+          <mat-spinner diameter="50" color="accent"></mat-spinner>
+          <p>Sincronizando con Universilabs...</p>
+        </div>
+      } 
+      
+      @else {
+        <div class="enrollments-grid">
+          @for (enroll of filteredEnrollments(); track enroll.id) {
+            <mat-card class="project-card" [class.is-completed]="enroll.progressPercentage === 100">
+              <mat-card-header>
+                <div class="header-content">
+                  <div class="role-label">{{ enroll.roleInCourse }}</div>
+                  <mat-card-title>{{ enroll.projectTitle || 'Proyecto sin título' }}</mat-card-title>
+                </div>
+                
+                @if (enroll.progressPercentage === 100) {
+                  <span class="completed-badge">
+                    <mat-icon>check_circle</mat-icon>
+                    LISTO
+                  </span>
+                }
+              </mat-card-header>
+              
+              <mat-card-content>
+                <div class="progress-section">
+                  <div class="progress-info">
+                    <span class="label">Tu progreso</span>
+                    <span class="percent">{{ enroll.progressPercentage }}%</span>
+                  </div>
+                  <mat-progress-bar 
+                    mode="determinate" 
+                    [value]="enroll.progressPercentage">
+                  </mat-progress-bar>
+                </div>
+
+                <p class="card-description">Accede a materiales, laboratorios y recursos de este proyecto.</p> 
+                
+                <div class="date-info">
+                  <mat-icon>calendar_today</mat-icon>
+                  <span>Inscrito: {{ enroll.createdAt | date:'dd/MM/yyyy' }}</span>
+                </div>
+              </mat-card-content>
+
+              <mat-card-actions class="card-footer">
+                <button mat-button color="warn" (click)="confirmDelete(enroll.id)" class="delete-btn-explicit">
+                  <mat-icon>delete_sweep</mat-icon>
+                  <span>BAJA</span>
+                </button>
+
+                <span class="spacer"></span>
+
+                <button mat-flat-button class="continue-btn" (click)="continuarProyecto(enroll)">
+                    {{ enroll.progressPercentage === 100 ? 'REVISAR' : 'CONTINUAR' }}
+                    <mat-icon>chevron_right</mat-icon>
+                </button>
+              </mat-card-actions>
+            </mat-card>
+          } 
+          
+          @empty {
+            <div class="no-results-container">
+              <mat-icon class="large-icon">{{ filterText() ? 'search_off' : 'upcoming' }}</mat-icon>
+              <h3>{{ filterText() ? 'Sin resultados para la búsqueda' : 'No tienes proyectos aún' }}</h3>
+              <p>{{ filterText() ? 'Prueba con otros términos o limpia el filtro.' : 'Explora nuestro catálogo para comenzar.' }}</p>
+              
+              <div class="empty-actions">
+                @if (filterText()) {
+                  <button mat-stroked-button color="primary" (click)="filterText.set('')">
+                    LIMPIAR BÚSQUEDA
+                  </button>
+                } @else {
+                  <button mat-flat-button color="accent" routerLink="/inicio/proyectos">
+                    EXPLORAR CATÁLOGO
+                  </button>
+                }
+              </div>
+            </div>
+          }
+        </div>
+      }
+    </main>
+  </div>
+</div>

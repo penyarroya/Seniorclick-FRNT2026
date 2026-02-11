@@ -1,0 +1,159 @@
+<!-- @@if (!loading()) {
+<div class="viewer-container">
+
+  <nav class="navigation-top">
+    <button class="btn-close" (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon>
+      <span>Volver al panel</span>
+    </button>
+  </nav>
+
+  @if (safeResourceUrl()) {
+    <div id="resource-viewer-container" class="active">
+      <div class="visor-header">
+        <div class="title-box">
+          <mat-icon>visibility</mat-icon>
+          <span>{{ activeResourceTitle() }}</span>
+        </div>
+        <button class="btn-close-visor" (click)="closeResource()">
+          Cerrar visor ✕
+        </button>
+      </div>
+      <iframe [src]="safeResourceUrl()!" frameborder="0" allowfullscreen></iframe>
+    </div>
+  }
+
+  <header class="page-header" [class.dimmed]="safeResourceUrl()">
+    <div class="header-content">
+      <span class="subtopic-tag">
+        <mat-icon>folder_open</mat-icon>
+        {{ page?.subtopicTitle }}
+      </span>
+      <h1>{{ page?.title }}</h1>
+    </div>
+  </header>
+
+  <div class="main-layout" [class.dimmed]="safeResourceUrl()">
+    
+    <article class="content-body">
+      <div class="rich-text-content" [innerHTML]="page?.content"></div>
+    </article>
+
+    <aside class="resources-sidebar">
+      <div class="sidebar-header">
+        <mat-icon>library_books</mat-icon>
+        <h3>Materiales de Apoyo</h3>
+      </div>
+
+      <div class="resource-list">
+        @for (res of resources; track res.id) {
+          <div class="resource-card" 
+               [class.active]="navService.activeResource()?.id === res.id"
+               (click)="openResource(res)">
+            <div class="icon-box" [attr.data-type]="res.type">
+              <mat-icon>{{ getResourceIcon(res.type) }}</mat-icon>
+            </div>
+            <div class="res-details">
+              <span class="res-title">{{ res.title }}</span>
+            </div>
+          </div>
+        }
+      </div>
+    </aside>
+  </div>
+</div>
+
+} @else {
+  <div class="loading-state">
+    <div class="spinner-box">
+      <mat-spinner diameter="50"></mat-spinner>
+      <p>Cargando lección...</p>
+    </div>
+  </div>
+} -->
+
+@if (!loading()) {
+<div class="viewer-container">
+
+  <nav class="navigation-top">
+    <button class="btn-close" (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon>
+      <span>Volver al panel</span>
+    </button>
+  </nav>
+
+  @if (safeResourceUrl()) {
+    <div id="resource-viewer-container" class="active">
+      <div class="visor-header">
+        <div class="title-box">
+          <mat-icon>visibility</mat-icon>
+          <span>{{ activeResourceTitle() }}</span>
+        </div>
+        <button class="btn-close-visor" (click)="closeResource()" mat-tooltip="Cerrar visor">
+          Cerrar visor ✕
+        </button>
+      </div>
+      <div class="iframe-wrapper">
+        <iframe 
+          [src]="safeResourceUrl()!" 
+          frameborder="0" 
+          allowfullscreen
+          loading="lazy">
+        </iframe>
+      </div>
+    </div>
+  }
+
+  <header class="page-header" [class.dimmed]="safeResourceUrl()">
+    <div class="header-content">
+      <span class="subtopic-tag">
+        <mat-icon>folder_open</mat-icon>
+        {{ page?.subtopicTitle || 'Lección' }}
+      </span>
+      <h1>{{ page?.title }}</h1>
+    </div>
+  </header>
+
+  <div class="main-layout" [class.dimmed]="safeResourceUrl()">
+    
+    <article class="content-body">
+      <div class="rich-text-content" [innerHTML]="page?.content"></div>
+    </article>
+
+    <aside class="resources-sidebar">
+      <div class="sidebar-header">
+        <mat-icon>library_books</mat-icon>
+        <h3>Materiales de Apoyo</h3>
+      </div>
+
+      <div class="resource-list">
+        @for (res of resources; track res.id) {
+          <div class="resource-card" 
+               [class.active]="navService.activeResource()?.id === res.id"
+               (click)="openResource(res)">
+            <div class="icon-box" [attr.data-type]="res.type">
+              <mat-icon>{{ getResourceIcon(res.type) }}</mat-icon>
+            </div>
+            <div class="res-details">
+              <span class="res-title">{{ res.title }}</span>
+              <span class="res-type-label">{{ res.type | uppercase }}</span>
+            </div>
+          </div>
+        } @empty {
+          <div class="no-resources">
+            <p>No hay materiales adicionales para esta lección.</p>
+          </div>
+        }
+      </div>
+    </aside>
+  </div>
+</div>
+
+} @else {
+  <div class="loading-state">
+    <div class="spinner-box">
+      <mat-progress-spinner mode="indeterminate" diameter="50"></mat-progress-spinner>
+      <p>Cargando lección...</p>
+    </div>
+  </div>
+}

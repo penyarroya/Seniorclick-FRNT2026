@@ -1,0 +1,181 @@
+<!-- <div class="project-page-container">
+  
+  <nav class="internal-dashboard-toolbar">
+    <div class="toolbar-left">
+      <mat-icon>school</mat-icon>
+      <span>Catálogo Universilabs</span>
+    </div>
+    <div class="toolbar-actions">
+      <button class="btn-exit" (click)="goBack()" title="Volver al inicio">
+        <span>Cerrar</span>
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </nav>
+
+  <main class="page-main-content">
+    <header class="page-header">
+      <h1>Explorar Carreras y Proyectos</h1>
+      <p>Selecciona la ruta de aprendizaje que deseas continuar.</p>
+    </header>
+
+    @if (isLoading() && projects().length === 0) {
+      <div class="state-container">
+        <div class="spinner"></div>
+        <p>Buscando proyectos en Universilabs...</p>
+      </div>
+    } 
+    @else {
+      <div class="projects-grid" [class.is-checking]="isVerifying()">
+        
+        @for (project of projects(); track project.id) {
+          <div class="project-card" 
+               [class.card-disabled]="isVerifying()"
+               [class.is-enrolled]="project.isEnrolled"
+               (click)="!isVerifying() && onSelectProject(project)">
+            
+            <div class="badge">Nivel {{ project.level }}</div>
+            
+            <div class="card-content">
+              <h3>{{ project.title }}</h3>
+              <p>{{ project.description || 'Explora los recursos de este proyecto para avanzar en tu carrera.' }}</p>
+            </div>
+
+            <div class="card-footer">
+              <div class="info-group">
+                <span class="institution-name">
+                  <i class="material-icons">business</i> 
+                  {{ project.institutionName || 'Institución Universilabs' }}
+                </span>
+                @if (project.createdByName) {
+                  <span class="creator-name">
+                    <i class="material-icons">person</i> 
+                    {{ project.createdByName }}
+                  </span>
+                }
+              </div>
+
+              <button class="btn-enter" [disabled]="isVerifying()">
+                @if (isVerifying()) {
+                  <span class="loader-text">Procesando...</span>
+                } @else {
+                  <span>{{ project.isEnrolled ? 'Continuar Aprendizaje' : 'Entrar al Aula' }}</span>
+                  <mat-icon>chevron_right</mat-icon>
+                }
+              </button>
+            </div>
+          </div>
+        } 
+        @empty {
+          <div class="state-container">
+            <mat-icon>assignment_late</mat-icon>
+            <p>No hay proyectos activos disponibles en este momento.</p>
+          </div>
+        }
+      </div>
+    }
+  </main>
+
+  @if (!isLoading() && showScrollButton()) {
+    <button mat-fab class="fab-button-expandable" (click)="scrollToTop()" title="Ir arriba">
+      <div class="fab-content">
+        <mat-icon>arrow_upward</mat-icon>
+        <span class="btn-text">Subir</span>
+      </div>
+    </button>
+  }
+</div> -->
+
+
+<div class="project-page-container">
+  
+  <nav class="internal-dashboard-toolbar">
+    <div class="toolbar-left">
+      <mat-icon>school</mat-icon>
+      <span>Catálogo Universilabs</span>
+    </div>
+    <div class="toolbar-actions">
+      <button class="btn-exit" (click)="goBack()" title="Volver al inicio">
+        <span>Cerrar</span>
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </nav>
+
+  <main class="page-main-content">
+    <header class="page-header">
+      <h1>Explorar Carreras y Proyectos</h1>
+      <p>Selecciona la ruta de aprendizaje que deseas continuar.</p>
+    </header>
+
+    @if (isLoading() && projects().length === 0) {
+      <div class="state-container">
+        <div class="spinner"></div>
+        <p>Buscando proyectos en Universilabs...</p>
+      </div>
+    } 
+    @else {
+      <div class="projects-grid" [class.is-checking]="isVerifying()">
+        
+        @for (project of projects(); track project) {
+          <div class="project-card" 
+               [class.card-disabled]="isVerifying() || !project.activo"
+               [class.card-finished]="!project.activo"
+               [class.is-enrolled]="project.isEnrolled"
+               (click)="project.activo && !isVerifying() && onSelectProject(project)">
+            
+            <div class="badge" [class.badge-finished]="!project.activo">
+              {{ project.activo ? 'Nivel ' + project.level : 'Finalizado' }}
+            </div>
+            
+            <div class="card-content">
+              <h3>{{ project.title }}</h3>
+              <p>{{ project.description || 'Explora los recursos de este proyecto para avanzar en tu carrera.' }}</p>
+            </div>
+
+            <div class="card-footer">
+              <div class="info-group">
+                <span class="institution-name">
+                  <i class="material-icons">business</i> 
+                  {{ project.institutionName || 'Institución Universilabs' }}
+                </span>
+                @if (project.createdByName) {
+                  <span class="creator-name">
+                    <i class="material-icons">person</i> 
+                    {{ project.createdByName }}
+                  </span>
+                }
+              </div>
+
+              <button class="btn-enter" [disabled]="isVerifying() || !project.activo">
+                @if (isVerifying()) {
+                  <span class="loader-text">Procesando...</span>
+                } @else if (!project.activo) {
+                  <span>Proyecto Cerrado</span>
+                } @else {
+                  <span>{{ project.isEnrolled ? 'Continuar Aprendizaje' : 'Entrar al Aula' }}</span>
+                  <mat-icon>chevron_right</mat-icon>
+                }
+              </button>
+            </div>
+          </div>
+        } 
+        @empty {
+          <div class="state-container">
+            <mat-icon>assignment_late</mat-icon>
+            <p>No hay proyectos disponibles en este momento.</p>
+          </div>
+        }
+      </div>
+    }
+  </main>
+
+  @if (!isLoading() && showScrollButton()) {
+    <button mat-fab class="fab-button-expandable" (click)="scrollToTop()" title="Ir arriba">
+      <div class="fab-content">
+        <mat-icon>arrow_upward</mat-icon>
+        <span class="btn-text">Subir</span>
+      </div>
+    </button>
+  }
+</div>

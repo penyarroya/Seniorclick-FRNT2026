@@ -1,0 +1,100 @@
+[
+  {
+    "label": "Usuarios",
+    "icon": "person",
+    "roles": ["SUPER_ADMIN"],
+    "route": "/maintenance/users"
+  },
+  {
+    "label": "Instituciones",
+    "icon": "apartment",
+    "roles": ["SUPER_ADMIN"],
+    "route": "/maintenance/institutions"
+  },
+  {
+    "label": "Proyectos / Cursos",
+    "icon": "school",
+    "roles": ["SUPER_ADMIN"],
+    "route": "/maintenance/projects"
+  },
+  {
+    "label": "Inscripciones",
+    "icon": "group",
+    "roles": ["SUPER_ADMIN"],
+    "route": "/maintenance/enrollments"
+  },
+  {
+    "label": "Colecciones",
+    "icon": "collections_bookmark",
+    "roles": ["SUPER_ADMIN"],
+    "route": "/maintenance/collections"
+  },
+  {
+    "label": "Temas",
+    "icon": "topic",
+    "roles": ["SUPER_ADMIN"],
+    "route": "/maintenance/topics"
+  },
+  {
+    "label": "Subtemas",
+    "icon": "subdirectory_arrow_right",
+    "roles": ["SUPER_ADMIN"],
+    "route": "/maintenance/subtopics"
+  },
+  {
+    "label": "Páginas",
+    "icon": "description",
+    "roles": ["SUPER_ADMIN"],
+    "route": "/maintenance/pages"
+  },
+  {
+    "label": "Recursos",
+    "icon": "attachment",
+    "roles": ["SUPER_ADMIN"],
+    "route": "/maintenance/resources"
+  },
+  {
+    "label": "Comentarios",
+    "icon": "comment",
+    "roles": ["SUPER_ADMIN"],
+    "route": "/maintenance/coment"
+  },
+  {
+    "label": "Contribuciones",
+    "icon": "volunteer_activism",
+    "roles": ["SUPER_ADMIN"],
+    "route": "/maintenance/contribution"
+  },
+  {
+    "label": "Progreso del usuario",
+    "icon": "trending_up",
+    "roles": ["SUPER_ADMIN"],
+    "route": "/maintenance/mi-progreso"
+  },
+  {
+    "label": "Perfiles de Usuario",
+    "icon": "account_box",
+    "roles": ["SUPER_ADMIN"],
+    "route": "/maintenance/user-profiles"
+  },
+  {
+    "label": "Roles",
+    "icon": "badge",
+    "roles": ["SUPER_ADMIN"],
+    "route": "/maintenance/roles"
+  },
+  {
+    "label": "Permisos",
+    "icon": "lock",
+    "roles": ["SUPER_ADMIN"],
+    "route": "/maintenance/permissions"
+  },
+  { "type": "separator", 
+    "visible": true
+  },
+  {
+    "label": "Volver",
+    "icon": "arrow_back",
+    "route": "/inicio"
+  }
+]

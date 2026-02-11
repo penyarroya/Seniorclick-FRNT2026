@@ -1,0 +1,73 @@
+<div class="maintenance-wrapper">
+  <header class="toolbar">
+    <button class="toggle-sidebar-btn" (click)="toggleSidebar()">
+      <i class="material-icons">
+        {{ sidebarOpen() ? 'chevron_left' : 'menu' }}
+      </i>
+    </button>
+    <h2 class="toolbar-title">Panel de Administración</h2>
+  </header>
+
+  <div class="body-wrapper">
+    
+    @if (isHandset() && sidebarOpen()) {
+      <div class="sidebar-overlay" (click)="toggleSidebar()"></div>
+    }
+
+    <aside class="sidebar" [class.open]="sidebarOpen()">
+      <div class="sidebar-header">
+        <h3>Mantenimiento</h3>
+      </div>
+
+      <ul>
+        <!-- @for (item of menu(); track item.label) {
+          <ng-container *ngTemplateOutlet="menuItem; context: { $implicit: item }"></ng-container>
+        } -->
+          @for (item of menu(); track item) {
+            <ng-container *ngTemplateOutlet="menuItem; context: { $implicit: item }"></ng-container>
+          }
+      </ul>
+    </aside>
+    
+    <div class="main-section" [class.shifted]="sidebarOpen() && !isHandset()">
+      <main class="content">
+        <router-outlet></router-outlet>
+      </main>
+    </div>
+  </div>
+</div>
+
+<ng-template #menuItem let-item>
+  <li class="menu-node"
+      [class.has-children]="item.items?.length"
+      [class.separator]="item.type === 'separator'">
+
+    <div class="menu-item"
+         [class.active]="item.active"
+         [class.is-open]="item.open"
+         [class.no-click]="item.type === 'separator'"
+         (click)="item.type !== 'separator' && onMenuClick(item, $event)">
+      
+      <div class="item-content">
+        @if (item.icon) {
+          <i class="material-icons menu-icon">{{ item.icon }}</i>
+        }
+        <span class="label">{{ item.label }}</span>
+      </div>
+
+      @if (item.items?.length) {
+        <span class="toggle-icon">
+          {{ item.open ? 'expand_more' : 'chevron_right' }}
+        </span>
+      }
+    </div>
+
+    @if (item.items?.length && item.open) {
+      <ul class="sub-menu">
+        @for (sub of item.items; track sub.label) {
+          <ng-container *ngTemplateOutlet="menuItem; context: { $implicit: sub }"></ng-container>
+        }
+      </ul>
+    }
+  </li>
+</ng-template>

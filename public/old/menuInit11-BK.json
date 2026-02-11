@@ -1,0 +1,63 @@
+[
+  {
+    "label": "Institución",
+    "icon": "domain",
+    "open": false,
+    "items": [
+      { "label": "Sobre la Institución", "icon": "info", "route": "/institucion/sobre", "open": false },
+      { "label": "Equipo / Facilitadores", "icon": "group", "route": "/institucion/equipo", "open": false },
+      { "label": "Misión y Líneas de Acción", "icon": "flag", "route": "/institucion/mision", "open": false },
+      { "label": "Contacto", "icon": "contact_mail", "route": "/institucion/contacto", "open": false }
+    ]
+  },
+  {
+    "label": "Usuarios",
+    "icon": "person",
+    "roles": ["SUPER_ADMIN"],
+    "open": false,
+    "items": [
+      { "label": "Mi Perfil", "icon": "account_circle", "roles": ["USER", "SUPER_ADMIN"], "route": "/perfil", "open": false },
+      { "label": "Mis Inscripciones / Participación", "icon": "school", "roles": ["USER", "SUPER_ADMIN"], "route": "/inscripciones", "open": false },
+      { "label": "Consultas / Necesidades", "icon": "question_answer", "roles": ["USER", "SUPER_ADMIN"], "route": "/consultas", "open": false },
+      { "label": "Mis Páginas", "icon": "article", "roles": ["USER", "SUPER_ADMIN"], "route": "/mis-paginas", "open": false }
+    ]
+  },
+  {
+    "label": "Proyectos",
+    "icon": "book",
+    "roles": ["USER", "SUPER_ADMIN"],
+    "open": false,
+    "items": [
+      { "label": "Todos los Proyectos", "icon": "list", "roles": ["USER", "SUPER_ADMIN"], "route": "/proyectos", "open": false },
+      { "label": "Crear Proyecto", "icon": "add_circle", "roles": ["SUPER_ADMIN"], "route": "/proyectos/crear", "open": false },
+      { "label": "Mis Proyectos", "icon": "folder_shared", "roles": ["USER", "SUPER_ADMIN"], "route": "/proyectos/mis-proyectos", "open": false },
+      { "label": "Temas", "icon": "topic", "roles": ["SUPER_ADMIN"], "route": "/proyectos/temas", "open": false },
+      { "label": "Subtemas", "icon": "subtitles", "roles": ["SUPER_ADMIN"], "route": "/proyectos/subtemas", "open": false },
+      { "label": "Materiales / Páginas", "icon": "description", "roles": ["USER", "SUPER_ADMIN"], "route": "/proyectos/materiales", "open": false }
+    ]
+  },
+  {
+    "label": "Contenidos",
+    "icon": "folder",
+    "roles": ["USER", "SUPER_ADMIN"],
+    "open": false,
+    "items": [
+      { "label": "Colecciones / Áreas", "icon": "collections", "roles": ["USER", "SUPER_ADMIN"], "route": "/contenidos/colecciones", "open": false },
+      { "label": "Materiales", "icon": "description", "roles": ["USER", "SUPER_ADMIN"], "route": "/contenidos/materiales", "open": false },
+      { "label": "Biblioteca", "icon": "local_library", "roles": ["USER", "SUPER_ADMIN"], "route": "/contenidos/biblioteca", "open": false },
+      { "label": "Recursos Abiertos", "icon": "folder_open", "roles": ["USER", "SUPER_ADMIN"], "route": "/contenidos/recursos-abiertos", "open": false }
+    ]
+  },
+  {
+    "label": "Ayuda",
+    "icon": "help_outline",
+    "open": false,
+    "items": [
+      { "label": "Guías", "icon": "menu_book", "route": "/ayuda/guias", "open": false },
+      { "label": "Cómo Participar", "icon": "emoji_people", "route": "/ayuda/participar", "open": false },
+      { "label": "Preguntas Frecuentes", "icon": "help", "route": "/ayuda/faq", "open": false },
+      { "divider": true,"class": "menu-separator"},
+      { "label": "Quiénes somos", "icon": "info_outline", "route": "/inicio/acerca-de", "open": false }
+    ]
+  }
+]

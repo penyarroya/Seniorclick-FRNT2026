@@ -1,0 +1,91 @@
+<app-maintenance-layout
+  title="Proyectos Académicos"
+  [showViewAction]="false" 
+  [columns]="columns"
+  [service]="$any(projectService)" 
+  (onCreate)="createProject()"
+  (onEdit)="editProject($event)"
+  (onDelete)="deleteProject($event)"> 
+</app-maintenance-layout>
+
+<div class="modal" *ngIf="showModal">
+  <div class="modal-content">
+    <header class="modal-header">
+      <h3>{{ currentProject?.id ? 'Editar Proyecto' : 'Nuevo Proyecto' }}</h3>
+      <p class="subtitle" *ngIf="currentProject?.id">ID: {{ currentProject?.id }}</p>
+    </header>
+
+    <form [formGroup]="form" (ngSubmit)="saveProject()">
+      
+      <div class="form-group">
+        <label for="title">Título del Proyecto</label>
+        <input 
+          id="title"
+          formControlName="title" 
+          type="text" 
+          placeholder="Ej: Introducción a la Mecatrónica" 
+          [class.is-invalid]="form.get('title')?.touched && form.get('title')?.invalid"
+        />
+        <div class="error-msg" *ngIf="form.get('title')?.touched && form.get('title')?.hasError('required')">
+          El título es obligatorio.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Institución Propietaria</label>
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-select formControlName="institutionId" placeholder="Seleccione Institución">
+            <mat-option *ngFor="let inst of institutions" [value]="inst.id">
+              {{ inst.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="form-group">
+        <label>Nivel de Dificultad</label>
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-select formControlName="level">
+            <mat-option [value]="1">Básico</mat-option>
+            <mat-option [value]="2">Intermedio</mat-option>
+            <mat-option [value]="3">Avanzado</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="form-group">
+        <label for="description">Descripción</label>
+        <textarea 
+          id="description"
+          formControlName="description" 
+          rows="3" 
+          placeholder="Breve resumen de los objetivos del proyecto...">
+        </textarea>
+      </div>
+
+      <div class="status-container">
+        <div class="status-toggle-box">
+          <mat-slide-toggle formControlName="activo" color="primary">
+            <span class="status-label">
+              Estado: <strong>{{ form.get('activo')?.value ? 'Activo' : 'Inactivo' }}</strong>
+            </span>
+          </mat-slide-toggle>
+        </div>
+        <p class="status-help">
+          <mat-icon class="info-icon">info</mat-icon>
+          <span *ngIf="form.get('activo')?.value">Visible para estudiantes y público.</span>
+          <span *ngIf="!form.get('activo')?.value" class="text-warning">Oculto. Solo visible en este panel de administración.</span>
+        </p>
+      </div>
+
+      <div class="modal-actions">
+        <button type="submit" [disabled]="form.invalid" class="btn-save">
+          {{ currentProject?.id ? 'Actualizar' : 'Crear Proyecto' }}
+        </button>
+        <button type="button" (click)="closeModal()" class="btn-cancel">
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+ <app-toolbar
+  [logoUrl]="'/icon/logo.ico'"
+  [logoLabel]="'SeniorClick'"
+  [showTitle]="false"
+  [showLogin]="false"
+  [isLoggedIn]="false"
+  [showMenu]="false"
+  [showProfile]="false"
+  [showCarouselControls]="false">
+</app-toolbar>
+
+<div class="not-found-container">
+  <div class="not-found-texts">
+    <h1>404</h1>
+    <h2>Página no encontrada</h2>
+    <p>
+      Lo sentimos, la página que busca no está disponible o ha sido eliminada.
+    </p>
+    
+    <button mat-raised-button color="primary" (click)="goBack()">
+      Volver atrás
+    </button>
+  </div>
+</div>
+
+<footer class="footer">
+  <p>&copy; 2025 SeniorClick. Todos los derechos reservados.</p>
+</footer>

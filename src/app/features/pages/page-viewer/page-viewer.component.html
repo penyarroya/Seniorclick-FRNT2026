@@ -1,0 +1,259 @@
+@if (page()) {
+<div class="page-container" [@fadeSlide]>
+
+  <div class="scroll-content">
+    <header class="page-header">
+      <div class="meta-info">
+        <div class="badge-title-group">
+          <div class="badge-group">
+            <span class="badge neon-pill">
+              <mat-icon>menu_book</mat-icon>
+              Unidad Didáctica <strong>{{ subtopicIndex() }}</strong>
+            </span>
+          </div>
+
+          @if (navService.currentSubtopicTitle()) {
+            <h2 class="subtopic-display-title">{{ navService.currentSubtopicTitle() }}</h2>
+          }
+        </div>
+
+        <p class="page-author">
+          <mat-icon>person_outline</mat-icon>
+          <span>Publicado Por: <strong>{{ page().authorName }}</strong></span>
+        </p>
+      </div>
+
+      @if (navService.currentSubtopicTitle()) {
+        <div class="subtopic-accent-bar"></div>
+      } @else {
+        <h1 class="page-title">{{ page().title }}</h1>
+      }
+
+      <div class="lesson-header-row">
+        <div class="lesson-context">
+          <mat-icon class="context-icon">menu_book</mat-icon>
+          <span class="lesson-subtitle">Contenido de la lección</span>
+          <span class="lesson-id-tag"><strong>{{ page().title }}</strong></span>
+        </div>
+
+        <div class="reading-time">
+          <svg class="progress-circle" viewBox="0 0 36 36">
+            <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+            <path class="circle" 
+                  [style.stroke-dasharray]="scrollProgress() + ', 100'" 
+                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+          </svg>
+          <span>{{ readingTime() }} min de lectura</span>
+        </div>
+      </div>
+    </header>
+
+
+    <div class="page-layout-grid">
+      <article class="main-content">
+        <div class="education-frame">
+           <section class="html-content" [innerHTML]="safeContent()"></section>
+        </div>
+
+        @if (page().resources?.length) {
+        <section class="resources-section">
+          <div class="resources-header">
+            <mat-icon>attachment</mat-icon>
+            <h3>Material Complementario</h3>
+          </div>
+
+          <div class="resource-grid">
+            @for (res of page().resources; track res.id) {
+            <div class="resource-card" (click)="res.url && res.url !== '#' ? downloadResource(res) : null"
+              [class.disabled]="!res.url || res.url === '#'" [matRippleDisabled]="!res.url || res.url === '#'"
+              [matTooltip]="(!res.url || res.url === '#') ? 'Este material no está disponible actualmente' : 'Descargar recurso'"
+              matRipple>
+
+              <div class="resource-icon-wrapper" [ngClass]="res.type.toLowerCase()">
+                <mat-icon>{{ getFileIcon(res.type) }}</mat-icon>
+              </div>
+
+              <div class="res-info">
+                <span class="res-name">{{ res.name }}</span>
+                <span class="res-type">{{ res.type | uppercase }}</span>
+
+                @if (!res.url || res.url === '#') {
+                <span class="mobile-not-available">No disponible actualmente</span>
+                }
+              </div>
+
+              <div class="download-action">
+                @if (res.url && res.url !== '#') {
+                <mat-icon class="download-arrow">download</mat-icon>
+                } @else {
+                <mat-icon class="lock-icon">lock</mat-icon>
+                }
+              </div>
+            </div>
+            }
+          </div>
+        </section>
+        }
+      </article>
+    </div>
+  </div>
+
+  @if (showScrollButton()) {
+  <button mat-fab class="scroll-to-top" (click)="scrollToTop()" [@fadeInOut]>
+    <mat-icon>arrow_upward</mat-icon>
+  </button>
+  }
+
+  <footer class="page-footer">
+    <div class="nav-buttons-container">
+      <button mat-ripple class="nav-card prev" (click)="goBack()"
+        [disabled]="!navService.getNeighbors(page()?.id?.toString() ?? null).prev">
+        <mat-icon>chevron_left</mat-icon>
+        <div class="nav-text">
+          <span class="nav-label">Anterior</span>
+          <span class="nav-title">Lección previa</span>
+        </div>
+      </button>
+
+      <div class="status-action">
+        <button mat-flat-button [color]="completed() ? 'accent' : 'primary'" (click)="markAsCompleted()">
+          @if (completed()) { <mat-icon>check_circle</mat-icon> }
+          <span>{{ completed() ? 'Completado' : 'Marcar como terminado' }}</span>
+        </button>
+      </div>
+
+      <button mat-ripple class="nav-card next" (click)="goNext()"
+        [disabled]="!navService.getNeighbors(page()?.id?.toString() ?? null).next">
+        <div class="nav-text">
+          <span class="nav-label">Siguiente</span>
+          <span class="nav-title">Siguiente lección</span>
+        </div>
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+    </div>
+  </footer>
+
+</div>
+} @else {
+<div class="loading-page">
+  <mat-spinner diameter="40"></mat-spinner>
+  <p>Cargando lección...</p>
+</div>
+}
+
+
+
+
+<!-- @if (page()) {
+<div class="page-container" [@fadeSlide]>
+
+  <div class="scroll-content">
+    <header class="page-header slim-header">
+      <div class="header-main-row">
+        <div class="title-section">
+          <span class="badge-unit">U{{ subtopicIndex() }}</span>
+          <h1 class="page-title">{{ page().title }}</h1>
+        </div>
+
+        <div class="header-actions">
+          <div class="reading-time">
+            <mat-icon>schedule</mat-icon>
+            <span>{{ readingTime() }} min</span>
+          </div>
+          
+          <div class="header-divider"></div>
+
+          <div class="mini-progress">
+            <span class="pct">{{ scrollProgress() }}%</span>
+            <div class="circle-container">
+               <svg class="progress-circle" viewBox="0 0 36 36">
+                <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                <path class="circle" 
+                      [style.stroke-dasharray]="scrollProgress() + ', 100'" 
+                      d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="page-layout-grid">
+      <article class="main-content">
+        <div class="education-frame">
+           <section class="html-content" [innerHTML]="safeContent()"></section>
+        </div>
+
+        @if (page().resources?.length) {
+        <section class="resources-section">
+          <div class="resources-header">
+            <mat-icon>attachment</mat-icon>
+            <h3>Descargas</h3>
+          </div>
+          <div class="resource-grid">
+            @for (res of page().resources; track res.id) {
+            <div class="resource-card" 
+                 (click)="res.url && res.url !== '#' ? downloadResource(res) : null"
+                 [class.disabled]="!res.url || res.url === '#'" 
+                 matRipple>
+              
+              <div class="resource-icon-wrapper" [ngClass]="res.type.toLowerCase()">
+                <mat-icon>{{ getFileIcon(res.type) }}</mat-icon>
+              </div>
+
+              <div class="res-info">
+                <span class="res-name">{{ res.name }}</span>
+              </div>
+
+              <div class="download-status">
+                @if (!res.url || res.url === '#') {
+                  <mat-icon>lock</mat-icon>
+                } @else {
+                  <mat-icon>download</mat-icon>
+                }
+              </div>
+            </div>
+            }
+          </div>
+        </section>
+        }
+      </article>
+    </div>
+  </div>
+
+  @if (showScrollButton()) {
+  <button mat-fab class="scroll-to-top" (click)="scrollToTop()" [@fadeInOut]>
+    <mat-icon>arrow_upward</mat-icon>
+  </button>
+  }
+
+  <footer class="page-footer">
+    <div class="nav-buttons-container">
+      <button mat-ripple class="nav-btn" (click)="goBack()" 
+        [disabled]="!navService.getNeighbors(page()?.id?.toString() ?? null).prev">
+        <mat-icon>chevron_left</mat-icon>
+        <span>Anterior</span>
+      </button>
+
+      <div class="status-action">
+        <button mat-flat-button [color]="completed() ? 'accent' : 'primary'" (click)="markAsCompleted()">
+          <mat-icon>{{ completed() ? 'check_circle' : 'radio_button_unchecked' }}</mat-icon>
+          <span>{{ completed() ? 'Completado' : 'Finalizar' }}</span>
+        </button>
+      </div>
+
+      <button mat-ripple class="nav-btn" (click)="goNext()" 
+        [disabled]="!navService.getNeighbors(page()?.id?.toString() ?? null).next">
+        <span>Siguiente</span>
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+    </div>
+  </footer>
+
+</div>
+} @else {
+<div class="loading-page">
+  <mat-spinner diameter="40"></mat-spinner>
+  <p>Cargando lección...</p>
+</div>
+} -->

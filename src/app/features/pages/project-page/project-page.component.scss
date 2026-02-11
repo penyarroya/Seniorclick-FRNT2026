@@ -1,0 +1,603 @@
+// @use 'sass:color';
+// @use 'variables' as marca;
+// @use 'grid-table-variables' as grid;
+
+// // --- 1. ESTRUCTURA DE PANTALLA FIJA ---
+// :host {
+//   display: block;
+//   height: 100vh;
+//   width: 100vw;
+//   overflow: hidden; 
+//   position: fixed; 
+//   top: 0;
+//   left: 0;
+//   z-index: 1100;
+// }
+
+// .project-page-container {
+//   display: flex;
+//   flex-direction: column;
+//   height: 100vh;
+//   width: 100%;
+//   background-color: marca.$bg-light;
+//   overflow: hidden;
+
+//   // --- 2. TOOLBAR RESPONSIVA ---
+//   .internal-dashboard-toolbar {
+//     flex: 0 0 auto; 
+//     min-height: marca.$toolbar-height;
+//     display: flex;
+//     justify-content: space-between;
+//     align-items: center;
+//     padding: 0 2rem;
+//     background-color: marca.$toolbar-bg !important;
+//     z-index: 1000;
+//     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+//     box-sizing: border-box;
+
+//     @media (max-width: 600px) { padding: 0 1rem; }
+
+//     .toolbar-left {
+//       display: flex;
+//       align-items: center;
+//       gap: 0.8rem;
+//       color: white;
+//       font-weight: 600;
+//       min-width: 0; 
+
+//       mat-icon { color: marca.$brand-neon; flex-shrink: 0; }
+//       span {
+//         white-space: nowrap;
+//         overflow: hidden;
+//         text-overflow: ellipsis; 
+//         font-size: 1rem;
+//         @media (max-width: 480px) { font-size: 0.9rem; }
+//       }
+//     }
+
+//     .btn-exit {
+//       display: flex;
+//       align-items: center;
+//       gap: 0.5rem;
+//       background: rgba(255, 255, 255, 0.15);
+//       border: 1px solid rgba(255, 255, 255, 0.2);
+//       padding: 0.5rem 1.2rem;
+//       border-radius: 8px;
+//       color: white;
+//       cursor: pointer;
+//       transition: all 0.2s;
+//       flex-shrink: 0; 
+
+//       mat-icon { font-size: 18px; width: 18px; height: 18px; order: 2; }
+//       &:hover { background: marca.$secondary-color; }
+//       @media (max-width: 480px) { padding: 0.5rem; span { display: none; } }
+//     }
+//   }
+
+//   // --- 3. CONTENIDO PRINCIPAL ---
+//   .page-main-content {
+//     flex: 1;
+//     overflow-y: auto; 
+//     padding: 2rem 3rem;
+//     width: 100%;
+//     box-sizing: border-box;
+//     @media (max-width: 768px) { padding: 1.5rem 1rem; }
+//   }
+
+//   // --- 4. HEADER (TÍTULOS) ---
+//   .page-header {
+//     text-align: center;
+//     margin-bottom: 3rem;
+//     h1 {
+//       color: grid.$grid-header-text;
+//       font-size: 2.5rem;
+//       font-weight: 800;
+//       margin-bottom: 0.5rem;
+//       @media (max-width: 600px) { font-size: 1.8rem; }
+//     }
+//     p { color: marca.$text-light; font-size: 1.1rem; }
+//   }
+
+//   // --- 5. REJILLA DE PROYECTOS ---
+//   .projects-grid {
+//     display: grid;
+//     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+//     gap: 2rem;
+//     padding-bottom: 4rem;
+//     transition: opacity 0.3s ease;
+
+//     &.is-checking {
+//       cursor: wait;
+//       .project-card:not(.card-disabled) { 
+//         opacity: 0.5; 
+//         pointer-events: none; 
+//         filter: grayscale(0.4);
+//       }
+//     }
+//   }
+
+//   // --- 6. TARJETAS (CARDS) ---
+//   .project-card {
+//     background: grid.$grid-bg;
+//     border-radius: 16px;
+//     border: 1px solid rgba(grid.$grid-row-border, 0.1);
+//     padding: 2rem;
+//     cursor: pointer;
+//     transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+//     display: flex;
+//     flex-direction: column;
+//     box-shadow: marca.$card-shadow;
+//     animation: fadeIn 0.6s ease forwards; // Animación suave al cargar
+
+//     @media (max-width: 480px) { padding: 1.5rem; }
+
+//     &.card-disabled {
+//       border-color: marca.$brand-neon;
+//       box-shadow: 0 0 20px rgba(marca.$brand-neon, 0.2);
+//       pointer-events: none; 
+//       transform: scale(0.98);
+//     }
+
+//     // --- NUEVO: ESTADO FINALIZADO ---
+//     &.card-finished {
+//       opacity: 0.7;
+//       filter: grayscale(0.8);
+//       border: 1px dashed rgba(grid.$grid-row-border, 0.4);
+//       cursor: default !important;
+      
+//       &:hover {
+//         transform: none !important;
+//         box-shadow: marca.$card-shadow !important;
+//       }
+
+//       .badge.badge-finished {
+//         background: #6c757d !important;
+//         color: white;
+//       }
+
+//       .btn-enter {
+//         background-color: #555 !important;
+//         cursor: not-allowed;
+//       }
+//     }
+
+//     &:hover:not(.card-disabled):not(.card-finished) {
+//       transform: translateY(-8px);
+//       box-shadow: marca.$card-shadow-hover;
+//       border-color: grid.$grid-row-border;
+//       .btn-enter {
+//         background-color: grid.$grid-btn-activar;
+//         box-shadow: 0 4px 12px rgba(grid.$grid-btn-activar, 0.3);
+//       }
+//     }
+
+//     .badge {
+//       background: grid.$grid-row-selected;
+//       color: grid.$grid-row-border;
+//       padding: 0.4rem 0.8rem;
+//       border-radius: 6px;
+//       font-size: 0.75rem;
+//       font-weight: 700;
+//       text-transform: uppercase;
+//       margin-bottom: 1.5rem;
+//       width: fit-content;
+//     }
+
+//     .card-content {
+//       flex-grow: 1;
+//       h3 { color: grid.$grid-header-text; font-size: 1.3rem; font-weight: 700; margin-bottom: 1rem; }
+//       p {
+//         color: marca.$text-light;
+//         font-size: 0.95rem;
+//         line-height: 1.6;
+//         display: -webkit-box;
+//         -webkit-line-clamp: 3;
+//         line-clamp: 3;
+//         -webkit-box-orient: vertical;
+//         overflow: hidden;
+//       }
+//     }
+
+//     .card-footer {
+//       margin-top: 2rem;
+//       padding-top: 1.5rem;
+//       border-top: 1px solid grid.$grid-header-bg;
+//       display: flex;
+//       flex-direction: column;
+//       gap: 1.2rem;
+
+//       .info-group {
+//         display: flex;
+//         flex-direction: column;
+//         gap: 0.6rem;
+//         span {
+//           font-size: 0.85rem;
+//           color: marca.$text-light;
+//           display: flex;
+//           align-items: center;
+//           gap: 0.5rem;
+//           i.material-icons { font-size: 18px; color: grid.$grid-row-border; }
+//         }
+//       }
+
+//       .btn-enter {
+//         background-color: grid.$grid-row-border;
+//         color: white;
+//         border: none;
+//         padding: 0.85rem;
+//         border-radius: 8px;
+//         font-weight: 600;
+//         display: flex;
+//         align-items: center;
+//         justify-content: center;
+//         gap: 8px;
+//         font-size: 0.9rem;
+//         transition: all 0.2s;
+
+//         mat-icon { font-size: 18px; width: 18px; height: 18px; }
+
+//         .loader-text {
+//           animation: pulseText 1.5s infinite;
+//           font-style: italic;
+//           opacity: 0.8;
+//         }
+
+//         &:disabled {
+//           background-color: #555 !important;
+//         }
+//       }
+//     }
+//   }
+
+//   // --- 7. ESTADOS (SPINNER Y ERRORES) ---
+//   .state-container {
+//     display: flex;
+//     flex-direction: column;
+//     align-items: center;
+//     justify-content: center;
+//     padding: 4rem 1.5rem;
+//     grid-column: 1 / -1;
+//     text-align: center;
+
+//     .spinner {
+//       width: 45px; height: 45px;
+//       border: 3px solid grid.$grid-header-bg;
+//       border-left-color: grid.$grid-row-border;
+//       border-radius: 50%;
+//       animation: spin 1s linear infinite;
+//       margin-bottom: 1.5rem;
+//     }
+//     p { color: grid.$grid-no-data-color; font-size: 1.1rem; margin: 0; }
+//     mat-icon { font-size: 3rem; width: 3rem; height: 3rem; margin-bottom: 1rem; color: marca.$secondary-color; }
+//   }
+// }
+
+// // --- 8. FAB BUTTON ---
+// .fab-button-expandable {
+//   position: fixed;
+//   bottom: 40px; right: 40px;
+//   z-index: 2000;
+//   width: 56px; height: 56px;
+//   border-radius: 28px;
+//   background: marca.$brand-neon !important; 
+//   color: #1a237e !important;
+//   display: flex; align-items: center;
+//   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+//   cursor: pointer;
+
+//   .fab-content { display: flex; align-items: center; padding-left: 16px; }
+//   .btn-text { opacity: 0; max-width: 0; font-weight: 800; transition: all 0.3s ease; }
+
+//   &:hover {
+//     width: 135px; border-radius: 16px; background: white !important;
+//     .btn-text { opacity: 1; max-width: 80px; margin-left: 10px; }
+//   }
+// }
+
+// @keyframes spin { to { transform: rotate(360deg); } }
+// @keyframes pulseText { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+// @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+@use 'sass:color';
+@use 'variables' as marca;
+@use 'grid-table-variables' as grid;
+
+// --- 1. ESTRUCTURA DE PANTALLA FIJA (MODAL FULLSCREEN) ---
+:host {
+  display: block;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden; 
+  position: fixed; // Fijo al viewport para cubrir todo
+  top: 0;
+  left: 0;
+  // Subimos el z-index para asegurar que quede por encima de la toolbar del padre
+  z-index: 9999; 
+  background-color: marca.$bg-light;
+}
+
+.project-page-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+  background-color: marca.$bg-light;
+  overflow: hidden; // El contenedor padre no scrollea, scrollea el main
+
+  // --- 2. TOOLBAR RESPONSIVA ---
+  .internal-dashboard-toolbar {
+    flex: 0 0 auto; 
+    min-height: marca.$toolbar-height;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+    background-color: marca.$toolbar-bg !important;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+
+    @media (max-width: 600px) { padding: 0 1rem; }
+
+    .toolbar-left {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      color: white;
+      font-weight: 600;
+      min-width: 0; 
+
+      mat-icon { color: marca.$brand-neon; flex-shrink: 0; }
+      span {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis; 
+        font-size: 1rem;
+        @media (max-width: 480px) { font-size: 0.9rem; }
+      }
+    }
+
+    .btn-exit {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 0.5rem 1.2rem;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+      transition: all 0.2s;
+      flex-shrink: 0; 
+
+      mat-icon { font-size: 18px; width: 18px; height: 18px; order: 2; }
+      &:hover { background: marca.$secondary-color; }
+      @media (max-width: 480px) { padding: 0.5rem; span { display: none; } }
+    }
+  }
+
+  // --- 3. CONTENIDO PRINCIPAL ---
+  .page-main-content {
+    flex: 1;
+    overflow-y: auto; // Habilita el scroll interno para la rejilla
+    padding: 2rem 3rem;
+    width: 100%;
+    box-sizing: border-box;
+    // Suaviza el scroll en dispositivos móviles
+    -webkit-overflow-scrolling: touch; 
+    
+    @media (max-width: 768px) { padding: 1.5rem 1rem; }
+  }
+
+  // --- 4. HEADER (TÍTULOS) ---
+  .page-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    h1 {
+      color: grid.$grid-header-text;
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      @media (max-width: 600px) { font-size: 1.8rem; }
+    }
+    p { color: marca.$text-light; font-size: 1.1rem; }
+  }
+
+  // --- 5. REJILLA DE PROYECTOS ---
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+    gap: 2rem;
+    padding-bottom: 4rem;
+    transition: opacity 0.3s ease;
+
+    &.is-checking {
+      cursor: wait;
+      .project-card:not(.card-disabled) { 
+        opacity: 0.5; 
+        pointer-events: none; 
+        filter: grayscale(0.4);
+      }
+    }
+  }
+
+  // --- 6. TARJETAS (CARDS) ---
+  .project-card {
+    background: grid.$grid-bg;
+    border-radius: 16px;
+    border: 1px solid rgba(grid.$grid-row-border, 0.1);
+    padding: 2rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    display: flex;
+    flex-direction: column;
+    box-shadow: marca.$card-shadow;
+    animation: fadeIn 0.6s ease forwards; 
+
+    @media (max-width: 480px) { padding: 1.5rem; }
+
+    &.card-disabled {
+      border-color: marca.$brand-neon;
+      box-shadow: 0 0 20px rgba(marca.$brand-neon, 0.2);
+      pointer-events: none; 
+      transform: scale(0.98);
+    }
+
+    &.card-finished {
+      opacity: 0.7;
+      filter: grayscale(0.8);
+      border: 1px dashed rgba(grid.$grid-row-border, 0.4);
+      cursor: default !important;
+      
+      &:hover {
+        transform: none !important;
+        box-shadow: marca.$card-shadow !important;
+      }
+
+      .badge.badge-finished {
+        background: #6c757d !important;
+        color: white;
+      }
+
+      .btn-enter {
+        background-color: #555 !important;
+        cursor: not-allowed;
+      }
+    }
+
+    &:hover:not(.card-disabled):not(.card-finished) {
+      transform: translateY(-8px);
+      box-shadow: marca.$card-shadow-hover;
+      border-color: grid.$grid-row-border;
+      .btn-enter {
+        background-color: grid.$grid-btn-activar;
+        box-shadow: 0 4px 12px rgba(grid.$grid-btn-activar, 0.3);
+      }
+    }
+
+    .badge {
+      background: grid.$grid-row-selected;
+      color: grid.$grid-row-border;
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      width: fit-content;
+    }
+
+    .card-content {
+      flex-grow: 1;
+      h3 { color: grid.$grid-header-text; font-size: 1.3rem; font-weight: 700; margin-bottom: 1rem; }
+      p {
+        color: marca.$text-light;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+    }
+
+    .card-footer {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid grid.$grid-header-bg;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+
+      .info-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+        span {
+          font-size: 0.85rem;
+          color: marca.$text-light;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          i.material-icons { font-size: 18px; color: grid.$grid-row-border; }
+        }
+      }
+
+      .btn-enter {
+        background-color: grid.$grid-row-border;
+        color: white;
+        border: none;
+        padding: 0.85rem;
+        border-radius: 8px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        font-size: 0.9rem;
+        transition: all 0.2s;
+
+        mat-icon { font-size: 18px; width: 18px; height: 18px; }
+
+        .loader-text {
+          animation: pulseText 1.5s infinite;
+          font-style: italic;
+          opacity: 0.8;
+        }
+
+        &:disabled {
+          background-color: #555 !important;
+        }
+      }
+    }
+  }
+
+  // --- 7. ESTADOS (SPINNER Y ERRORES) ---
+  .state-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 1.5rem;
+    grid-column: 1 / -1;
+    text-align: center;
+
+    .spinner {
+      width: 45px; height: 45px;
+      border: 3px solid grid.$grid-header-bg;
+      border-left-color: grid.$grid-row-border;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: 1.5rem;
+    }
+    p { color: grid.$grid-no-data-color; font-size: 1.1rem; margin: 0; }
+    mat-icon { font-size: 3rem; width: 3rem; height: 3rem; margin-bottom: 1rem; color: marca.$secondary-color; }
+  }
+}
+
+// --- 8. FAB BUTTON ---
+.fab-button-expandable {
+  position: fixed;
+  bottom: 40px; right: 40px;
+  z-index: 2000;
+  width: 56px; height: 56px;
+  border-radius: 28px;
+  background: marca.$brand-neon !important; 
+  color: #1a237e !important;
+  display: flex; align-items: center;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+
+  .fab-content { display: flex; align-items: center; padding-left: 16px; }
+  .btn-text { opacity: 0; max-width: 0; font-weight: 800; transition: all 0.3s ease; }
+
+  &:hover {
+    width: 135px; border-radius: 16px; background: white !important;
+    .btn-text { opacity: 1; max-width: 80px; margin-left: 10px; }
+  }
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes pulseText { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }

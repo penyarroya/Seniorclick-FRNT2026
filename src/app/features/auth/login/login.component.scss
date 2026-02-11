@@ -1,0 +1,426 @@
+// @use '../../../../styles/variables' as *;
+
+// // ---------------- Login Wrapper ----------------
+// .login-wrapper {
+//   width: 100%;
+//   height: 100%;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+
+//   // Aplicar caret-color a todos los inputs
+//   ::ng-deep .mat-mdc-input-element {
+//     caret-color: $cursor-color !important;
+//   }
+// }
+
+// // ---------------- Login Card ----------------
+// .login-card {
+//   max-width: 400px;
+//   width: 100%;
+//   padding: 40px 30px;
+//   border-radius: 16px;
+//   background: $card-bg;
+//   box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+//   transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+//   &:hover {
+//     transform: translateY(-4px);
+//     box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+//   }
+
+//   .title {
+//     text-align: center;
+//     font-size: 2rem;
+//     color: $text-color;
+//     margin-bottom: 30px;
+//     font-weight: 700;
+//   }
+
+//   mat-form-field {
+//     width: 100%;
+//     margin-bottom: 20px;
+
+//     ::ng-deep .mat-mdc-text-field-wrapper {
+//       background: $input-bg;
+//       border-radius: 8px;
+//       transition: all 0.3s ease;
+//     }
+
+//     ::ng-deep .mdc-floating-label {
+//       font-weight: 600;
+//       color: $label-color;
+//       font-size: 1.2rem;
+//       transition: all 0.25s ease;
+//       transform-origin: left top;
+//     }
+
+//     ::ng-deep .mdc-floating-label--float-above,
+//     ::ng-deep .mdc-text-field--focused .mdc-floating-label {
+//       color: $label-focus-color !important;
+//       font-size: 1.3rem !important;
+//       font-weight: 700;
+//       letter-spacing: 0.5px;
+//     }
+
+//     ::ng-deep .mat-mdc-input-element {
+//       font-size: 1.2rem;
+//       color: $text-color;
+//       caret-color: $cursor-color !important; // CURSOR COLOR
+
+//       &::placeholder {
+//         font-size: 1.2rem;
+//         font-weight: 500;
+//         color: rgba(255, 255, 255, 0.6);
+//       }
+
+//       &::selection {
+//         background-color: rgba(108, 99, 255, 0.3);
+//         color: #fff;
+//       }
+//     }
+//   }
+// }
+
+// // ---------------- Login Wrapper ----------------
+// .login-wrapper {
+//   width: 100%;
+//   height: 100%;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+
+//   // Aplicar color del cursor a los inputs
+//   ::ng-deep .mat-mdc-input-element {
+//     caret-color: $cursor-color !important;
+//   }
+// }
+
+// // ---------------- Login Card ----------------
+// .login-card {
+//   max-width: 400px;
+//   width: 100%;
+//   padding: 40px 30px;
+//   border-radius: 16px;
+//   background: $card-bg;
+//   box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+//   transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+//   &:hover {
+//     transform: translateY(-4px);
+//     box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+//   }
+
+//   .title {
+//     text-align: center;
+//     font-size: 2rem;
+//     color: $text-color;
+//     margin-bottom: 30px;
+//     font-weight: 700;
+//   }
+
+//   /* ---------------- Form Fields ---------------- */
+//   mat-form-field {
+//     width: 100%;
+//     margin-bottom: 20px;
+
+//     // Material wrapper
+//     ::ng-deep .mat-mdc-text-field-wrapper {
+//       background: $input-bg;
+//       border-radius: 8px;
+//       transition: all 0.3s ease;
+//     }
+
+//     // Floating label
+//     ::ng-deep .mdc-floating-label {
+//       font-weight: 600;
+//       color: $label-color;
+//       font-size: 1.2rem;
+//       transition: all 0.25s ease;
+//       transform-origin: left top;
+//     }
+
+//     ::ng-deep .mdc-floating-label--float-above,
+//     ::ng-deep .mdc-text-field--focused .mdc-floating-label {
+//       color: $label-focus-color !important;
+//       font-size: 1.3rem !important;
+//       font-weight: 700;
+//       letter-spacing: 0.5px;
+//     }
+
+//     // Input con cursor
+//     ::ng-deep .mat-mdc-input-element {
+//       font-size: 1.2rem;
+//       color: $text-color;
+//       caret-color:#02fad1!important;
+
+//       &::placeholder {
+//         font-size: 1.2rem;
+//         font-weight: 500;
+//         color: rgba(255, 255, 255, 0.6);
+//       }
+
+//       &::selection {
+//         background-color: rgba(108, 99, 255, 0.3);
+//         color: #fff;
+//       }
+//     }
+
+//     mat-error {
+//       font-size: 0.85rem;
+//       color: #05f4dc;
+//       animation: fadeIn 0.3s ease-in;
+//     }
+
+//     // Icono de visibilidad
+//     ::ng-deep button.password-visibility.mat-mdc-icon-button {
+//       color: darkkhaki;
+//       transition: color 0.2s ease;
+//       display: flex;
+//       align-items: center;
+//       justify-content: center;
+//       margin-right: 6px;
+
+//       &:hover {
+//         color: rgb(7, 246, 210);
+//       }
+
+//       span.material-symbols-outlined {
+//         font-size: 2rem;
+//         vertical-align: middle;
+//       }
+
+//       @media (max-width: 480px) {
+//         margin-right: 4px;
+//         span.material-symbols-outlined {
+//           font-size: 1.6rem;
+//         }
+//       }
+
+//       @media (max-width: 360px) {
+//         margin-right: 2px;
+//         span.material-symbols-outlined {
+//           font-size: 1.4rem;
+//         }
+//       }
+//     }
+//   }
+
+//   /* ---------------- Mensajes ---------------- */
+//   .server-error-message, .success-message {
+//     text-align: center;
+//     font-weight: 600;
+//     margin-bottom: 15px;
+//     animation: fadeIn 0.3s ease-in;
+//   }
+//   .server-error-message { color: $error-color; }
+//   .success-message { color: $success-color; }
+
+//   /* ---------------- Botones ---------------- */
+//   .button-group {
+//     display: flex;
+//     gap: 12px;
+//     margin-top: 20px;
+
+//     button {
+//       flex: 1;
+//       font-weight: 600;
+//       border-radius: 10px;
+//       padding: 14px;
+//       font-size: 1rem;
+//       transition: all 0.25s ease;
+//       color: #fff;
+
+//       &:disabled {
+//         opacity: 0.6;
+//         cursor: not-allowed;
+//       }
+//     }
+
+//     .login-submit-btn {
+//       background: linear-gradient(90deg, $primary-color, $primary-hover);
+//       &:hover:not(:disabled) {
+//         background: linear-gradient(90deg, $primary-hover, $primary-color);
+//       }
+//     }
+
+//     .cancel-btn {
+//       background: linear-gradient(90deg, $secondary-color, $secondary-hover);
+//       &:hover:not(:disabled) {
+//         background: linear-gradient(90deg, $secondary-hover, $secondary-color);
+//       }
+//     }
+//   }
+
+//   /* ---------------- Links ---------------- */
+//   .login-options {
+//     display: flex;
+//     flex-direction: column;
+//     align-items: flex-end;
+//     gap: 2px;
+//     margin-top: 15px;
+
+//     .link-btn {
+//       background: none;
+//       border: none;
+//       color: #ccc;
+//       font-weight: 500;
+//       cursor: pointer;
+//       padding: 4px;
+//       font-size: 0.95rem;
+//       transition: color 0.2s ease, transform 0.2s ease;
+
+//       &:hover {
+//         color: $text-color;
+//         transform: translateY(-1px);
+//       }
+//     }
+//   }
+// }
+
+// // ---------------- Animación ----------------
+// @keyframes fadeIn {
+//   from { opacity: 0; transform: translateY(-3px); }
+//   to { opacity: 1; transform: translateY(0); }
+// }
+
+// // ---------------- Responsivo ----------------
+// @media (max-width: 480px) {
+//   .login-card {
+//     max-width: 90%;
+//     padding: 30px 20px;
+//     box-shadow: none;
+
+//     &:hover {
+//       transform: none;
+//       box-shadow: none;
+//     }
+
+//     .title { font-size: 1.6rem; }
+//     .button-group button { font-size: 0.95rem; padding: 12px; }
+//   }
+// }
+
+
+@use '../../../../styles/variables' as *;
+
+.login-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  // Variables para los componentes de Material
+  --mdc-outlined-text-field-container-color: #{$input-bg};
+  --mdc-filled-text-field-container-color: #{$input-bg};
+  --mdc-outlined-text-field-caret-color: #02fad1;
+  --mdc-filled-text-field-caret-color: #02fad1;
+}
+
+.login-card {
+  max-width: 400px;
+  width: 100%;
+  padding: 40px 30px;
+  border-radius: 16px;
+  background: $card-bg;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+  }
+
+  .title {
+    text-align: center;
+    font-size: 2rem;
+    color: $text-color;
+    margin-bottom: 30px;
+    font-weight: 700;
+  }
+
+  mat-form-field {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  /* --- BOTONES (Restaurando Simetría) --- */
+  .button-group {
+    display: flex;
+    gap: 12px;         // Espacio entre botones
+    margin-top: 20px;
+    width: 100%;       // Asegura que el contenedor use todo el ancho
+
+    button {
+      flex: 1;         // ESTA ES LA CLAVE: Hace que ambos midan exactamente lo mismo
+      font-weight: 600;
+      border-radius: 10px;
+      padding: 14px;
+      font-size: 1rem;
+      border: none;    // Quita el borde por defecto de los botones
+      color: #fff;
+      cursor: pointer;
+      transition: all 0.25s ease;
+
+      &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+    }
+
+    .login-submit-btn {
+      background: linear-gradient(90deg, $primary-color, $primary-hover);
+      &:hover:not(:disabled) {
+        background: linear-gradient(90deg, $primary-hover, $primary-color);
+        box-shadow: 0 8px 15px rgba($primary-color, 0.3);
+      }
+    }
+
+    .cancel-btn {
+      background: linear-gradient(90deg, $secondary-color, $secondary-hover);
+      &:hover:not(:disabled) {
+        background: linear-gradient(90deg, $secondary-hover, $secondary-color);
+        box-shadow: 0 8px 15px rgba($secondary-color, 0.3);
+      }
+    }
+  }
+
+  .login-options {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+    margin-top: 15px;
+
+    .link-btn {
+      background: none;
+      border: none;
+      color: #ccc;
+      font-weight: 500;
+      cursor: pointer;
+      padding: 4px;
+      font-size: 0.95rem;
+      transition: all 0.2s ease;
+
+      &:hover {
+        color: $text-color;
+        transform: translateY(-1px);
+      }
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-3px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 480px) {
+  .login-card {
+    max-width: 90%;
+    padding: 30px 20px;
+    .title { font-size: 1.6rem; }
+    .button-group button { font-size: 0.95rem; padding: 12px; }
+  }
+}

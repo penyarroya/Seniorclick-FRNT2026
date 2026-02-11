@@ -1,0 +1,266 @@
+<!-- <div class="maintenance-container">
+
+  <div class="header">
+    <div class="header-left">
+      <button mat-icon-button 
+              class="btn-close-module" 
+              (click)="closeModule()" 
+              title="Volver">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+
+      <h2>{{ title }}</h2>
+
+      <app-search-input 
+        [label]="'Buscar ' + title"
+        [placeholder]="'Filtrar resultados...'"
+        (search)="onSearch($event)">
+      </app-search-input>
+    </div>
+
+    @if (canCreate()) {
+      <button mat-flat-button
+              class="btn-create"
+              (click)="create()">
+        <mat-icon>add_circle</mat-icon>
+        <span>Crear nuevo {{ title }}</span>
+      </button>
+    }
+  </div>
+
+  <div #tableWrapper 
+       class="table-wrapper mat-elevation-z2" 
+       tabindex="0" 
+       style="outline: none;">
+    
+    <table mat-table [dataSource]="dataSource">
+
+      @for (col of columns; track col.key) {
+        <ng-container [matColumnDef]="col.key">
+          <th mat-header-cell *matHeaderCellDef>
+            <div class="header-cell-container">
+              <span class="column-label">{{ col.label }}</span>
+              
+              @if (col.filter) {
+                <mat-form-field appearance="outline" class="filter-field">
+                  <input matInput
+                         [placeholder]="'Filtrar...'"
+                         (input)="onFilter(col.key, $any($event.target).value)"
+                         (click)="$event.stopPropagation()">
+                </mat-form-field>
+              }
+            </div>
+          </th>
+          
+          <td mat-cell *matCellDef="let row" [title]="row[col.key]">
+            @if (col.key === 'activo') {
+              <span [class]="row[col.key] ? 'status-pill active' : 'status-pill inactive'">
+                {{ row[col.key] ? 'Activo' : 'Inactivo' }}
+              </span>
+            } @else {
+              {{ row[col.key] }}
+            }
+          </td>
+        </ng-container>
+      }
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef class="actions">Acciones</th>
+        <td mat-cell *matCellDef="let row" class="actions">
+          
+          @if (showViewAction) {
+            <button mat-icon-button 
+                    class="btn-view" 
+                    matTooltip="Ver detalles" 
+                    (click)="view(row); $event.stopPropagation()">
+              <mat-icon style="color: #00f2ff;">visibility</mat-icon>
+            </button>
+          }
+
+          @if (canEdit()) {
+            <button mat-icon-button 
+                    class="btn-edit" 
+                    matTooltip="Editar" 
+                    (click)="edit(row); $event.stopPropagation()">
+              <mat-icon>edit</mat-icon>
+            </button>
+          }
+
+          @if (canDelete()) {
+            <button mat-icon-button 
+                    class="btn-delete" 
+                    matTooltip="Eliminar" 
+                    (click)="remove(row); $event.stopPropagation()">
+              <mat-icon>delete</mat-icon>
+            </button>
+          }
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns()"></tr>
+      
+      <tr mat-row 
+          *matRowDef="let row; columns: displayedColumns(); let i = index"
+          [class.row-selected]="i === selectedIndex()"
+          [class.is-inactive]="row.activo === false"
+          (click)="selectedIndex.set(i)"
+          (dblclick)="canEdit() ? edit(row) : null">
+      </tr>
+
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" [attr.colspan]="displayedColumns().length">
+          <div class="no-results-container">
+            <mat-icon>search_off</mat-icon>
+            <p>No se encontraron resultados para "{{ filters()['global'] || '' }}"</p>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <mat-paginator
+    [length]="total()"
+    [pageIndex]="page()"
+    [pageSize]="pageSize()"
+    [pageSizeOptions]="[10, 25, 50]"
+    (page)="onPage($event)">
+  </mat-paginator>
+
+</div> -->
+
+<div class="maintenance-container">
+
+  <div class="header">
+    <div class="header-left">
+      <button mat-icon-button 
+              class="btn-close-module" 
+              (click)="closeModule()" 
+              title="Volver">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+
+      <div class="title-section" style="display: flex; align-items: center; gap: 10px;">
+        @if (icon) {
+          <mat-icon class="header-icon" style="color: #00f2ff; font-size: 28px; width: 28px; height: 28px;">
+            {{ icon }}
+          </mat-icon>
+        }
+        <h2 style="margin: 0;">{{ title }}</h2>
+      </div>
+
+      <app-search-input 
+        [label]="'Buscar ' + title"
+        [placeholder]="'Filtrar resultados...'"
+        (search)="onSearch($event)">
+      </app-search-input>
+    </div>
+
+    @if (canCreate()) {
+      <button mat-flat-button
+              class="btn-create"
+              (click)="create()">
+        <mat-icon>add_circle</mat-icon>
+        <span>Crear nuevo {{ title }}</span>
+      </button>
+    }
+  </div>
+
+  <div #tableWrapper 
+       class="table-wrapper mat-elevation-z2" 
+       tabindex="0" 
+       style="outline: none;">
+    
+    <table mat-table [dataSource]="dataSource">
+
+      @for (col of columns; track col.key) {
+        <ng-container [matColumnDef]="col.key">
+          <th mat-header-cell *matHeaderCellDef>
+            <div class="header-cell-container">
+              <span class="column-label">{{ col.label }}</span>
+              
+              @if (col.filter) {
+                <mat-form-field appearance="outline" class="filter-field">
+                  <input matInput
+                         [placeholder]="'Filtrar...'"
+                         (input)="onFilter(col.key, $any($event.target).value)"
+                         (click)="$event.stopPropagation()">
+                </mat-form-field>
+              }
+            </div>
+          </th>
+          
+          <td mat-cell *matCellDef="let row" [title]="row[col.key]">
+            @if (col.key === 'activo') {
+              <span [class]="row[col.key] ? 'status-pill active' : 'status-pill inactive'">
+                {{ row[col.key] ? 'Activo' : 'Inactivo' }}
+              </span>
+            } @else {
+              {{ row[col.key] }}
+            }
+          </td>
+        </ng-container>
+      }
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef class="actions">Acciones</th>
+        <td mat-cell *matCellDef="let row" class="actions">
+          
+          @if (showViewAction) {
+            <button mat-icon-button 
+                    class="btn-view" 
+                    matTooltip="Ver detalles" 
+                    (click)="view(row); $event.stopPropagation()">
+              <mat-icon style="color: #00f2ff;">visibility</mat-icon>
+            </button>
+          }
+
+          @if (canEdit()) {
+            <button mat-icon-button 
+                    class="btn-edit" 
+                    matTooltip="Editar" 
+                    (click)="edit(row); $event.stopPropagation()">
+              <mat-icon>edit</mat-icon>
+            </button>
+          }
+
+          @if (canDelete()) {
+            <button mat-icon-button 
+                    class="btn-delete" 
+                    matTooltip="Eliminar" 
+                    (click)="remove(row); $event.stopPropagation()">
+              <mat-icon>delete</mat-icon>
+            </button>
+          }
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns()"></tr>
+      
+      <tr mat-row 
+          *matRowDef="let row; columns: displayedColumns(); let i = index"
+          [class.row-selected]="i === selectedIndex()"
+          [class.is-inactive]="row.activo === false"
+          (click)="selectedIndex.set(i)"
+          (dblclick)="canEdit() ? edit(row) : null">
+      </tr>
+
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" [attr.colspan]="displayedColumns().length">
+          <div class="no-results-container">
+            <mat-icon>search_off</mat-icon>
+            <p>No se encontraron resultados para "{{ filters()['global'] || '' }}"</p>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <mat-paginator
+    [length]="total()"
+    [pageIndex]="page()"
+    [pageSize]="pageSize()"
+    [pageSizeOptions]="[10, 25, 50]"
+    (page)="onPage($event)">
+  </mat-paginator>
+
+</div>

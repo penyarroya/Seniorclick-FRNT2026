@@ -1,0 +1,586 @@
+// @use 'variables' as v;
+
+// /* ==========================================================================
+//    0. CONFIGURACIÓN DEL HOST (Tokens & Material Overrides)
+//    ========================================================================== */
+// :host {
+//   display: flex;
+//   flex-direction: column;
+//   width: 100%;
+//   height: 100vh; 
+//   overflow: hidden;
+//   background-color: #0f172a;
+
+//   /* --- TOKENS DE COLORES --- */
+//   --mdc-filled-text-field-container-color: rgba(15, 23, 42, 0.5);
+//   --mdc-filled-text-field-input-text-color: #ffffff;
+  
+//   // Etiquetas (Labels)
+//   --mdc-filled-text-field-label-text-color: #94a3b8;
+//   --mdc-filled-text-field-focus-label-text-color: #{v.$brand-neon};
+//   --mdc-filled-text-field-focus-active-indicator-color: #{v.$brand-neon};
+  
+//   // Errores
+//   --mat-form-field-error-text-color: #ff5252;
+
+//   /* --- CONTROL DE PLACEHOLDERS (Evita solapamiento) --- */
+//   // 1. Inicialmente invisibles para no chocar con la etiqueta en el centro
+//   --mdc-filled-text-field-placeholder-text-color: transparent;
+//   --mat-select-placeholder-text-color: transparent;
+
+//   // 2. Aparecen suavemente solo en el foco (cuando la etiqueta ya subió)
+//   --mdc-filled-text-field-focus-placeholder-text-color: rgba(255, 255, 255, 0.5);
+
+//   /* --- LAYOUT --- */
+//   app-maintenance-layout { 
+//     flex: 1; 
+//     display: flex; 
+//     flex-direction: column; 
+//   }
+// }
+
+// /* ==========================================================================
+//    1. DETALLES DE CELDAS (TABLA)
+//    ========================================================================== */
+// .user-name {
+//   font-weight: 600;
+//   color: v.$brand-neon;
+// }
+
+// .truncate-text {
+//   display: block;
+//   max-width: 450px;
+//   white-space: nowrap;
+//   overflow: hidden;
+//   text-overflow: ellipsis;
+//   color: #cbd5e1;
+//   font-style: italic;
+//   font-size: 0.9rem;
+// }
+
+// /* ==========================================================================
+//    2. MODALES (Optimizado para Formulario Reactivo)
+//    ========================================================================== */
+// .modal-overlay {
+//   position: fixed;
+//   inset: 0;
+//   background: rgba(0, 0, 0, 0.85);
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   z-index: 2000;
+//   backdrop-filter: blur(8px);
+// }
+
+// .modal-content {
+//   background: #1f2a38;
+//   padding: 2.5rem; // Unificado a 2.5rem
+//   border-radius: 16px;
+//   width: 750px;
+//   max-width: 95vw;
+//   border: 1px solid rgba(v.$brand-neon, 0.3);
+//   box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
+//   display: flex;
+//   flex-direction: column;
+//   animation: slideUp 0.3s ease-out;
+
+//   .modal-header {
+//     display: flex;
+//     justify-content: space-between;
+//     align-items: center;
+//     margin-bottom: 1.5rem;
+//     border-bottom: 1px solid rgba(v.$brand-neon, 0.1);
+//     padding-bottom: 0.8rem;
+
+//     h3 {
+//       margin: 0;
+//       color: white;
+//       display: flex;
+//       align-items: center;
+//       gap: 0.75rem;
+//       text-transform: uppercase;
+//       letter-spacing: 1.5px;
+//       font-weight: 700;
+//       mat-icon { color: v.$brand-neon; font-size: 24px; }
+//     }
+
+//     button { color: #94a3b8; transition: color 0.2s; &:hover { color: #fff; } }
+//   }
+
+//   .info-grid {
+//     display: grid;
+//     grid-template-columns: 1fr 1fr;
+//     gap: 1.5rem;
+//     margin-bottom: 1rem;
+//   }
+  
+//   .content-view {
+//   margin-top: 0.5rem;
+//   .full-width { width: 100%; }
+  
+//   textarea {
+//     min-height: 200px;
+//     font-family: 'Fira Code', monospace;
+//     line-height: 1.6;
+//     background: rgba(0, 0, 0, 0.2);
+//     color: #cbd5e1 !important;
+//     border: 1px solid #334155;
+//     border-radius: 8px;
+//     padding: 1rem;
+    
+//     // 1. Placeholder invisible mientras la etiqueta está en el centro
+//     &::placeholder {
+//       color: rgba(255, 255, 255, 0.5) !important;
+//       opacity: 0; 
+//       transition: opacity 0.2s ease;
+//     }
+
+//     // 2. Solo aparece cuando el usuario hace clic (Foco)
+//     // En este momento la mat-label sube y deja espacio libre
+//     &:focus::placeholder {
+//       opacity: 1;
+//     }
+//   }
+// }
+
+// // 3. Opcional: Aplicar la misma lógica a los inputs pequeños (Autor y Página)
+// mat-form-field {
+//   input::placeholder {
+//     opacity: 0;
+//     transition: opacity 0.2s ease;
+//   }
+//   &.mat-form-field-should-float input::placeholder {
+//     opacity: 1;
+//   }
+// }
+
+
+//   /* Scrollbar */
+//   &::-webkit-scrollbar { width: 6px; }
+//   &::-webkit-scrollbar-thumb {
+//     background: rgba(v.$brand-neon, 0.2);
+//     border-radius: 10px;
+//   }
+// }
+
+// /* ==========================================================================
+//    3. ACCIONES DEL MODAL (FOOTER)
+//    ========================================================================== */
+// .modal-footer {
+//   display: flex;
+//   justify-content: flex-end;
+//   align-items: center;
+//   gap: 1rem;
+//   margin-top: 2rem;
+//   padding-top: 1.5rem;
+//   border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+//   button {
+//     text-transform: uppercase;
+//     font-weight: 700;
+//     letter-spacing: 0.5px;
+//     padding: 0.8rem 1.6rem;
+//     border-radius: 8px; // Unificado a 8px
+//     transition: all 0.2s ease;
+//     height: auto;
+//     line-height: normal;
+
+//     &.btn-save {
+//       background: v.$brand-neon;
+//       color: #000;
+//       &:hover:not(:disabled) {
+//         transform: translateY(-2px);
+//         box-shadow: 0 5px 15px rgba(v.$brand-neon, 0.4);
+//       }
+//     }
+
+//     &.btn-cancel {
+//       background: rgba(255, 255, 255, 0.05);
+//       color: #fff;
+//       border: 1px solid rgba(255, 255, 255, 0.2);
+//       &:hover { border-color: #fff; background: rgba(255, 255, 255, 0.1); }
+//     }
+//   }
+
+//   // Botón de eliminar o advertencia a la izquierda
+//   .btn-warn { margin-right: auto; color: #ff5252; border: 1px solid rgba(255, 82, 82, 0.3); }
+// }
+
+// /* ==========================================================================
+//    4. CLASES DE ESTADO Y ANIMACIONES
+//    ========================================================================== */
+// .text-neon {
+//   color: v.$brand-neon !important;
+//   text-shadow: 0 0 5px rgba(v.$brand-neon, 0.3);
+//   font-weight: 700;
+// }
+
+// @keyframes slideUp {
+//   from { opacity: 0; transform: translateY(20px); }
+//   to { opacity: 1; transform: translateY(0); }
+// }
+
+
+// // Selecciona todos los inputs y textareas dentro de los campos de Material
+// .mat-mdc-form-field {
+//   input::placeholder, 
+//   textarea::placeholder {
+//     opacity: 0 !important;
+//     transition: opacity 0.2s ease;
+//   }
+
+//   // Cuando el campo tiene el foco o ya tiene texto, la etiqueta sube 
+//   // y ahí es seguro mostrar el placeholder
+//   &.mat-focused, &.mat-form-field-should-float {
+//     input::placeholder, 
+//     textarea::placeholder {
+//       opacity: 1 !important;
+//     }
+//   }
+// }
+
+
+
+@use 'variables' as v;
+
+/* ==========================================================================
+   0. CONFIGURACIÓN DEL HOST (Tokens & Material Overrides)
+   ========================================================================== */
+:host {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh; 
+  overflow: hidden;
+  background-color: #0f172a;
+
+  /* --- TOKENS DE COLORES --- */
+  --mdc-filled-text-field-container-color: rgba(15, 23, 42, 0.5);
+  --mdc-filled-text-field-input-text-color: #ffffff;
+  
+  // Etiquetas (Labels)
+  --mdc-filled-text-field-label-text-color: #94a3b8;
+  --mdc-filled-text-field-focus-label-text-color: #{v.$brand-neon};
+  --mdc-filled-text-field-focus-active-indicator-color: #{v.$brand-neon};
+  
+  // Errores
+  --mat-form-field-error-text-color: #ff5252;
+
+  /* --- CONTROL DE PLACEHOLDERS --- */
+  --mdc-filled-text-field-placeholder-text-color: transparent;
+  --mat-select-placeholder-text-color: transparent;
+  --mdc-filled-text-field-focus-placeholder-text-color: rgba(255, 255, 255, 0.5);
+
+  /* --- LAYOUT --- */
+  app-maintenance-layout { 
+    flex: 1; 
+    display: flex; 
+    flex-direction: column; 
+  }
+
+  &::-webkit-scrollbar { width: 6px; }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(v.$brand-neon, 0.2);
+    border-radius: 10px;
+  }
+}
+
+/* ==========================================================================
+   1. DETALLES DE CELDAS (TABLA)
+   ========================================================================== */
+.user-name {
+  font-weight: 600;
+  color: v.$brand-neon;
+}
+
+.truncate-text {
+  display: block;
+  max-width: 450px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #cbd5e1;
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
+/* ==========================================================================
+   2. MODALES
+   ========================================================================== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  backdrop-filter: blur(8px);
+}
+
+.modal-content {
+  background: #1f2a38;
+  padding: 2.5rem; 
+  border-radius: 16px;
+  width: 750px;
+  max-width: 95vw;
+  max-height: 90vh; 
+  border: 1px solid rgba(v.$brand-neon, 0.3);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  animation: slideUp 0.3s ease-out;
+
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(v.$brand-neon, 0.1);
+    padding-bottom: 0.8rem;
+
+    h3 {
+      margin: 0;
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-weight: 700;
+      mat-icon { color: v.$brand-neon; font-size: 24px; }
+    }
+
+    button { color: #94a3b8; transition: color 0.2s; &:hover { color: #fff; } }
+  }
+
+  .modal-body {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 8px;
+
+    &::-webkit-scrollbar { width: 4px; }
+    &::-webkit-scrollbar-thumb {
+      background: rgba(v.$brand-neon, 0.3);
+      border-radius: 10px;
+    }
+  }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 1rem;
+
+    .slug-field {
+      grid-column: span 2; 
+      input {
+        font-family: 'Fira Code', monospace;
+        color: v.$brand-neon !important;
+        font-size: 0.85rem;
+        letter-spacing: 0.5px;
+      }
+      &.mat-mdc-form-field {
+        background: rgba(v.$brand-neon, 0.03);
+        border-radius: 4px;
+      }
+    }
+  }
+  
+  .content-view {
+    margin-top: 0.5rem;
+    .full-width { width: 100%; }
+    textarea {
+      min-height: 200px;
+      font-family: 'Fira Code', monospace;
+      line-height: 1.6;
+      background: rgba(0, 0, 0, 0.2);
+      color: #cbd5e1 !important;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 1rem;
+    }
+  }
+}
+
+/* ==========================================================================
+   3. ACCIONES DEL MODAL (FOOTER)
+   ========================================================================== */
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  button {
+    text-transform: uppercase;
+    font-weight: 700;
+    padding: 0.8rem 1.6rem;
+    border-radius: 8px; 
+    transition: all 0.2s ease;
+  }
+  .btn-warn { margin-right: auto; color: #ff5252; border: 1px solid rgba(255, 82, 82, 0.3); }
+}
+
+/* ==========================================================================
+   4. CLASES DE ESTADO Y ANIMACIONES
+   ========================================================================== */
+.text-neon {
+  color: v.$brand-neon !important;
+  text-shadow: 0 0 5px rgba(v.$brand-neon, 0.3);
+  font-weight: 700;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================================================================
+   5. AUTOCOMPLETE PANEL & OPCIONES (UNIFICADO MATERIAL 20)
+   ========================================================================== */
+// Usamos ::v-deep para asegurar que llegue al overlay de Material
+::v-deep .mat-mdc-autocomplete-panel {
+  background: #1f2a38 !important;
+  border: 1px solid rgba(v.$brand-neon, 0.3) !important;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5) !important;
+
+  // Estilo para las opciones normales
+  .mat-mdc-option {
+    .mdc-list-item__primary-text { 
+      color: #ffffff !important; 
+    }
+    
+    &:hover:not(.mdc-list-item--disabled) { 
+      background: rgba(v.$brand-neon, 0.1) !important; 
+    }
+
+    // --- ESTILO ESPECÍFICO PARA "SIN RESULTADOS" ---
+    &.no-results-option {
+      // Tokens de Material 20 para forzar el color en estado disabled
+      --mdc-list-list-item-disabled-label-text-color: #ffffff;
+      --mdc-list-list-item-disabled-state-layer-opacity: 0;
+      
+      background-color: #263345 !important; // Fondo sólido más claro
+      opacity: 1 !important;                // Evita que se vea "apagado"
+      height: auto !important;
+      min-height: 70px !important;
+      cursor: default !important;
+      border-left: 4px solid #ff5252 !important;
+
+      // Forzamos a los contenedores internos de MDC
+      .mdc-list-item__content,
+      .mdc-list-item__primary-text {
+        opacity: 1 !important;
+        color: #ffffff !important;
+      }
+
+      .no-results-content {
+        display: flex !important;
+        align-items: center !important;
+        gap: 12px !important;
+        width: 100%;
+
+        mat-icon {
+          color: #ff5252 !important;
+          font-size: 28px !important;
+          width: 28px !important;
+          height: 28px !important;
+          opacity: 1 !important;
+        }
+
+        .text-wrapper {
+          display: flex !important;
+          flex-direction: column !important;
+          line-height: 1.3 !important;
+          
+          .main-text {
+            color: #ffffff !important; // Blanco Puro
+            font-size: 0.95rem !important;
+            font-weight: 800 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.5px !important;
+          }
+
+          .sub-text {
+            color: v.$brand-neon !important; // Tu color neón
+            font-size: 0.85rem !important;
+            font-weight: 600 !important;
+            font-style: italic !important;
+          }
+        }
+      }
+
+      // Evita que el hover oscurezca el mensaje
+      &:hover {
+        background-color: #263345 !important;
+      }
+    }
+  }
+}
+
+// Estilos para la fila de opción normal (se mantiene fuera del deep si prefieres)
+.option-row {
+  display: flex;
+  align-items: center;
+  color: #ffffff;
+
+  small {
+    opacity: 0.7;
+    margin-left: 8px;
+    font-size: 0.85em;
+    color: v.$brand-neon;
+  }
+}
+
+
+/* ==========================================================================
+   6. AJUSTE DE TAMAÑO PARA MENSAJE "SIN RESULTADOS"
+   ========================================================================== */
+::v-deep .no-results-option.mat-mdc-option {
+  // Aumentamos la altura mínima para que el texto grande no se vea apretado
+  min-height: 85px !important; 
+  background-color: #263345 !important;
+  opacity: 1 !important;
+
+  .no-results-content {
+    padding: 10px 16px !important;
+
+    mat-icon {
+      font-size: 32px !important; // Icono más grande
+      width: 32px !important;
+      height: 32px !important;
+    }
+
+    .text-wrapper {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 4px !important;
+      max-width: 100%; // Evita que el contenedor se desborde
+      overflow: hidden;
+
+      .main-text {
+        color: #ffffff !important;
+        font-size: 1.15rem !important;
+        font-weight: 900 !important;
+        letter-spacing: 1.2px !important;
+        display: block !important;
+      }
+
+      .sub-text {
+        color: v.$brand-neon !important; // O #00ffcc si estás en global
+        font-size: 1.2rem !important;    // VALOR CORREGIDO Y AUMENTADO
+        font-weight: 700 !important;
+        
+        /* --- CONFIGURACIÓN PARA TRUNCAR EL TEXTO --- */
+        display: block !important;
+        max-width: 300px !important;     // Límite de ancho
+        white-space: nowrap !important;  // No permite saltos de línea
+        overflow: hidden !important;     // Oculta lo que sobra
+        text-overflow: ellipsis !important; // Pone los "..."
+      }
+    }
+  }
+}

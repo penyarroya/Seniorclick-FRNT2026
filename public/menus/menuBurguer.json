@@ -1,0 +1,12 @@
+[
+  {
+    "label": "Configuración",
+    "icon": "settings",
+    "items": [
+      { "label": "Modo oscuro", "icon": "dark_mode", "action": "toggleDarkMode" },
+      { "label": "Mostrar/Ocultar Features", "icon": "view_module", "action": "toggleFeatures" },
+      { "label": "Mostrar/Ocultar Hero", "icon": "image", "action": "toggleHero" },
+      { "label": "Cerrar sesión", "icon": "logout", "action": "logout" }
+    ]
+  }
+]

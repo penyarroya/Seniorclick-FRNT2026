@@ -1,0 +1,38 @@
+[
+  {
+    "label": "Mi Aprendizaje",
+    "icon": "school",
+    "items": [
+      { "label": "Explorar Proyectos", "icon": "explore", "route": "/inicio/proyectos" },
+      { "label": "Mis Inscripciones", "icon": "auto_stories", "route": "/inicio/mis-inscripciones" },
+      { "label": "Biblioteca de Recursos", "icon": "local_library", "roles": ["SUPER_ADMIN"], "route": "/inicio/mis-resources" }
+    ]
+  },
+  {
+    "label": "Comunidad",
+    "icon": "groups",
+    "items": [
+      { "label": "Mis Aportaciones", "icon": "edit_document", "route": "/mis-paginas" },
+      { "label": "Consultas y Dudas", "icon": "question_answer", "route": "/consultas" }
+    ]
+  },
+  {
+    "label": "Gestión Académica",
+    "icon": "admin_panel_settings",
+    "roles": ["SUPER_ADMIN"],
+    "items": [
+      { "label": "Panel de Proyectos", "icon": "dashboard", "route": "/inicio/proyectos" },
+      { "label": "Estructura Curricular", "icon": "account_tree", "route": "/proyectos/temas" },
+      { "label": "Editor de Contenidos", "icon": "border_color", "route": "/proyectos/materiales" }
+    ]
+  },
+  {
+    "label": "Seniorclick",
+    "icon": "corporate_fare",
+    "items": [
+      { "label": "Quiénes Somos", "icon": "info", "route": "/inicio/acerca-de" },
+      { "label": "Ayuda y FAQ", "icon": "help_center", "route": "/ayuda/faq" },
+      { "label": "Contacto", "icon": "contact_mail", "route": "/institucion/contacto" }
+    ]
+  }
+]

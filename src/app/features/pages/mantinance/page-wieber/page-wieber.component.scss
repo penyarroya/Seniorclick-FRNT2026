@@ -1,0 +1,198 @@
+// @use 'variables' as v;
+
+// #resource-viewer-container {
+//   display: flex; 
+//   flex-direction: column;
+//   width: 100%;
+//   background: #111;
+//   border-radius: 20px;
+//   overflow: hidden;
+//   margin-bottom: 2rem;
+//   border: 1px solid rgba(255, 255, 255, 0.15);
+//   box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+  
+//   // Ajuste: Si existe en el DOM (gracias al @if), queremos que se vea.
+//   // La animación de "crecimiento" es mejor hacerla desde una altura mínima.
+//   min-height: 750px; 
+//   height: 750px;
+//   opacity: 1;
+//   margin-top: 10px;
+//   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+
+//   .visor-header {
+//     background: #1a1a1a;
+//     padding: 12px 25px;
+//     display: flex;
+//     justify-content: space-between;
+//     align-items: center;
+//     border-bottom: 1px solid rgba(255,255,255,0.1);
+
+//     .title-box {
+//       display: flex; 
+//       align-items: center; 
+//       gap: 10px;
+//       color: #00f3ff; // Cambia v.$brand-neon por tu color si da error
+      
+//       mat-icon { 
+//         font-size: 20px;
+//         width: 20px;
+//         height: 20px;
+//       }
+//     }
+
+//     .btn-close-visor {
+//       background: #ff4444; 
+//       color: white; 
+//       border: none;
+//       padding: 6px 15px; 
+//       border-radius: 6px; 
+//       cursor: pointer;
+//       font-weight: bold;
+//       transition: background 0.2s;
+
+//       &:hover { background: #cc0000; }
+//     }
+//   }
+
+//   iframe {
+//     width: 100%;
+//     height: 100%; // Importante para que ocupe el flex:1
+//     flex: 1;
+//     border: none;
+//     background: #fff;
+//   }
+// }
+
+// /* Resto de la interfaz */
+// .dimmed {
+//   opacity: 0.1;
+//   filter: blur(10px);
+//   pointer-events: none;
+//   transition: all 0.5s ease;
+// }
+
+// .viewer-container {
+//   padding: 40px;
+//   background: #080c14;
+//   min-height: 100vh;
+// }
+
+// .main-layout {
+//   display: grid;
+//   grid-template-columns: 1fr 350px;
+//   gap: 40px;
+// }
+
+@use 'variables' as v;
+
+/* Contenedor del Visor con Animación de Entrada */
+#resource-viewer-container {
+  display: flex; 
+  flex-direction: column;
+  width: 100%;
+  background: #111;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+  
+  /* Altura y animación */
+  height: 750px;
+  animation: slideDown 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+
+  .visor-header {
+    background: #1a1a1a;
+    padding: 12px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+
+    .title-box {
+      display: flex; 
+      align-items: center; 
+      gap: 10px;
+      color: #00f3ff; 
+      
+      mat-icon { 
+        font-size: 20px;
+        width: 20px;
+        height: 20px;
+      }
+    }
+
+    .btn-close-visor {
+      background: rgba(255, 68, 68, 0.2); 
+      color: #ff4444; 
+      border: 1px solid #ff4444;
+      padding: 6px 15px; 
+      border-radius: 6px; 
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.2s;
+
+      &:hover { 
+        background: #ff4444; 
+        color: white;
+      }
+    }
+  }
+
+  iframe {
+    width: 100%;
+    flex: 1; /* Esto obliga al iframe a llenar todo el espacio restante del flex */
+    border: none;
+    background: #fff;
+  }
+}
+
+/* Animación para que no aparezca de golpe */
+@keyframes slideDown {
+  from {
+    height: 0;
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    height: 750px;
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Efecto de enfoque/desenfoque para el contenido del fondo */
+.dimmed {
+  opacity: 0.3; /* Un poco más alto para que se pueda intuir el texto */
+  filter: blur(8px);
+  pointer-events: none; /* Evita que el usuario haga clic en la barra lateral mientras ve un video */
+  user-select: none;
+  transition: all 0.5s ease;
+}
+
+/* Estructura Base */
+.viewer-container {
+  padding: 40px;
+  background: #080c14;
+  min-height: 100vh;
+  color: white;
+}
+
+.main-layout {
+  display: grid;
+  grid-template-columns: 1fr 350px;
+  gap: 40px;
+  transition: all 0.5s ease;
+
+  /* Responsivo: Si la pantalla es pequeña, la barra lateral baja */
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.content-body {
+  background: rgba(255, 255, 255, 0.03);
+  padding: 30px;
+  border-radius: 15px;
+  line-height: 1.6;
+}

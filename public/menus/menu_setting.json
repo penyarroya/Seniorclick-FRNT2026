@@ -1,0 +1,41 @@
+[
+  {
+    "label": "Configuración",
+    "icon": "settings",
+    "submenu": [
+      { 
+        "label": "Mi Perfil", 
+        "icon": "person_outline", 
+        "route": "/perfil", 
+        "description": "Gestionar datos personales" 
+      },
+      { 
+        "label": "Preferencias", 
+        "icon": "tune", 
+        "action": "toggleSettings",
+        "description": "Idioma y notificaciones"
+      },
+      { "divider": true },
+      { 
+        "label": "Mantenimiento", 
+        "icon": "build", 
+        "roles": ["SUPER_ADMIN"], 
+        "route": "/maintenance", 
+        "open": false 
+      },
+      { 
+        "label": "Consola de Administración", 
+        "icon": "admin_panel_settings", 
+        "roles": ["SUPER_ADMIN"], 
+        "route": "/admin/dashboard" 
+      },
+      { "divider": true, "roles": ["SUPER_ADMIN"] },
+      
+      { 
+        "label": "Cerrar sesión", 
+        "icon": "logout", 
+        "action": "logout" 
+      }
+    ]
+  }
+]

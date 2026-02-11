@@ -1,0 +1,17 @@
+[
+  { "label": "Dashboard", "route": "/dashboard", "icon": "dashboard" },
+  { "label": "Quienes somos", "route": "/main/about", "icon": "dashboard" },
+  { "label": "Usuarios", "icon": "people", "roles": ["admin","SUPER_ADMIN"],
+    "submenu": [
+      { "label": "Listado", "route": "/main/usuarios/listado", "icon": "list" },
+      { "label": "Crear Usuario", "route": "/main/usuarios/nuevo", "icon": "person_add" },
+      { "label": "Editar Usuario", "route": "/main/usuarios/new", "icon": "person_add" }
+    ]
+  },
+  { "label": "Reportes", "route": "/reportes", "icon": "bar_chart", "roles": ["admin","USER","SUPER_ADMIN"] },
+  { "label": "Configuración", "route": "/configuracion", "icon": "settings", "roles": ["admin","SUPER_ADMIN"] },
+  { "type": "separator" },
+  { "label": "Cerrar sesión", "route": "/logout", "icon": "logout" }
+]
+
+

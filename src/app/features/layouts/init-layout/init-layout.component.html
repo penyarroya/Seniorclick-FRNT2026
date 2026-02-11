@@ -1,0 +1,215 @@
+<!-- <mat-sidenav-container class="sidenav-container">
+
+  <mat-sidenav #drawer mode="over" class="mobile-sidenav" fixedInViewport="true">
+    <ul>
+      <li *ngFor="let menu of burguerMenuItems()" class="menu-item-wrapper" [class.open]="menu.open">
+
+        <button mat-button class="menu-item"
+                (click)="menu.items?.length ? toggleSubMenu(menu, burguerMenuItems()) : onMenuClick(menu)">
+          <mat-icon *ngIf="menu.icon">{{ menu.icon }}</mat-icon>
+          {{ menu.label }}
+          <span *ngIf="menu.items?.length">{{ menu.open ? '▲' : '▼' }}</span>
+        </button>
+
+        <ng-container *ngIf="menu.items?.length && menu.open">
+          <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: menu.items }"></ng-container>
+        </ng-container>
+
+      </li>
+    </ul>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <div class="app-layout-container">
+
+      <mat-toolbar color="primary" class="main-toolbar">
+        <div class="logo-container">
+          <img src="/icon/logo.ico" class="app-logo" alt="Logo">
+          <span class="app-title">{{ institutionName() | truncate:45 }}</span>
+        </div>
+
+        <span class="spacer"></span>
+
+        <nav class="horizontal-menu">
+          <ul>
+            <li *ngFor="let menu of menuData()" class="menu-item-wrapper" [class.open]="menu.open"
+                (mouseenter)="openSubMenu(menu)" (mouseleave)="closeSubMenu(menu)">
+              <button mat-button class="menu-item"
+                      (click)="menu.items?.length ? toggleSubMenu(menu, menuData()) : onMenuClick(menu)">
+                <mat-icon *ngIf="menu.icon">{{ menu.icon }}</mat-icon>
+                {{ menu.label }}
+                <span *ngIf="menu.items?.length">{{ menu.open ? '▲' : '▼' }}</span>
+              </button>
+
+              <ng-container *ngIf="menu.items?.length && menu.open">
+                <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: menu.items }"></ng-container>
+              </ng-container>
+            </li>
+          </ul>
+        </nav>
+
+        <button mat-icon-button class="mobile-menu" (click)="onHamburgerClick($event)">
+          <mat-icon>menu</mat-icon>
+        </button>
+
+        <div class="toolbar-right">
+          <button mat-icon-button [matMenuTriggerFor]="configMenu" class="config-button">
+            <mat-icon>settings</mat-icon>
+          </button>
+
+          <mat-menu #configMenu="matMenu" xPosition="after" yPosition="below" class="custom-menu">
+            <ng-container *ngFor="let item of configMenuItems()">
+              <mat-divider *ngIf="item.divider" class="config-divider"></mat-divider>
+              <button mat-menu-item *ngIf="!item.divider" (click)="onMenuClick(item)">
+                <mat-icon *ngIf="item.icon">{{ item.icon }}</mat-icon>
+                {{ item.label }}
+              </button>
+            </ng-container>
+          </mat-menu>
+        </div>
+      </mat-toolbar>
+
+      <ng-template #recursiveList let-items>
+        <ul class="submenu">
+          <li *ngFor="let sub of items" class="menu-item-wrapper" [class.open]="sub.open">
+
+            <ng-container *ngIf="sub.divider">
+              <li class="menu-divider">
+                <mat-divider></mat-divider>
+              </li>
+            </ng-container>
+
+            <ng-container *ngIf="!sub.divider">
+              <button mat-button class="menu-item"
+                      (click)="sub.items?.length ? toggleSubMenu(sub, items) : onMenuClick(sub)">
+                <mat-icon *ngIf="sub.icon">{{ sub.icon }}</mat-icon>
+                {{ sub.label }}
+                <span *ngIf="sub.items?.length">{{ sub.open ? '▲' : '▼' }}</span>
+              </button>
+            </ng-container>
+
+            <ng-container *ngIf="sub.items?.length && sub.open">
+              <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: sub.items }"></ng-container>
+            </ng-container>
+
+          </li>
+        </ul>
+      </ng-template>
+
+      <div class="page-content">
+        <router-outlet></router-outlet>
+      </div>
+
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container> -->
+
+<mat-sidenav-container class="sidenav-container">
+
+  <mat-sidenav #drawer mode="over" class="mobile-sidenav" fixedInViewport="true">
+    <ul>
+      @for (menu of burguerMenuItems(); track $index) {
+        <li class="menu-item-wrapper" [class.open]="menu.open">
+          <button mat-button class="menu-item"
+                  (click)="menu.items?.length ? toggleSubMenu(menu, burguerMenuItems()) : onMenuClick(menu)">
+            @if (menu.icon) { <mat-icon>{{ menu.icon }}</mat-icon> }
+            {{ menu.label }}
+            @if (menu.items?.length) { <span>{{ menu.open ? '▲' : '▼' }}</span> }
+          </button>
+
+          @if (menu.items?.length && menu.open) {
+            <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: menu.items }"></ng-container>
+          }
+        </li>
+      }
+    </ul>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <div class="app-layout-container">
+
+      <mat-toolbar color="primary" class="main-toolbar">
+        <div class="logo-container">
+          <img src="/icon/logo.ico" class="app-logo" alt="Logo">
+          <span class="app-title">{{ institutionName() | truncate:45 }}</span>
+        </div>
+
+        <span class="spacer"></span>
+
+        <nav class="horizontal-menu">
+          <ul>
+            @for (menu of menuData(); track $index) {
+              <li class="menu-item-wrapper" [class.open]="menu.open"
+                  (mouseenter)="openSubMenu(menu)" (mouseleave)="closeSubMenu(menu)">
+                <button mat-button class="menu-item"
+                        (click)="menu.items?.length ? toggleSubMenu(menu, menuData()) : onMenuClick(menu)">
+                  @if (menu.icon) { <mat-icon>{{ menu.icon }}</mat-icon> }
+                  {{ menu.label }}
+                  @if (menu.items?.length) { <span>{{ menu.open ? '▲' : '▼' }}</span> }
+                </button>
+
+                @if (menu.items?.length && menu.open) {
+                  <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: menu.items }"></ng-container>
+                }
+              </li>
+            }
+          </ul>
+        </nav>
+
+        <button mat-icon-button class="mobile-menu" (click)="onHamburgerClick($event)">
+          <mat-icon>menu</mat-icon>
+        </button>
+
+        <div class="toolbar-right">
+          <button mat-icon-button [matMenuTriggerFor]="configMenu" class="config-button">
+            <mat-icon>settings</mat-icon>
+          </button>
+
+          <mat-menu #configMenu="matMenu" xPosition="after" yPosition="below" class="custom-menu">
+            @for (item of configMenuItems(); track $index) {
+              @if (item.divider) {
+                <mat-divider class="config-divider"></mat-divider>
+              } @else {
+                <button mat-menu-item (click)="onMenuClick(item)">
+                  @if (item.icon) { <mat-icon>{{ item.icon }}</mat-icon> }
+                  {{ item.label }}
+                </button>
+              }
+            }
+          </mat-menu>
+        </div>
+      </mat-toolbar>
+
+      <ng-template #recursiveList let-items>
+        <ul class="submenu">
+          @for (sub of items; track $index) {
+            <li class="menu-item-wrapper" [class.open]="sub.open">
+
+              @if (sub.divider) {
+                <li class="menu-divider">
+                  <mat-divider></mat-divider>
+                </li>
+              } @else {
+                <button mat-button class="menu-item"
+                        (click)="sub.items?.length ? toggleSubMenu(sub, items) : onMenuClick(sub)">
+                  @if (sub.icon) { <mat-icon>{{ sub.icon }}</mat-icon> }
+                  {{ sub.label }}
+                  @if (sub.items?.length) { <span>{{ sub.open ? '▲' : '▼' }}</span> }
+                </button>
+              }
+
+              @if (sub.items?.length && sub.open) {
+                <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: sub.items }"></ng-container>
+              }
+            </li>
+          }
+        </ul>
+      </ng-template>
+
+      <div class="page-content">
+        <router-outlet></router-outlet>
+      </div>
+
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

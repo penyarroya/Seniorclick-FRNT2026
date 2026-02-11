@@ -1,0 +1,72 @@
+<app-maintenance-layout
+  title="Gestión de Inscripciones"
+  [showViewAction]="false" 
+  [columns]="columns"
+  [service]="enrollmentService"
+  (onCreate)="createEnrollment()"
+  (onEdit)="editEnrollment($event)"  
+  (onDelete)="deleteEnrollment($event)">
+  
+  <ng-container table-column="roleInCourse">
+    <th mat-header-cell *matHeaderCellDef> Rol </th>
+    <td mat-cell *matCellDef="let element">
+      <span class="role-badge" [ngClass]="element.roleInCourse.toLowerCase()">
+        {{ element.roleInCourse }}
+      </span>
+    </td>
+  </ng-container>
+</app-maintenance-layout>
+
+<div class="modal" *ngIf="showModal">
+  <div class="modal-content">
+    <h3>{{ isEditing ? 'Editar Inscripción' : 'Nueva Inscripción' }}</h3>
+
+    <form [formGroup]="form" (ngSubmit)="saveEnrollment()">
+      
+      <div class="form-group">
+        <label>Estudiante</label>
+        <mat-form-field appearance="outline">
+          <mat-select formControlName="userId" placeholder="Seleccione un estudiante">
+            <mat-option *ngFor="let user of users" [value]="user.id">
+              {{ user.username }} <small style="opacity: 0.6;">({{ user.email }})</small>
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="form.get('userId')?.invalid">El estudiante es obligatorio</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-group">
+        <label>Proyecto / Curso</label>
+        <mat-form-field appearance="outline">
+          <mat-select formControlName="projectId" placeholder="Seleccione un proyecto">
+            <mat-option *ngFor="let project of projects" [value]="project.id">
+              {{ project.title }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="form.get('projectId')?.invalid">El proyecto es obligatorio</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-group">
+        <label>Rol asignado</label>
+        <mat-form-field appearance="outline">
+          <mat-select formControlName="roleInCourse">
+            <mat-option value="LEARNER">LEARNER</mat-option>
+            <mat-option value="MENTOR">MENTOR</mat-option>
+            <mat-option value="COLLABORATOR">COLLABORATOR</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="modal-actions">
+        <button type="submit" class="btn-save" [disabled]="form.invalid">
+          {{ isEditing ? 'Guardar Cambios' : 'Confirmar Inscripción' }}
+        </button>
+        <button type="button" class="btn-cancel" (click)="closeModal()">
+          Cancelar
+        </button>
+      </div>
+      
+    </form>
+  </div>
+</div>

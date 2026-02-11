@@ -1,0 +1,184 @@
+<div class="page-container">
+  <header class="header academic-toolbar">
+    <div class="header-nav">
+      <button mat-icon-button (click)="goBack()" class="back-btn" matTooltip="Volver">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <span class="breadcrumb-badge">Gestión de Contenido</span>
+    </div>
+
+    <div class="header-main-row">
+      <div class="title-group">
+        <h1>
+          <mat-icon class="title-icon">library_books</mat-icon>
+          Mis Recursos Académicos
+          @if (resources().length > 0) {
+            <span class="count-badge">{{ resources().length }}</span>
+          }
+        </h1>
+        <p class="subtitle">Administra los materiales multimedia y documentos de tus páginas.</p>
+      </div>
+
+      <div class="header-actions">
+        <mat-form-field appearance="outline" class="modern-search">
+          <mat-icon matPrefix>search</mat-icon>
+          <input matInput 
+                 [ngModel]="filterText()" 
+                 (ngModelChange)="filterText.set($event)" 
+                 placeholder="Buscar recurso...">
+          @if (filterText()) {
+            <button matSuffix mat-icon-button (click)="filterText.set('')">
+              <mat-icon>close</mat-icon>
+            </button>
+          }
+        </mat-form-field>
+
+        <button mat-flat-button class="add-btn" (click)="openCreateModal()">
+          <mat-icon>add</mat-icon>
+          NUEVO RECURSO
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="scroll-content">
+    <main class="main-content">
+      @if (isLoading()) {
+        <div class="loading-container">
+          <mat-spinner diameter="50"></mat-spinner>
+          <p>Cargando biblioteca de recursos...</p>
+        </div>
+      } 
+      @else {
+        <div class="resources-grid">
+          @for (res of filteredResources(); track res.id) {
+            <mat-card class="resource-card">
+              <mat-card-header>
+                <div class="header-content">
+                  <div class="type-tag" [attr.data-type]="res.type">
+                    @switch (res.type) {
+                      @case ('VIDEO') { <mat-icon>play_circle</mat-icon> }
+                      @case ('PDF') { <mat-icon>picture_as_pdf</mat-icon> }
+                      @case ('IMAGE') { <mat-icon>image</mat-icon> }
+                      @default { <mat-icon>link</mat-icon> }
+                    }
+                    {{ res.type }}
+                  </div>
+                  <mat-card-title>{{ res.title }}</mat-card-title>
+                </div>
+              </mat-card-header>
+
+              <mat-card-content>
+                <div class="resource-meta">
+                  <div class="info-item">
+                    <mat-icon>auto_stories</mat-icon>
+                    <span class="page-name-badge" [matTooltip]="getPageName(res.pageId)">
+                      Página: {{ getPageName(res.pageId) }}
+                    </span>
+                  </div>
+                  <div class="info-item">
+                    <mat-icon>sort</mat-icon>
+                    <span>Orden: {{ res.order }}</span>
+                  </div>
+                </div>
+                <p class="url-text" [matTooltip]="res.url">{{ res.url }}</p>
+              </mat-card-content>
+
+              <mat-card-actions class="card-footer">
+                <button mat-button color="warn" (click)="confirmDelete(res.id!)">
+                  <mat-icon>delete</mat-icon>
+                  ELIMINAR
+                </button>
+                <span class="spacer"></span>
+                <button mat-flat-button class="edit-btn" (click)="editResource(res)">
+                  <mat-icon>edit</mat-icon>
+                  EDITAR
+                </button>
+              </mat-card-actions>
+            </mat-card>
+          } 
+          @empty {
+            <div class="no-results-container">
+              <mat-icon class="large-icon">find_in_page</mat-icon>
+              <h3>No se encontraron recursos</h3>
+            </div>
+          }
+        </div>
+      }
+    </main>
+  </div>
+</div>
+
+@if (showModal()) {
+  <div class="modal-overlay">
+    <div class="modal-content academic-modal" [class.is-editing]="isEdit()">
+      <div class="modal-header">
+        <h3>
+          <mat-icon>{{ isEdit() ? 'edit_note' : 'add_circle' }}</mat-icon>
+          {{ isEdit() ? 'Editar' : 'Nuevo' }} Recurso Académico
+        </h3>
+        @if (isEdit()) {
+          <span class="edit-subtitle">Modificando los parámetros del recurso seleccionado</span>
+        }
+      </div>
+
+      <form [formGroup]="form" (ngSubmit)="saveResource()" class="resource-form">
+        <div class="form-scroll-area">
+          <div class="form-grid">
+            
+            <mat-form-field appearance="outline" class="full-width high-contrast-field" floatLabel="always">
+              <mat-label>Título del Recurso</mat-label>
+              <input matInput formControlName="title" placeholder="Ej: Manual de Instalación">
+              <mat-icon matSuffix>title</mat-icon>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="high-contrast-field" floatLabel="always">
+              <mat-label>Tipo de Recurso</mat-label>
+              <mat-select formControlName="type">
+                @for (type of resourceTypes; track type) {
+                  <mat-option [value]="type">{{ type }}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="high-contrast-field" floatLabel="always">
+              <mat-label>Vincular a Página</mat-label>
+              <mat-select formControlName="pageId">
+                @for (item of pagesMap() | keyvalue; track item.key) {
+                  <mat-option [value]="$any(item.key)">{{ item.value }}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width high-contrast-field" floatLabel="always">
+              <mat-label>URL del recurso</mat-label>
+              <input matInput formControlName="url" placeholder="https://ejemplo.com/archivo.pdf">
+              <mat-icon matSuffix>link</mat-icon>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="high-contrast-field" floatLabel="always">
+              <mat-label>Orden de visualización</mat-label>
+              <input matInput type="number" formControlName="order">
+              <mat-icon matSuffix>sort</mat-icon>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button mat-button type="button" (click)="closeModal()" class="cancel-btn">
+            CANCELAR
+          </button>
+          
+          <button mat-flat-button 
+                  class="add-btn" 
+                  [class.edit-mode-btn]="isEdit()"
+                  type="submit" 
+                  [disabled]="form.invalid || isLoading()">
+            <mat-icon>{{ isEdit() ? 'save' : 'add' }}</mat-icon>
+            {{ isEdit() ? 'GUARDAR CAMBIOS' : 'CREAR RECURSO' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+}

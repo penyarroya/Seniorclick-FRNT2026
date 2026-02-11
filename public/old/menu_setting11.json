@@ -1,0 +1,14 @@
+[
+  {
+    "label": "Configuración",
+    "icon": "settings",
+    "submenu": [
+      { "label": "Mantenimiento", "icon": "build", "roles": ["SUPER_ADMIN"], "action": "/maintenance", "open": false },
+      { "label": "Modo oscuro", "icon": "dark_mode",  "roles": ["USER", "SUPER_ADMIN"], "action": "toggleDarkMode" },
+      { "label": "Mostrar/Ocultar Features", "icon": "view_module",  "roles": ["USER", "SUPER_ADMIN"], "action": "toggleFeatures" },
+      { "label": "Mostrar/Ocultar Hero", "icon": "image", "roles": ["USER", "SUPER_ADMIN"], "action": "toggleHero" },
+      { "divider": true},
+      { "label": "Cerrar sesión", "icon": "logout", "action": "logout" }
+    ]
+  }
+]

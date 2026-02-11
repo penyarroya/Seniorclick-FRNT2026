@@ -1,0 +1,625 @@
+// @use 'variables' as v;
+
+// /* ==========================================================================
+//    0. Configuración del Host (Tokens Material 20 - Sin ng-deep)
+//    ========================================================================== */
+// :host {
+//   display: flex;
+//   flex-direction: column;
+//   width: 100%;
+//   height: 100vh;
+//   background-color: #121826; 
+//   color: v.$text-color;
+//   overflow: hidden;
+
+//   // TOKENS MATERIAL 20 (Sustituyen los overrides de ng-deep)
+//   --mdc-filled-text-field-container-color: #{v.$input-bg};
+//   --mdc-filled-text-field-input-text-color: #{v.$text-color};
+//   --mdc-filled-text-field-placeholder-text-color: rgba(255, 255, 255, 0.75);
+//   --mdc-filled-text-field-label-text-color: #{rgba(v.$text-color, 0.6)};
+//   --mdc-filled-text-field-focus-label-text-color: #{v.$brand-neon};
+//   --mdc-filled-text-field-focus-active-indicator-color: #{v.$brand-neon};
+//   --mdc-outlined-text-field-focus-outline-color: #{v.$brand-neon};
+  
+//   --mat-select-trigger-text-color: #{v.$text-color};
+//   --mat-select-placeholder-text-color: rgba(255, 255, 255, 0.75);
+
+//   app-maintenance-layout {
+//     flex: 1;
+//   }
+// }
+
+// /* ==========================================================================
+//    1. Modal de Edición
+//    ========================================================================== */
+// .modal {
+//   position: fixed;
+//   inset: 0;
+//   background: rgba(0, 0, 0, 0.85); 
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   z-index: 1200;
+//   backdrop-filter: blur(8px);
+
+//   .modal-content {
+//     background-color: v.$card-bg !important; 
+//     padding: 1.5rem;
+//     border-radius: 12px;
+//     width: 550px; 
+//     border: 1px solid rgba(v.$brand-neon, 0.4); 
+//     box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8);
+//     max-height: 85vh;
+//     overflow-y: auto;
+//     display: flex;
+//     flex-direction: column;
+//     position: relative;
+//     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+//     background-attachment: local !important;
+//     background-image: linear-gradient(v.$card-bg, v.$card-bg) !important;
+//     background-repeat: repeat !important; 
+
+//     &.large { width: 900px; max-width: 95vw; }
+//     &.preview-mode { 
+//       width: 98vw !important; 
+//       max-width: 1400px !important; 
+//       height: 95vh; 
+//       max-height: 95vh; 
+//     }
+
+//     h3 { 
+//       margin-bottom: 1rem;
+//       color: v.$brand-neon; 
+//       text-align: left;
+//       font-weight: 600;
+//       font-size: 1.1rem;
+//       border-bottom: 1px solid rgba(v.$brand-neon, 0.1);
+//       padding-bottom: 0.5rem;
+//     }
+
+//     /* Scrollbar (Movido aquí para evitar ng-deep) */
+//     &::-webkit-scrollbar { width: 8px; }
+//     &::-webkit-scrollbar-thumb {
+//       background: rgba(v.$brand-neon, 0.2);
+//       border-radius: 10px;
+//       &:hover { background: v.$brand-neon; }
+//     }
+//   }
+// }
+
+// /* ==========================================================================
+//    2. Contenedor de Vista Previa
+//    ========================================================================== */
+// .preview-scroll-container {
+//   flex: 1;
+//   padding: 2rem;
+//   overflow-y: auto;
+//   display: flex;
+//   justify-content: center;
+//   background: rgba(0, 0, 0, 0.1);
+//   animation: fadeIn 0.3s ease-in-out;
+
+//   app-page-preview {
+//     width: 100%;
+//     max-width: 1200px;
+//   }
+// }
+
+// /* ==========================================================================
+//    3. Formulario y Recursos
+//    ========================================================================== */
+// .form-grid {
+//   display: flex;
+//   flex-direction: column;
+//   gap: 0.8rem;
+
+//   .content-area textarea {
+//     min-height: 250px;
+//     background-color: v.$input-bg !important; 
+//     color: v.$text-color !important;
+//     font-family: 'Fira Code', monospace; 
+//     line-height: 1.5;
+//     font-size: 0.9rem;
+//     border: 1px solid rgba(255, 255, 255, 0.1) !important;
+//     caret-color: v.$brand-neon;
+//     &::placeholder { color: rgba(255, 255, 255, 0.75); }
+
+//     &:focus {
+//       border-color: v.$brand-neon !important;
+//       box-shadow: 0 0 8px rgba(v.$brand-neon, 0.2);
+//       outline: none;
+//     }
+//   }
+// }
+
+// .resources-section {
+//   margin-top: 1rem;
+//   padding: 1.2rem;
+//   background: rgba(0, 0, 0, 0.3);
+//   border-radius: 8px;
+//   border: 1px solid rgba(255, 255, 255, 0.05);
+
+//   .section-header h4 {
+//     color: v.$brand-neon;
+//     font-size: 0.9rem;
+//     text-transform: uppercase;
+//     display: flex; align-items: center; gap: 8px; margin-bottom: 1rem;
+//   }
+
+//   .resource-info-placeholder {
+//     display: flex; flex-direction: column; align-items: center; justify-content: center;
+//     padding: 1.5rem; background: rgba(v.$brand-neon, 0.02);
+//     border: 1px dashed rgba(v.$brand-neon, 0.2); border-radius: 8px;
+//     text-align: center; gap: 10px;
+
+//     mat-icon { color: v.$brand-neon; opacity: 0.5; font-size: 28px; height: 28px; width: 28px; }
+//     p { margin: 0; font-size: 0.8rem; color: rgba(v.$text-color, 0.6); }
+//   }
+
+//   .resource-quick-add {
+//     display: grid; grid-template-columns: 1.5fr 110px 2fr auto; gap: 0.6rem;
+//     padding-bottom: 1rem; border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+//     input, select {
+//       background: v.$input-bg; border: 1px solid rgba(255, 255, 255, 0.15);
+//       color: v.$text-color; padding: 8px 12px; border-radius: 4px; font-size: 0.85rem;
+//       &:focus { border-color: v.$brand-neon; outline: none; }
+//     }
+
+//     .btn-add-inline {
+//       background: v.$brand-neon; color: #000; border-radius: 4px; width: 40px; height: 38px;
+//       cursor: pointer; display: flex; align-items: center; justify-content: center; border: none;
+//       transition: all 0.2s;
+//       &:hover:not(:disabled) { transform: scale(1.05); box-shadow: 0 0 10px rgba(v.$brand-neon, 0.5); }
+//       &:disabled { opacity: 0.3; cursor: not-allowed; }
+//     }
+//   }
+
+//   .resource-item {
+//     background: rgba(255, 255, 255, 0.03); border-left: 3px solid v.$brand-neon;
+//     margin-top: 0.5rem; padding: 0.6rem 0.8rem;
+//     display: flex; justify-content: space-between; align-items: center; border-radius: 4px;
+//     transition: all 0.2s;
+
+//     &:hover { background: rgba(255, 255, 255, 0.06); transform: translateX(5px); }
+
+//     .res-type {
+//       font-size: 0.65rem; font-weight: bold; padding: 2px 6px; border-radius: 4px;
+//       background: rgba(0,0,0,0.3); border: 1px solid transparent;
+
+//       &[data-type="PDF"] { color: #ff4b5c; border-color: rgba(#ff4b5c, 0.2); }
+//       &[data-type="VIDEO"] { color: #00d2ff; border-color: rgba(#00d2ff, 0.2); }
+//       &[data-type="IMAGE"] { color: v.$success-color; border-color: rgba(v.$success-color, 0.2); }
+//       &[data-type="LINK"] { color: v.$brand-neon; border-color: rgba(v.$brand-neon, 0.2); }
+//     }
+//   }
+
+//   .empty-resources {
+//     text-align: center; padding: 1rem; font-size: 0.8rem;
+//     color: rgba(v.$text-color, 0.3); font-style: italic;
+//   }
+// }
+
+// /* ==========================================================================
+//    4. Acciones Finales (Alineación Perfecta)
+//    ========================================================================== */
+// .modal-actions {
+//   display: flex;
+//   flex-direction: row;      // Forzamos fila
+//   align-items: center;      // Centrado vertical
+//   justify-content: space-between; // Empuja el primer hijo a la izquierda y el resto a la derecha
+  
+//   margin-top: 1.2rem;
+//   padding: 1.2rem 1.5rem;
+//   background-color: v.$card-bg; 
+//   position: sticky;
+//   bottom: -1.5rem; 
+//   margin: 1.5rem -1.5rem -1.5rem -1.5rem;
+//   border-top: 1px solid rgba(255, 255, 255, 0.1);
+//   z-index: 20;
+
+//   // Botón individual de la izquierda (Vista Previa)
+//   .btn-preview {
+//     background: rgba(v.$brand-neon, 0.1);
+//     color: v.$brand-neon;
+//     border: 1px solid v.$brand-neon;
+//     padding: 0.7rem 1.5rem;
+//     border-radius: 8px;
+//     font-weight: 700;
+//     text-transform: uppercase;
+//     cursor: pointer;
+//     display: flex;
+//     align-items: center;
+//     gap: 8px;
+//     font-size: 0.85rem;
+//     transition: all 0.2s ease;
+//     white-space: nowrap;
+
+//     &:hover:not(:disabled) { 
+//       background: v.$brand-neon; 
+//       color: #000; 
+//     }
+//     &:disabled { opacity: 0.3; cursor: not-allowed; }
+//   }
+
+//   // Contenedor de la derecha (Cancelar + Guardar)
+//   .main-actions {
+//     display: flex;          // Los botones internos también en fila
+//     align-items: center;
+//     gap: 1rem;              // Espacio entre Cancelar y Guardar
+
+//     button {
+//       padding: 0.7rem 1.5rem;
+//       border-radius: 8px;
+//       font-weight: 700;
+//       text-transform: uppercase;
+//       cursor: pointer;
+//       border: none;
+//       display: flex;
+//       align-items: center;
+//       gap: 8px;
+//       font-size: 0.85rem;
+//       transition: all 0.2s ease;
+//       white-space: nowrap;
+
+//       &.btn-save {
+//         background: v.$brand-neon;
+//         color: #000;
+//         &:hover:not(:disabled) { 
+//           box-shadow: 0 0 15px rgba(v.$brand-neon, 0.4); 
+//           transform: translateY(-1px); 
+//         }
+//         &:disabled { opacity: 0.5; }
+//       }
+
+//       &.btn-cancel {
+//         background: rgba(255, 255, 255, 0.05);
+//         color: v.$text-color;
+//         border: 1px solid rgba(255, 255, 255, 0.2);
+//         &:hover { 
+//           background: rgba(255, 255, 255, 0.1); 
+//           border-color: #fff; 
+//         }
+//       }
+//     }
+//   }
+// }
+
+// /* ==========================================================================
+//    6. Animaciones
+//    ========================================================================== */
+// @keyframes fadeIn {
+//   from { opacity: 0; transform: translateY(10px); }
+//   to { opacity: 1; transform: translateY(0); }
+// }
+
+// /* ==========================================================================
+//    7. Adaptabilidad (Responsive)
+//    ========================================================================== */
+// @media (max-width: 768px) {
+//   .modal .modal-content {
+//     width: 100% !important;
+//     height: 92vh !important;
+//     border-radius: 20px 20px 0 0;
+//   }
+
+//   .modal-actions {
+//     flex-direction: column;
+//     padding: 1.2rem;
+//     button {
+//       width: 100%;
+//       justify-content: center;
+//       &.btn-preview { margin-right: 0; order: 3; }
+//       &.btn-save { order: 1; }
+//       &.btn-cancel { order: 2; }
+//     }
+//   }
+
+//   .resource-quick-add { grid-template-columns: 1fr !important; }
+// }
+
+@use 'variables' as v;
+
+/* ==========================================================================
+   0. Configuración del Host (Tokens Material 20)
+   ========================================================================== */
+:host {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  background-color: #121826; 
+  color: v.$text-color;
+  overflow: hidden;
+
+  --mdc-filled-text-field-container-color: #{v.$input-bg};
+  --mdc-filled-text-field-input-text-color: #{v.$text-color};
+  --mdc-filled-text-field-placeholder-text-color: rgba(255, 255, 255, 0.75);
+  --mdc-filled-text-field-label-text-color: #{rgba(v.$text-color, 0.6)};
+  --mdc-filled-text-field-focus-label-text-color: #{v.$brand-neon};
+  --mdc-filled-text-field-focus-active-indicator-color: #{v.$brand-neon};
+  --mdc-outlined-text-field-focus-outline-color: #{v.$brand-neon};
+  
+  --mat-select-trigger-text-color: #{v.$text-color};
+  --mat-select-placeholder-text-color: rgba(255, 255, 255, 0.75);
+
+  app-maintenance-layout {
+    flex: 1;
+  }
+}
+
+/* ==========================================================================
+   1. Modal de Edición
+   ========================================================================== */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85); 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1200;
+  backdrop-filter: blur(8px);
+
+  .modal-content {
+    background-color: v.$card-bg !important; 
+    padding: 1.5rem;
+    border-radius: 12px;
+    width: 550px; 
+    border: 1px solid rgba(v.$brand-neon, 0.4); 
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8);
+    max-height: 85vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+    background-attachment: local !important;
+    background-image: linear-gradient(v.$card-bg, v.$card-bg) !important;
+    background-repeat: repeat !important; 
+
+    &.large { width: 900px; max-width: 95vw; }
+    &.preview-mode { 
+      width: 98vw !important; 
+      max-width: 1400px !important; 
+      height: 95vh; 
+      max-height: 95vh; 
+    }
+
+    h3 { 
+      margin-bottom: 1rem;
+      color: v.$brand-neon; 
+      text-align: left;
+      font-weight: 600;
+      font-size: 1.1rem;
+      border-bottom: 1px solid rgba(v.$brand-neon, 0.1);
+      padding-bottom: 0.5rem;
+    }
+
+    &::-webkit-scrollbar { width: 8px; }
+    &::-webkit-scrollbar-thumb {
+      background: rgba(v.$brand-neon, 0.2);
+      border-radius: 10px;
+      &:hover { background: v.$brand-neon; }
+    }
+  }
+}
+
+/* ==========================================================================
+   2. Contenedor de Vista Previa
+   ========================================================================== */
+.preview-scroll-container {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+  display: flex;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.3s ease-in-out;
+
+  app-page-preview {
+    width: 100%;
+    max-width: 1200px;
+  }
+}
+
+/* ==========================================================================
+   3. Formulario y Recursos (Editor Optimizado)
+   ========================================================================== */
+.form-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+
+  .content-area textarea {
+    min-height: 350px; // Aumentado para ver mejor el HTML largo
+    background-color: v.$input-bg !important; 
+    color: v.$text-color !important;
+    font-family: 'Fira Code', 'Consolas', monospace; 
+    line-height: 1.6;
+    font-size: 0.9rem;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    caret-color: v.$brand-neon;
+    resize: vertical; 
+
+    &::placeholder { color: rgba(255, 255, 255, 0.4); }
+
+    // Scrollbar neon para el área de texto
+    &::-webkit-scrollbar { width: 6px; }
+    &::-webkit-scrollbar-thumb {
+      background: rgba(v.$brand-neon, 0.3);
+      border-radius: 10px;
+    }
+
+    &:focus {
+      border-color: v.$brand-neon !important;
+      box-shadow: 0 0 8px rgba(v.$brand-neon, 0.2);
+      outline: none;
+    }
+  }
+}
+
+// Estilos de advertencia para el mat-hint del contador
+.color-warning { color: #ffca28 !important; text-shadow: 0 0 5px rgba(255, 202, 40, 0.2); }
+.color-error   { color: #ff5252 !important; font-weight: bold; text-shadow: 0 0 5px rgba(255, 82, 82, 0.2); }
+
+.resources-section {
+  margin-top: 1rem;
+  padding: 1.2rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+
+  .section-header h4 {
+    color: v.$brand-neon;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    display: flex; align-items: center; gap: 8px; margin-bottom: 1rem;
+  }
+
+  .resource-info-placeholder {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 1.5rem; background: rgba(v.$brand-neon, 0.02);
+    border: 1px dashed rgba(v.$brand-neon, 0.2); border-radius: 8px;
+    text-align: center; gap: 10px;
+    mat-icon { color: v.$brand-neon; opacity: 0.5; font-size: 28px; height: 28px; width: 28px; }
+    p { margin: 0; font-size: 0.8rem; color: rgba(v.$text-color, 0.6); }
+  }
+
+  .resource-quick-add {
+    display: grid; grid-template-columns: 1.5fr 110px 2fr auto; gap: 0.6rem;
+    padding-bottom: 1rem; border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+    input, select {
+      background: v.$input-bg; border: 1px solid rgba(255, 255, 255, 0.15);
+      color: v.$text-color; padding: 8px 12px; border-radius: 4px; font-size: 0.85rem;
+      &:focus { border-color: v.$brand-neon; outline: none; }
+    }
+
+    .btn-add-inline {
+      background: v.$brand-neon; color: #000; border-radius: 4px; width: 40px; height: 38px;
+      cursor: pointer; display: flex; align-items: center; justify-content: center; border: none;
+      transition: all 0.2s;
+      &:hover:not(:disabled) { transform: scale(1.05); box-shadow: 0 0 10px rgba(v.$brand-neon, 0.5); }
+      &:disabled { opacity: 0.3; cursor: not-allowed; }
+    }
+  }
+
+  .resource-item {
+    background: rgba(255, 255, 255, 0.03); border-left: 3px solid v.$brand-neon;
+    margin-top: 0.5rem; padding: 0.6rem 0.8rem;
+    display: flex; justify-content: space-between; align-items: center; border-radius: 4px;
+    transition: all 0.2s;
+    &:hover { background: rgba(255, 255, 255, 0.06); transform: translateX(5px); }
+
+    .res-type {
+      font-size: 0.65rem; font-weight: bold; padding: 2px 6px; border-radius: 4px;
+      background: rgba(0,0,0,0.3); border: 1px solid transparent;
+      &[data-type="PDF"] { color: #ff4b5c; border-color: rgba(#ff4b5c, 0.2); }
+      &[data-type="VIDEO"] { color: #00d2ff; border-color: rgba(#00d2ff, 0.2); }
+      &[data-type="IMAGE"] { color: v.$success-color; border-color: rgba(v.$success-color, 0.2); }
+      &[data-type="LINK"] { color: v.$brand-neon; border-color: rgba(v.$brand-neon, 0.2); }
+    }
+  }
+
+  .empty-resources {
+    text-align: center; padding: 1rem; font-size: 0.8rem;
+    color: rgba(v.$text-color, 0.3); font-style: italic;
+  }
+}
+
+/* ==========================================================================
+   4. Acciones Finales
+   ========================================================================== */
+.modal-actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1.2rem;
+  padding: 1.2rem 1.5rem;
+  background-color: v.$card-bg; 
+  position: sticky;
+  bottom: -1.5rem; 
+  margin: 1.5rem -1.5rem -1.5rem -1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  z-index: 20;
+
+  .btn-preview {
+    background: rgba(v.$brand-neon, 0.1);
+    color: v.$brand-neon;
+    border: 1px solid v.$brand-neon;
+    padding: 0.7rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: flex; align-items: center; gap: 8px; font-size: 0.85rem;
+    transition: all 0.2s ease;
+    &:hover:not(:disabled) { background: v.$brand-neon; color: #000; }
+  }
+
+  .main-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    button {
+      padding: 0.7rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 700;
+      text-transform: uppercase;
+      cursor: pointer;
+      border: none;
+      display: flex; align-items: center; gap: 8px; font-size: 0.85rem;
+      transition: all 0.2s ease;
+
+      &.btn-save {
+        background: v.$brand-neon; color: #000;
+        &:hover:not(:disabled) { box-shadow: 0 0 15px rgba(v.$brand-neon, 0.4); transform: translateY(-1px); }
+        &:disabled { opacity: 0.5; }
+      }
+
+      &.btn-cancel {
+        background: rgba(255, 255, 255, 0.05); color: v.$text-color;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        &:hover { background: rgba(255, 255, 255, 0.1); border-color: #fff; }
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   6. Animaciones
+   ========================================================================== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================================================================
+   7. Adaptabilidad (Responsive)
+   ========================================================================== */
+@media (max-width: 768px) {
+  .modal .modal-content {
+    width: 100% !important;
+    height: 92vh !important;
+    border-radius: 20px 20px 0 0;
+  }
+
+  .modal-actions {
+    flex-direction: column;
+    padding: 1.2rem;
+    button {
+      width: 100%;
+      justify-content: center;
+      &.btn-preview { margin-right: 0; order: 3; }
+      &.btn-save { order: 1; }
+      &.btn-cancel { order: 2; }
+    }
+  }
+
+  .resource-quick-add { grid-template-columns: 1fr !important; }
+}

@@ -1,0 +1,325 @@
+ <!-- <mat-toolbar color="primary" class="mat-elevation-z6 main-toolbar">
+
+  <div class="logo-container">
+    <img src="/icon/logo.ico" alt="Logo" class="app-logo">
+    <span class="app-title small-text">{{ institutionName() | truncate:45}}</span>
+  </div>
+
+  <span class="spacer"></span>
+
+  <div class="toolbar-right">
+   
+    <ng-template #recursiveList let-items>
+      <ul class="submenu">
+        <li *ngFor="let item of items" class="menu-item-wrapper" [class.open]="item.open">
+
+          <div *ngIf="item.divider" class="menu-separator"></div>
+
+          <button *ngIf="!item.divider" mat-button class="menu-item"
+                  (click)="toggleSubMenu(item, items)">
+            <mat-icon *ngIf="item.icon">{{ item.icon }}</mat-icon>
+            {{ item.label }}
+            <span *ngIf="item.items?.length">{{ item.open ? '▲' : '▼' }}</span>
+          </button>
+
+          <ng-container *ngIf="item.items?.length && item.open">
+            <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: item.items }"></ng-container>
+          </ng-container>
+
+        </li>
+      </ul>
+    </ng-template>
+
+
+    <nav class="horizontal-menu">
+      <ul>
+        <li *ngFor="let menu of menuData()" class="menu-item-wrapper" [class.open]="menu.open"
+            (mouseenter)="openSubMenu(menu)" (mouseleave)="closeSubMenu(menu)">
+
+          <button mat-button class="menu-item"
+                  (click)="toggleSubMenu(menu, menuData())">
+            <mat-icon *ngIf="menu.icon">{{ menu.icon }}</mat-icon>
+            {{ menu.label }}
+            <span *ngIf="menu.items?.length">{{ menu.open ? '▲' : '▼' }}</span>
+          </button>
+
+          <ng-container *ngIf="menu.items?.length && menu.open">
+            <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: menu.items }">
+            </ng-container>
+          </ng-container>
+
+        </li>
+      </ul>
+    </nav>
+
+    <button mat-icon-button [matMenuTriggerFor]="configMenu" #mobileMenuTrigger="matMenuTrigger"
+            matTooltip="Configuración" class="config-button"
+            (menuOpened)="closeMobileSidenav()" (closed)="onSettingsMenuClosed()">
+      <mat-icon>settings</mat-icon>
+    </button>
+
+    <button mat-icon-button class="mobile-menu" (click)="onHamburgerClick($event)">
+      <mat-icon>menu</mat-icon>
+    </button>
+
+    <mat-menu #configMenu="matMenu" class="custom-menu">
+      <ng-container *ngFor="let item of configMenuItems()">
+        <mat-divider *ngIf="item.divider" [ngClass]="item.dividerClass || 'menu-separator'"></mat-divider>
+        <button mat-menu-item *ngIf="!item.divider" (click)="onMenuClick(item)">
+          <mat-icon *ngIf="item.icon">{{ item.icon }}</mat-icon>
+          {{ item.label }}
+        </button>
+      </ng-container>
+    </mat-menu>
+
+  </div>
+</mat-toolbar>
+
+<mat-sidenav-container class="mobile-sidenav-container">
+  <mat-sidenav #drawer mode="over" class="mobile-sidenav">
+    <div class="mobile-menu-header">
+      <h3>Menú</h3>
+    </div>
+
+    <nav class="mobile-horizontal-menu">
+      <ul>
+        <ng-container *ngFor="let menu of menuData()">
+          <li class="menu-item-wrapper" [class.open]="menu.open">
+
+            <button mat-button class="menu-item"
+                    (click)="toggleSubMenu(menu, menuData())">
+              <mat-icon *ngIf="menu.icon">{{ menu.icon }}</mat-icon>
+              {{ menu.label }}
+              <span *ngIf="menu.items?.length">{{ menu.open ? '▲' : '▼' }}</span>
+            </button>
+
+            <ng-container *ngIf="menu.items?.length && menu.open">
+              <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: menu.items }">
+              </ng-container>
+            </ng-container>
+
+          </li>
+        </ng-container>
+
+        <ng-container *ngFor="let burger of burguerMenuItems()">
+          <li class="menu-item-wrapper" [class.open]="burger.open">
+
+            <button mat-button class="menu-item"
+                    (click)="toggleSubMenu(burger, burguerMenuItems())">
+              <mat-icon *ngIf="burger.icon">{{ burger.icon }}</mat-icon>
+              {{ burger.label }}
+              <span *ngIf="burger.items?.length">{{ burger.open ? '▲' : '▼' }}</span>
+            </button>
+
+            <ng-container *ngIf="burger.items?.length && burger.open">
+              <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: burger.items }">
+              </ng-container>
+            </ng-container>
+
+          </li>
+        </ng-container>
+
+      </ul>
+    </nav>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <div class="page-content">
+      <section class="hero" *ngIf="showHero()">
+        <div class="hero-content">
+          <div class="hero-text">
+            <h1>SeniorClick</h1>
+            <p>La Universilab ciudadana.</p>
+            <button mat-raised-button color="accent">Comenzar</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="features" *ngIf="showFeatures()">
+        <mat-card class="feature-card" *ngFor="let feature of features">
+          <mat-icon>{{ feature.icon }}</mat-icon>
+          <h3>{{ feature.title }}</h3>
+          <p>{{ feature.desc }}</p>
+        </mat-card>
+      </section>
+
+      <section class="stats">
+        <mat-card class="stat-card" *ngFor="let stat of stats">
+          <h2>{{ stat.value }}</h2>
+          <p>{{ stat.label }}</p>
+        </mat-card>
+      </section>
+    </div>
+
+    <button mat-fab color="accent" class="fab-button" (click)="toggleHero()" matTooltip="Mostrar/Ocultar Hero">
+      <mat-icon>arrow_upward</mat-icon>
+    </button>
+  </mat-sidenav-content>
+</mat-sidenav-container> -->  
+
+
+<mat-sidenav-container class="mobile-sidenav-container">
+
+  <!-- SIDENAV -->
+  <mat-sidenav #drawer mode="over" class="mobile-sidenav">
+    <div class="mobile-menu-header"><h3>Menú</h3></div>
+    <nav class="mobile-horizontal-menu">
+      <ul>
+        <ng-container *ngFor="let menu of menuData()">
+          <li class="menu-item-wrapper" [class.open]="menu.open">
+            <button mat-button class="menu-item"
+                    [routerLink]="menu.route"
+                    routerLinkActive="active"
+                    (click)="toggleSubMenu(menu, menuData())">
+              <mat-icon *ngIf="menu.icon">{{ menu.icon }}</mat-icon>
+              {{ menu.label }}
+              <span *ngIf="menu.items?.length">{{ menu.open ? '▲' : '▼' }}</span>
+            </button>
+            <ng-container *ngIf="menu.items?.length && menu.open">
+              <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: menu.items }"></ng-container>
+            </ng-container>
+          </li>
+        </ng-container>
+
+        <ng-container *ngFor="let burger of burguerMenuItems()">
+          <li class="menu-item-wrapper" [class.open]="burger.open">
+            <button mat-button class="menu-item"
+                    [routerLink]="burger.route"
+                    routerLinkActive="active"
+                    (click)="toggleSubMenu(burger, burguerMenuItems())">
+              <mat-icon *ngIf="burger.icon">{{ burger.icon }}</mat-icon>
+              {{ burger.label }}
+              <span *ngIf="burger.items?.length">{{ burger.open ? '▲' : '▼' }}</span>
+            </button>
+            <ng-container *ngIf="burger.items?.length && burger.open">
+              <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: burger.items }"></ng-container>
+            </ng-container>
+          </li>
+        </ng-container>
+      </ul>
+    </nav>
+  </mat-sidenav>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <mat-sidenav-content>
+
+    <!-- TOOLBAR FIJA ARRIBA -->
+    <mat-toolbar color="primary" class="mat-elevation-z6 main-toolbar">
+      <div class="logo-container">
+        <img src="/icon/logo.ico" alt="Logo" class="app-logo">
+        <span class="app-title small-text">{{ institutionName() | truncate:45 }}</span>
+      </div>
+
+      <span class="spacer"></span>
+
+      <div class="toolbar-right">
+        <!-- TEMPLATE RECURSIVO PARA SUBMENÚS -->
+        <ng-template #recursiveList let-items>
+          <ul class="submenu">
+            <li *ngFor="let item of items" class="menu-item-wrapper" [class.open]="item.open">
+              <div *ngIf="item.divider" class="menu-separator"></div>
+              <button *ngIf="!item.divider" mat-button class="menu-item"
+                      [routerLink]="item.route"
+                      routerLinkActive="active"
+                      (click)="toggleSubMenu(item, items)">
+                <mat-icon *ngIf="item.icon">{{ item.icon }}</mat-icon>
+                {{ item.label }}
+                <span *ngIf="item.items?.length">{{ item.open ? '▲' : '▼' }}</span>
+              </button>
+              <ng-container *ngIf="item.items?.length && item.open">
+                <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: item.items }"></ng-container>
+              </ng-container>
+            </li>
+          </ul>
+        </ng-template>
+
+        <!-- MENÚ HORIZONTAL PRINCIPAL -->
+        <nav class="horizontal-menu">
+          <ul>
+            <li *ngFor="let menu of menuData()" class="menu-item-wrapper" [class.open]="menu.open"
+                (mouseenter)="openSubMenu(menu)" (mouseleave)="closeSubMenu(menu)">
+              <button mat-button class="menu-item"
+                      [routerLink]="menu.route"
+                      routerLinkActive="active"
+                      (click)="toggleSubMenu(menu, menuData())">
+                <mat-icon *ngIf="menu.icon">{{ menu.icon }}</mat-icon>
+                {{ menu.label }}
+                <span *ngIf="menu.items?.length">{{ menu.open ? '▲' : '▼' }}</span>
+              </button>
+              <ng-container *ngIf="menu.items?.length && menu.open">
+                <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: menu.items }"></ng-container>
+              </ng-container>
+            </li>
+          </ul>
+        </nav>
+
+        <!-- BOTONES DE CONFIGURACIÓN Y MENÚ MÓVIL -->
+        <button mat-icon-button [matMenuTriggerFor]="configMenu" #mobileMenuTrigger="matMenuTrigger"
+                matTooltip="Configuración" class="config-button"
+                (menuOpened)="closeMobileSidenav()" (closed)="onSettingsMenuClosed()">
+          <mat-icon>settings</mat-icon>
+        </button>
+
+        <button mat-icon-button class="mobile-menu" (click)="onHamburgerClick($event)">
+          <mat-icon>menu</mat-icon>
+        </button>
+
+        <mat-menu #configMenu="matMenu" class="custom-menu">
+          <ng-container *ngFor="let item of configMenuItems()">
+            <mat-divider *ngIf="item.divider" [ngClass]="item.dividerClass || 'menu-separator'"></mat-divider>
+            <button mat-menu-item *ngIf="!item.divider" [routerLink]="item.route" routerLinkActive="active" (click)="onMenuClick(item)">
+              <mat-icon *ngIf="item.icon">{{ item.icon }}</mat-icon>
+              {{ item.label }}
+            </button>
+          </ng-container>
+        </mat-menu>
+      </div>
+    </mat-toolbar>
+
+    <!-- PAGE CONTENT SCROLLABLE -->
+    <div class="page-content">
+
+      <!-- HERO opcional -->
+      <section class="hero" *ngIf="showHero()">
+        <div class="hero-content">
+          <div class="hero-text">
+            <h1>SeniorClick</h1>
+            <p>La Universilab ciudadana.</p>
+            <button mat-raised-button color="accent">Comenzar</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ROUTER-OUTLET DE LAS RUTAS HIJAS -->
+      <div class="page-routes">
+        <!-- NUEVO CONTENEDOR CON PADDING PARA QUE QUEDEN DEBAJO DE LA TOOLBAR -->
+        <div class="router-padding">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+
+      <!-- FEATURES y STATS -->
+      <section class="features" *ngIf="showFeatures()">
+        <mat-card class="feature-card" *ngFor="let feature of features">
+          <mat-icon>{{ feature.icon }}</mat-icon>
+          <h3>{{ feature.title }}</h3>
+          <p>{{ feature.desc }}</p>
+        </mat-card>
+      </section>
+
+      <section class="stats">
+        <mat-card class="stat-card" *ngFor="let stat of stats">
+          <h2>{{ stat.value }}</h2>
+          <p>{{ stat.label }}</p>
+        </mat-card>
+      </section>
+    </div>
+
+    <!-- BOTÓN FAB -->
+    <button mat-fab color="accent" class="fab-button" (click)="toggleHero()" matTooltip="Mostrar/Ocultar Hero">
+      <mat-icon>arrow_upward</mat-icon>
+    </button>
+
+  </mat-sidenav-content>
+
+</mat-sidenav-container>

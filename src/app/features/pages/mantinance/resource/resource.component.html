@@ -1,0 +1,74 @@
+<app-maintenance-layout
+  title="Gestión de Recursos"
+  [showViewAction]="false" 
+  [columns]="columns"
+  [service]="resourceService"
+  (onCreate)="createResource()"
+  (onEdit)="editResource($event)"
+  (onDelete)="deleteResource($event)"
+></app-maintenance-layout>
+
+<div class="modal" *ngIf="showModal">
+  <div class="modal-content">
+    <h3>{{ isEditing ? 'Editar Recurso' : 'Nuevo Recurso' }}</h3>
+
+    <form [formGroup]="form" (ngSubmit)="saveResource()">
+      
+      <div class="form-group">
+        <label>Título del Recurso</label>
+        <mat-form-field appearance="outline">
+          <input matInput formControlName="title" placeholder="Ej: Video Tutorial de Java">
+          <mat-error *ngIf="form.get('title')?.invalid">El título es obligatorio</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-group">
+        <label>Tipo de Recurso</label>
+        <mat-form-field appearance="outline">
+          <mat-select formControlName="type">
+            <mat-option value="IMAGE">Imagen</mat-option>
+            <mat-option value="VIDEO">Video</mat-option>
+            <mat-option value="PDF">Documento PDF</mat-option>
+            <mat-option value="LINK">Enlace Externo</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="form-group">
+        <label>URL o Enlace</label>
+        <mat-form-field appearance="outline">
+          <input matInput formControlName="url" placeholder="https://ejemplo.com/archivo.pdf">
+          <mat-error *ngIf="form.get('url')?.invalid">La URL es obligatoria</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-group">
+        <label>Página Asociada</label>
+        <mat-form-field appearance="outline">
+          <mat-select formControlName="pageId" placeholder="Seleccione una página">
+            <mat-option *ngFor="let p of pages" [value]="p.id">
+              {{ p.title }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="form.get('pageId')?.invalid">Debe asignar una página</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-group">
+        <label>Orden de visualización</label>
+        <mat-form-field appearance="outline">
+          <input matInput type="number" formControlName="order" placeholder="0">
+        </mat-form-field>
+      </div>
+
+      <div class="modal-actions">
+        <button type="submit" class="btn-save" [disabled]="form.invalid">
+          {{ isEditing ? 'Guardar Cambios' : 'Crear Recurso' }}
+        </button>
+        <button type="button" class="btn-cancel" (click)="closeModal()">
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

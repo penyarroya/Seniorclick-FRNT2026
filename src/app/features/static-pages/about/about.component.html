@@ -1,0 +1,38 @@
+ <div class="about-wrapper" (click)="goBack()">
+  <article class="about-card" (click)="$event.stopPropagation()">
+    
+    <header>
+      <img src="/icon/universidad.png" alt="Logo SeniorClick" class="logo" />
+      <h1>SeniorClick</h1>
+      <p class="tagline">La UniversiLab Ciudadana</p>
+    </header>
+
+    <section class="content">
+      <p class="intro">
+        Un espacio donde <strong>aprender es colaborar</strong>. Acercamos la cultura digital 
+        fomentando la curiosidad y el intercambio entre personas.
+      </p>
+
+      <ul class="features">
+        <li><mat-icon>auto_stories</mat-icon> Aprende haciendo, no memorizando.</li>
+        <li><mat-icon>groups</mat-icon> Proyectos reales en comunidad.</li>
+        <li><mat-icon>verified_user</mat-icon> Privacidad y seguridad paso a paso.</li>
+      </ul>
+    </section>
+
+    <footer>
+      <div class="contact-line">
+        <mat-icon>place</mat-icon> <span>Cornellà de Llobregat</span>
+      </div>
+      <div class="contact-line">
+        <mat-icon>mail</mat-icon> 
+        <a href="mailto:correo@seniorclick.org">correo@seniorclick.org</a>
+      </div>
+    </footer>
+
+    <button class="btn-close" (click)="goBack()" aria-label="Cerrar">
+      <mat-icon>close</mat-icon>
+    </button>
+    
+  </article>
+</div>

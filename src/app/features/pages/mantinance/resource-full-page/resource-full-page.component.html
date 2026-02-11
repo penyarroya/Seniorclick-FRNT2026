@@ -1,0 +1,121 @@
+<!-- <div class="full-page-viewer">
+  <header class="viewer-nav">
+    <button (click)="goBack()" class="btn-back">
+      <mat-icon>arrow_back</mat-icon>
+      Volver al aula
+    </button>
+    
+    <h1>{{ title }}</h1>
+
+    <button (click)="toggleFullscreen()" class="btn-fullscreen">
+      <mat-icon>{{ isFullscreen ? 'fullscreen_exit' : 'fullscreen' }}</mat-icon>
+      <span>{{ isFullscreen ? 'Salir' : 'Pantalla completa' }}</span>
+    </button>
+  </header>
+
+  <main class="iframe-container">
+    @if (isLoading()) {
+      <div class="loading-state">
+        <mat-icon class="spinner">sync</mat-icon>
+        <p>Cargando recurso...</p>
+      </div>
+    } 
+    
+    @else if (safeUrl) {
+      @if (isMp4) {
+        <video 
+          controls 
+          autoplay 
+          class="video-player"
+          [src]="rawUrl">
+        </video>
+      } @else {
+        <iframe [src]="safeUrl" allowfullscreen></iframe>
+      }
+    } 
+    
+    @else {
+      <div class="error-state">
+        <mat-icon>error_outline</mat-icon>
+        <p>No se pudo cargar el recurso</p>
+      </div>
+    }
+  </main>
+</div> -->
+
+
+
+
+<div class="full-page-viewer">
+  <header class="viewer-nav">
+    <button (click)="goBack()" class="btn-back">
+      <mat-icon>arrow_back</mat-icon>
+      Volver al aula
+    </button>
+    
+    <h1>{{ title }}</h1>
+
+    <button (click)="toggleFullscreen()" class="btn-fullscreen">
+      <mat-icon>{{ isFullscreen ? 'fullscreen_exit' : 'fullscreen' }}</mat-icon>
+      <span>{{ isFullscreen ? 'Salir' : 'Pantalla completa' }}</span>
+    </button>
+  </header>
+
+  <main class="iframe-container">
+    @if (safeUrl) {
+      <div class="content-wrapper" [class.hidden]="isLoading()">
+        @if (isMp4) {
+          <video controls autoplay class="video-player" 
+            (loadeddata)="onResourceLoad()" 
+            (error)="handleResourceError()"> 
+            <source [src]="safeUrl" type="video/mp4">
+          </video>
+        } @else {
+          <iframe 
+            [src]="safeUrl" 
+            (load)="onResourceLoad()"
+            (error)="handleResourceError()" 
+            allow="autoplay; fullscreen; encrypted-media"
+            style="width:100%; height:100%; border:none;"
+            loading="eager">
+          </iframe>
+        }
+      </div>
+    } 
+
+    @if (isLoading()) {
+      <div class="loading-state">
+        <mat-icon class="spinner">refresh</mat-icon> 
+        <p>Cargando recurso...</p>
+      </div>
+    } 
+
+    @if (showExternalLinkHint()) {
+      <div class="broken-link-alert" [@fadeSlide]>
+        <mat-icon>warning</mat-icon>
+        <div class="alert-content">
+          <p class="alert-title">¿No puedes ver el documento?</p>
+          <p class="alert-subtitle">El visor puede tardar o el enlace ser privado.</p>
+          
+          <a [href]="rawUrl" target="_blank" class="btn-external-alert">
+            <mat-icon>open_in_new</mat-icon>
+            <span>Abrir enlace original</span>
+          </a>
+        </div>
+
+        <button class="btn-close-hint" (click)="showExternalLinkHint.set(false)">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+    }
+    
+    @if (!safeUrl && !isLoading()) {
+      <div class="error-state">
+        <mat-icon>link_off</mat-icon>
+        <p>No se pudo generar el acceso al recurso.</p>
+      </div>
+    }
+  </main>
+</div>
+
+

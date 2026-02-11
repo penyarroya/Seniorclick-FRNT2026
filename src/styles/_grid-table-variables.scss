@@ -1,0 +1,33 @@
+// ============================
+// Colores específicos para GridTable
+// ============================
+$grid-bg: #ffffff;
+$grid-header-bg: #fafafa;
+$grid-header-text: #333;
+$grid-row-hover: rgba(25, 118, 210, 0.08);
+$grid-row-selected: rgba(25, 118, 210, 0.15);
+$grid-row-border: #1976d2;
+
+// ============================
+// Acciones
+// ============================
+$grid-btn-editar: #4CAF50;
+$grid-btn-eliminar: #F44336;
+$grid-btn-activar: #2196F3;
+
+// ============================
+// Filas alternadas
+// ============================
+$grid-row-even: #fafafa;
+$grid-row-odd: #ffffff;
+
+// ============================
+// Mensajes de “no data”
+// ============================
+$grid-no-data-color: #ed1708;
+$grid-no-data-bg: #fff;
+
+// ============================
+// Checkbox
+// ============================
+$grid-checkbox-unchecked: #d86812;

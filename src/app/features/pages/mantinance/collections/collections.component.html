@@ -1,0 +1,47 @@
+<app-maintenance-layout
+  title="Gestión de Colecciones"
+  [showViewAction]="false" 
+  [columns]="columns"
+  [service]="collectionService"
+  (onCreate)="createCollection()"
+  (onEdit)="editCollection($event)"
+  (onDelete)="deleteCollection($event)"
+></app-maintenance-layout>
+
+<div class="modal" *ngIf="showModal">
+  <div class="modal-content">
+    <h3>{{ isEditing ? 'Editar Colección' : 'Nueva Colección' }}</h3>
+
+    <form [formGroup]="form" (ngSubmit)="saveCollection()">
+      
+      <div class="form-group">
+        <label>Nombre de la Colección</label>
+        <mat-form-field appearance="outline">
+          <input matInput formControlName="name" placeholder="Ej: Fundamentos de Java">
+          <mat-error *ngIf="form.get('name')?.invalid">El nombre es obligatorio</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-group">
+        <label>Proyecto Destino</label>
+        <mat-form-field appearance="outline">
+          <mat-select formControlName="projectId" placeholder="Seleccione un proyecto">
+            <mat-option *ngFor="let project of projects" [value]="project.id">
+              {{ project.title }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="form.get('projectId')?.invalid">Debe asignar un proyecto</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="modal-actions">
+        <button type="submit" class="btn-save" [disabled]="form.invalid">
+          {{ isEditing ? 'Guardar Cambios' : 'Crear Colección' }}
+        </button>
+        <button type="button" class="btn-cancel" (click)="closeModal()">
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

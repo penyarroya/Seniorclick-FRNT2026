@@ -1,0 +1,67 @@
+[
+  {
+    "label": "Institución",
+    "icon": "corporate_fare",
+    "open": false,
+    "items": [
+      { "label": "Sobre Seniorclick", "icon": "info", "route": "/inicio/acerca-de", "open": false },
+      { "label": "Misión y Acción", "icon": "flag", "route": "/institucion/mision", "open": false },
+      { "label": "Equipo", "icon": "group", "route": "/institucion/equipo", "open": false },
+      { "label": "Contacto", "icon": "contact_mail", "route": "/institucion/contacto", "open": false }
+    ]
+  },
+  {
+    "label": "Mi Aprendizaje",
+    "icon": "school",
+    "open": false,
+    "items": [
+      { "label": "Explorar Proyectos", "icon": "explore", "route": "/proyectos", "open": false },
+      { "label": "Mis Inscripciones", "icon": "auto_stories", "route": "/inscripciones", "open": false },
+      { "label": "Biblioteca Digital", "icon": "local_library", "route": "/contenidos/biblioteca", "open": false },
+      { "label": "Recursos Abiertos", "icon": "folder_open", "route": "/contenidos/recursos-abiertos", "open": false }
+    ]
+  },
+  {
+    "label": "Mi Espacio",
+    "icon": "account_circle",
+    "open": false,
+    "items": [
+      { "label": "Mi Perfil", "icon": "person", "route": "/perfil", "open": false },
+      { "label": "Mis Contribuciones", "icon": "article", "route": "/mis-paginas", "open": false },
+      { "label": "Mis Consultas", "icon": "question_answer", "route": "/consultas", "open": false }
+    ]
+  },
+  {
+    "label": "Gestión Académica",
+    "icon": "settings_suggest",
+    "roles": ["SUPER_ADMIN"],
+    "open": false,
+    "items": [
+      { "label": "Mantenimiento General", "icon": "build", "route": "/maintenance", "open": false },
+      { "label": "Configurar Proyectos", "icon": "add_box", "route": "/proyectos/crear", "open": false },
+      { "label": "Estructura (Temas/Sub)", "icon": "account_tree", "route": "/proyectos/temas", "open": false },
+      { "label": "Editor de Materiales", "icon": "edit_note", "route": "/proyectos/materiales", "open": false },
+      { "label": "Gestión de Colecciones", "icon": "collections_bookmark", "route": "/contenidos/colecciones", "open": false }
+    ]
+  },
+  {
+    "label": "Ayuda y Soporte",
+    "icon": "help_outline",
+    "open": false,
+    "items": [
+      { "label": "Guía del Alumno", "icon": "menu_book", "route": "/ayuda/guias", "open": false },
+      { "label": "Preguntas Frecuentes", "icon": "quiz", "route": "/ayuda/faq", "open": false }
+    ]
+  },
+  {
+    "label": "Configuración",
+    "icon": "settings",
+    "open": false,
+    "items": [
+      { "label": "Modo oscuro", "icon": "dark_mode", "action": "toggleDarkMode" },
+      { "label": "Personalizar Vista", "icon": "view_module", "action": "toggleFeatures" },
+      { "divider": true },
+      { "label": "Cerrar sesión", "icon": "logout", "action": "logout" } 
+    ]
+  }
+]

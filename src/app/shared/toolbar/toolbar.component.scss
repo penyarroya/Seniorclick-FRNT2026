@@ -1,0 +1,432 @@
+// /* =========================
+//    Toolbar principal
+// ========================= */
+// .toolbar {
+//   position: fixed;
+//   top: 0;
+//   left: 0;
+//   right: 0;
+//   z-index: 100;
+//   height: 50px;
+//   min-height: 50px;
+//   background-color: #154f9f;
+//   color: #fff;
+//   box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+//   border-bottom: 2px solid #1e88e5;
+//   display: flex;
+//   align-items: center;
+//   padding: 0 8px;
+// }
+
+// /* =========================
+//    Bloque logo + texto
+// ========================= */
+// .logo-text {
+//   display: flex;
+//   align-items: center;
+//   margin-right: auto; /* empuja el bloque derecho a la derecha */
+//   gap: 6px;           /* espacio entre logo y texto */
+// }
+
+// .logo {
+//   height: 38px;       
+//   width: auto;
+//   border-radius: 50%;
+// }
+
+// .logo-label {
+//   font-weight: 700;
+//   font-size: 18px;
+//   background: linear-gradient(90deg, #ffd700, #ff8c00); 
+//   background-clip: text;
+//   -webkit-background-clip: text;
+//   -webkit-text-fill-color: transparent;
+//   color: transparent;
+// }
+
+// /* =========================
+//    Bloque derecha: título + login
+// ========================= */
+// .right-group {
+//   display: flex;
+//   align-items: center;      
+//   justify-content: center;  
+//   margin-left: auto;        
+//   margin-right: 18px;
+//   gap: 8px;
+//   margin-top: 0;           /* sin margen superior */
+// }
+
+// /* Título con degradado igual que .logo-label */
+// .right-group .title {
+//   font-size: 18px;
+//   font-weight: 700;
+//   letter-spacing: 0.5px;
+//   background: linear-gradient(90deg, #ffd700, #ff8c00); 
+//   background-clip: text;
+//   -webkit-background-clip: text;
+//   -webkit-text-fill-color: transparent;
+//   color: transparent;
+//   line-height: 40px;
+// }
+
+// /* Iconos estándar (menú y perfil) */
+// .mat-icon {
+//   color: #ffca28;
+//   width: 28px;
+//   height: 28px;
+// }
+
+// /* Icono de login más grande, con hover */
+// button[mat-icon-button] mat-icon.login-icon {
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   width: 32px;
+//   height: 32px;
+//   font-size: 36px !important; /* más grande */
+//   color: #ff4d4d;             /* rojo brillante */
+//   transition: transform 0.2s ease, color 0.2s ease;
+//   position: relative;
+//   top: -4px;                  /* ajuste vertical fino */
+// }
+
+// button[mat-icon-button] mat-icon.login-icon:hover {
+//   transform: scale(1.2);
+//   color: #32cd32;             /* verde brillante */
+// }
+
+// /* =========================
+//    Carrusel
+// ========================= */
+// .carousel-control {
+//   width: 28px;
+//   height: 28px;
+//   font-size: 18px;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   background: rgba(0,0,0,0.3);
+//   border: none;
+//   border-radius: 50%;
+//   color: #ffca28;
+//   cursor: pointer;
+//   margin: 0 4px;
+//   transition: background 0.3s;
+
+//   &:hover {
+//     background: rgba(0,0,0,0.5);
+//   }
+// }
+
+// /* =========================
+//    Nombre de usuario
+// ========================= */
+// .user-name {
+//   font-weight: 500;
+//   margin-right: 8px;
+// }
+
+
+
+
+
+
+// .logout-btn-pill {
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;    /* centrado horizontal */
+//   gap: 8px;
+
+//   padding: 6px 18px;
+//   border-radius: 999px;
+//   font-weight: 600;
+//   cursor: pointer;
+
+//   background: rgba(255, 255, 255, 0.15);
+//   color: #ffca28 !important;
+//   transition: background 0.25s ease, color 0.25s ease;
+
+//   mat-icon {
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;  /* centra el contenido del icono */
+//     font-size: 22px;
+//     height: 22px;             /* asegura centrado vertical */
+//     width: 22px;
+//     margin: 0;                /* elimina desplazamientos */
+//     color: inherit;
+//     transition: inherit;
+//   }
+   
+//   &:hover {
+//     background: rgba(30, 136, 229, 0.45);
+//     color: #f60404 !important;
+//     font-weight: 600;
+//   }
+
+//   &:active {
+//     background: rgba(30, 136, 229, 0.65);
+//   }
+// }
+
+
+
+
+/* =========================
+   Toolbar principal
+========================= */
+.toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  height: 50px;
+  min-height: 50px;
+  background-color: #154f9f;
+  color: #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  border-bottom: 2px solid #1e88e5;
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+}
+
+/* =========================
+   Bloque logo + texto (izquierda)
+========================= */
+.logo-text {
+  display: flex;
+  align-items: center;
+  margin-right: auto;
+  gap: 6px;
+
+  .logo {
+    height: 38px;
+    width: auto;
+    border-radius: 50%;
+  }
+
+  .logo-label {
+    font-weight: 700;
+    font-size: 18px;
+    background: linear-gradient(90deg, #ffd700, #ff8c00);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+}
+
+/* =========================
+   Bloque derecho: título + login/logout
+========================= */
+.right-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: 18px;
+  gap: 8px;
+
+  .title {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    line-height: 40px;
+    background: linear-gradient(90deg, #ffd700, #ff8c00);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+}
+
+/* =========================
+   Iconos
+========================= */
+.mat-icon {
+  color: #ffca28;
+  width: 28px;
+  height: 28px;
+}
+
+button[mat-icon-button] mat-icon.login-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  font-size: 36px !important;
+  color: #ff4d4d;
+  transition: transform 0.2s ease, color 0.2s ease;
+  position: relative;
+  top: -4px;
+
+  &:hover {
+    transform: scale(1.2);
+    color: #32cd32;
+  }
+}
+
+/* =========================
+   Botón logout tipo pastilla (derecha)
+========================= */
+.logout-btn-pill {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 6px 18px;
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffca28 !important;
+  transition: background 0.25s ease, color 0.25s ease;
+  margin-left: auto; /* siempre a la derecha */
+
+  mat-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    width: 22px;
+    height: 22px;
+    margin: 0;
+    color: inherit;
+    transition: inherit;
+  }
+
+  .logout-text {
+    transition: opacity 0.25s ease;
+  }
+
+  &:hover {
+    background: rgba(30, 136, 229, 0.45);
+    color: #f60404 !important;
+  }
+
+  &:active {
+    background: rgba(30, 136, 229, 0.65);
+  }
+}
+
+/* =========================
+   Carrusel
+========================= */
+.carousel-control {
+  width: 28px;
+  height: 28px;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.3);
+  border: none;
+  border-radius: 50%;
+  color: #ffca28;
+  cursor: pointer;
+  margin: 0 4px;
+  transition: background 0.3s;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.5);
+  }
+}
+
+/* =========================
+   Nombre de usuario
+========================= */
+.user-name {
+  font-weight: 500;
+  margin-right: 8px;
+}
+
+/* =========================
+   Responsive
+========================= */
+@media (max-width: 1024px) {
+  .right-group .title {
+    font-size: 16px;
+  }
+
+  .logout-btn-pill {
+    padding: 5px 14px;
+
+    mat-icon {
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  button[mat-icon-button] mat-icon.login-icon {
+    font-size: 28px !important;
+    width: 28px;
+    height: 28px;
+  }
+
+  .carousel-control {
+    width: 24px;
+    height: 24px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .logo-label,
+  .right-group .title,
+  .user-name {
+    display: none; /* oculta texto para pantallas pequeñas */
+  }
+
+  .toolbar {
+    padding: 0 6px;
+  }
+
+  .logout-btn-pill {
+    padding: 6px 12px;
+    width: auto;
+    margin-left: auto; /* sigue a la derecha */
+    justify-content: center;
+    gap: 6px;
+
+    .logout-text {
+      display: inline; /* texto visible */
+      font-size: 14px;
+    }
+
+    mat-icon {
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  button[mat-icon-button] mat-icon.login-icon {
+    font-size: 24px !important;
+    width: 24px;
+    height: 24px;
+  }
+
+  .carousel-control {
+    width: 20px;
+    height: 20px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .toolbar {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 4px;
+  }
+
+  .right-group {
+    margin-right: 8px;
+    gap: 6px;
+  }
+}

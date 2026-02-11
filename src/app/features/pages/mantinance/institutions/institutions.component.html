@@ -1,0 +1,117 @@
+<app-maintenance-layout
+  title="Instituciones"
+  [showViewAction]="false" 
+  [columns]="columns"
+  [service]="institutionService"
+  (onCreate)="createInstitution()"
+  (onEdit)="editInstitution($any($event))"      
+  (onDelete)="deleteInstitution($any($event))"
+  (search)="onSearch($any($event))"> 
+</app-maintenance-layout>
+
+<div class="modal" *ngIf="showModal">
+  <div class="modal-content">
+    <h3>{{ currentInstitution?.id ? 'Editar Institución' : 'Crear Institución' }}</h3>
+
+    <form [formGroup]="form" (ngSubmit)="saveInstitution()">
+      
+      <div class="form-group">
+        <label>Nombre</label>
+        <input 
+          formControlName="name" 
+          type="text" 
+          placeholder="Ej: Universidad Central" 
+          [class.is-invalid]="form.get('name')?.invalid && form.get('name')?.touched" />
+        
+        <div class="error-container" *ngIf="form.get('name')?.touched">
+          <small class="error" *ngIf="form.get('name')?.hasError('required')">
+            El nombre es obligatorio.
+          </small>
+          <small class="error" *ngIf="form.get('name')?.hasError('maxlength')">
+            Máximo 255 caracteres.
+          </small>
+          <small class="error" *ngIf="form.get('name')?.hasError('nameTaken')">
+            Ya existe una institución registrada con este nombre.
+          </small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Email</label>
+        <input 
+          formControlName="email" 
+          type="email" 
+          placeholder="contacto@institucion.edu"
+          [class.is-invalid]="form.get('email')?.invalid && form.get('email')?.touched" />
+        
+        <div class="error-container" *ngIf="form.get('email')?.touched">
+          <small class="error" *ngIf="form.get('email')?.hasError('required')">
+            El email es obligatorio.
+          </small>
+          <small class="error" *ngIf="form.get('email')?.hasError('pattern')">
+            Formato de email inválido (ejemplo@dominio.com).
+          </small>
+          <small class="error" *ngIf="form.get('email')?.hasError('emailTaken')">
+            Este email ya pertenece a otra institución.
+          </small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Dirección</label>
+        <input 
+          formControlName="address" 
+          type="text" 
+          placeholder="Av. Principal #123"
+          [class.is-invalid]="form.get('address')?.invalid && form.get('address')?.touched" />
+        
+        <div class="error-container" *ngIf="form.get('address')?.touched">
+          <small class="error" *ngIf="form.get('address')?.hasError('required')">
+            La dirección es obligatoria.
+          </small>
+          <small class="error" *ngIf="form.get('address')?.hasError('maxlength')">
+            Máximo 500 caracteres.
+          </small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Sitio Web</label>
+        <input 
+          formControlName="website" 
+          type="url" 
+          placeholder="https://www.ejemplo.com"
+          [class.is-invalid]="form.get('website')?.invalid && form.get('website')?.touched" />
+        
+        <div class="error-container" *ngIf="form.get('website')?.touched">
+          <small class="error" *ngIf="form.get('website')?.invalid">
+            Debe ser una URL válida (ej: https://google.com).
+          </small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Descripción</label>
+        <textarea 
+          formControlName="description" 
+          rows="4" 
+          placeholder="Breve reseña..."
+          [class.is-invalid]="form.get('description')?.invalid && form.get('description')?.touched"></textarea>
+        
+        <div class="error-container" *ngIf="form.get('description')?.touched">
+          <small class="error" *ngIf="form.get('description')?.hasError('maxlength')">
+            La descripción es demasiado larga (máx. 2000).
+          </small>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button type="submit" [disabled]="form.invalid || form.pending">
+          <span *ngIf="form.pending">Validando...</span>
+          <span *ngIf="!form.pending">{{ currentInstitution?.id ? 'Actualizar' : 'Guardar' }}</span>
+        </button>
+        <button type="button" (click)="closeModal()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>

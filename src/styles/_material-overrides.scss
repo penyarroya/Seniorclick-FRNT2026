@@ -1,0 +1,920 @@
+/* ==========================================================================
+   _maintenance.scss (Para el Panel de Mantenimiento oscuro)
+  _academic-viewer.scss (Para el Visualizador de lecciones claro)
+  _shared-material.scss (Para modales, snackbars y cosas globales)
+   ========================================================================== */
+
+// src/styles/_material-overrides.scss
+@use 'variables' as v;
+
+/* ==========================================================================
+   1. ESTILOS BASE PARA CONTENEDOR DE MANTENIMIENTO
+   ========================================================================== */
+.maintenance-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%; 
+
+  // --- CONTENEDOR DE TABLA ---
+  .table-wrapper {
+    flex: 1; 
+    height: 100% !important; 
+    overflow-y: auto !important; 
+    background-color: #1f2a38 !important;
+    position: relative;
+    display: block;
+    box-sizing: border-box;
+    scrollbar-gutter: stable;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  // --- EL PAGINADOR ---
+  .mat-mdc-paginator {
+    position: relative; 
+    z-index: 10;
+    background-color: #1a222c !important; 
+    margin-top: 0 !important; 
+    border-top: 1px solid rgba(v.$brand-neon, 0.2) !important;
+
+    .mat-mdc-paginator-container {
+      min-height: 56px !important; 
+      height: 56px !important;
+      padding: 0 24px !important;
+      display: flex;
+      align-items: center;
+    }
+
+    .mat-mdc-select-value-text span,
+    .mat-mdc-select-value {
+      color: v.$brand-neon !important; 
+      font-weight: 600;
+    }
+
+    .mat-mdc-select-arrow svg { fill: v.$brand-neon !important; }
+
+    .mat-mdc-paginator-page-size-label,
+    .mat-mdc-paginator-range-label {
+      color: rgba(v.$text-color, 0.7) !important;
+      font-size: 13px;
+    }
+
+    .mat-mdc-icon-button {
+      color: v.$brand-neon !important;
+      width: 40px !important;
+      height: 40px !important;
+      &:disabled { color: rgba(v.$text-color, 0.2) !important; }
+      &:not(:disabled):hover { background-color: rgba(v.$brand-neon, 0.1) !important; }
+    }
+  }
+
+  // --- LA TABLA ---
+  .mat-mdc-table {
+    background-color: transparent !important;
+    margin-bottom: 0 !important; 
+    border-collapse: collapse !important; 
+    width: 100%;
+
+    .mat-mdc-header-row { height: 56px !important; }
+
+    .mat-mdc-header-cell {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background-color: #1f2a38 !important; 
+      color: v.$brand-neon !important;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 2px solid rgba(v.$brand-neon, 0.4) !important;
+    }
+
+    .mat-mdc-row {
+      height: 50px !important;
+      transition: all 0.2s ease;
+      &:hover { background-color: rgba(v.$brand-neon, 0.08) !important; }
+
+      &.is-inactive {
+        background-color: rgba(0, 0, 0, 0.2) !important;
+        .mat-mdc-cell { color: rgba(v.$text-color, 0.35) !important; font-style: italic; }
+        .actions .mat-mdc-icon-button {
+          opacity: 0.4;
+          filter: grayscale(0.5);
+          &:hover { opacity: 1; filter: grayscale(0); color: v.$brand-neon !important; }
+        }
+      }
+    }
+
+    .mat-mdc-cell {
+      height: 50px !important;
+      color: v.$text-color;
+      border-bottom: 1px solid rgba(v.$text-color, 0.05) !important;
+    }
+  }
+
+  // --- STATUS PILLS ---
+  .status-pill {
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    display: inline-block;
+    &.active {
+      background: rgba(v.$brand-neon, 0.1);
+      color: v.$brand-neon;
+      border: 1px solid rgba(v.$brand-neon, 0.3);
+    }
+    &.inactive {
+      background: rgba(255, 255, 255, 0.05);
+      color: rgba(v.$text-color, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  // --- FILTROS DE COLUMNA ---
+  .filter-field {
+    .mdc-text-field--outlined:not(.mdc-text-field--disabled) {
+      .mdc-notched-outline__leading,
+      .mdc-notched-outline__notch,
+      .mdc-notched-outline__trailing { border-color: rgba(v.$brand-neon, 0.2) !important; }
+    }
+    input { color: v.$text-color !important; font-size: 12px; }
+    .mat-mdc-form-field-focus-overlay { background-color: v.$input-bg; }
+  }
+}
+
+/* ==========================================================================
+   2. ESTILOS PARA MODALES Y SELECTS
+   ========================================================================== */
+// .modal-content {
+//   .mat-mdc-form-field {
+//     --mdc-outlined-text-field-container-color: #2c3e50;
+//     --mdc-outlined-text-field-outline-color: #444;
+//     --mdc-outlined-text-field-hover-outline-color: #{v.$brand-neon};
+//     --mdc-outlined-text-field-focus-outline-color: #{v.$brand-neon};
+//     --mdc-outlined-text-field-container-shape: 8px;
+//     .mat-mdc-select-value, .mat-mdc-select-placeholder { color: #ffffff !important; }
+//   }
+// }
+
+// .mat-mdc-select-panel {
+//   background-color: #1f2a38 !important; 
+//   border: 1px solid rgba(v.$brand-neon, 0.3) !important;
+//   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6) !important;
+
+//   .mat-mdc-option {
+//     .mdc-list-item__primary-text { color: #ffffff !important; font-weight: 500; opacity: 0.85; }
+//     &:hover:not(.mdc-list-item--disabled) {
+//       background-color: rgba(v.$brand-neon, 0.12) !important;
+//       .mdc-list-item__primary-text { color: v.$brand-neon !important; opacity: 1; }
+//     }
+//     &.mdc-list-item--selected {
+//       background-color: rgba(v.$brand-neon, 0.2) !important;
+//       .mdc-list-item__primary-text { color: v.$brand-neon !important; font-weight: 700; }
+//     }
+//   }
+// }
+
+/* ==========================================================================
+   2. ESTILOS PARA MODALES Y SELECTS
+   ========================================================================== */
+.modal-content {
+  .mat-mdc-form-field {
+    --mdc-outlined-text-field-container-color: #2c3e50;
+    --mdc-outlined-text-field-outline-color: #444;
+    --mdc-outlined-text-field-hover-outline-color: #{v.$brand-neon};
+    --mdc-outlined-text-field-focus-outline-color: #{v.$brand-neon};
+    --mdc-outlined-text-field-container-shape: 8px;
+    .mat-mdc-select-value, .mat-mdc-select-placeholder { color: #ffffff !important; }
+  }
+}
+
+.mat-mdc-select-panel {
+  background-color: #1f2a38 !important; 
+  border: 1px solid rgba(v.$brand-neon, 0.3) !important;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6) !important;
+  
+  // --- CAMBIO CLAVE: Quitamos el padding para que el buscador sea ancho ---
+  padding: 0 !important; 
+
+  // --- ESTILO DEL BUSCADOR (Header del panel) ---
+  .select-search-header {
+    display: flex !important;
+    align-items: center !important;
+    width: 100% !important;           // Ocupa todo el ancho del panel
+    height: 60px !important;          // Altura robusta
+    background-color: #161e2b !important; 
+    border-bottom: 2px solid v.$brand-neon !important;
+    padding: 0 16px !important;
+    position: sticky !important;      // No se mueve al hacer scroll
+    top: 0;
+    z-index: 10;
+    box-sizing: border-box !important;
+
+    mat-icon:not(.clear-search-icon) {
+      color: v.$brand-neon !important;
+      font-size: 22px !important;
+      width: 22px !important;
+      height: 22px !important;
+      margin-right: 12px !important;
+    }
+
+    input {
+      flex: 1 !important;
+      background: transparent !important;
+      border: none !important;
+      color: #fff !important;
+      font-size: 1rem !important;
+      outline: none !important;
+      height: 100% !important;
+      &::placeholder { color: rgba(255, 255, 255, 0.4); }
+    }
+
+    .clear-search-icon {
+      cursor: pointer !important;
+      color: v.$brand-neon !important;
+      opacity: 0.6;
+      &:hover { opacity: 1; }
+    }
+  }
+
+  .mat-mdc-option {
+    .mdc-list-item__primary-text { color: #ffffff !important; font-weight: 500; opacity: 0.85; }
+    &:hover:not(.mdc-list-item--disabled) {
+      background-color: rgba(v.$brand-neon, 0.12) !important;
+      .mdc-list-item__primary-text { color: v.$brand-neon !important; opacity: 1; }
+    }
+    &.mdc-list-item--selected {
+      background-color: rgba(v.$brand-neon, 0.2) !important;
+      .mdc-list-item__primary-text { color: v.$brand-neon !important; font-weight: 700; }
+    }
+  }
+}
+
+/* ==========================================================================
+   3. OVERLAYS, SNACKBARS Y OTROS
+   ========================================================================== */
+.cdk-overlay-container { z-index: 2000 !important; }
+.cdk-global-scrollblock { position: static !important; width: 100% !important; overflow-y: hidden !important; }
+
+.success-snackbar {
+  --mdc-snackbar-container-color: #1a222c;
+  --mdc-snackbar-supporting-text-color: #{v.$brand-neon};
+  border: 1px solid v.$brand-neon;
+}
+
+.mat-mdc-slide-toggle {
+  --mdc-switch-selected-handle-color: #{v.$brand-neon};
+  --mdc-switch-selected-track-color: #{rgba(v.$brand-neon, 0.3)};
+  --mdc-switch-unselected-handle-color: #444;
+  --mdc-switch-unselected-track-color: #1a222c;
+  .mdc-label { color: v.$text-color !important; margin-left: 8px; }
+}
+
+/* ==========================================================================
+   4. UNIFICACIÓN COMPONENTES DE MANTENIMIENTO (PAGES, USER-PROGRESS, COMENTARIOS, CONTRIBUCIONES)
+   ========================================================================== */
+app-user-progress, app-pages, app-coment, app-contribution,app-user-profiles, app-roles, app-permissions { // <--- Añadido aquí
+  
+  .maintenance-container {
+    height: 100% !important; 
+    display: flex;
+    flex-direction: column;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .table-wrapper {
+    flex: 1 !important;
+    height: auto !important;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0 !important;
+  }
+
+  .mat-mdc-paginator {
+    position: sticky;
+    bottom: 0;
+    z-index: 100;
+    width: 100%;
+    margin-top: auto; 
+    margin-bottom: 0 !important;
+    box-shadow: 0 -4px 15px rgba(0,0,0,0.4) !important;
+  }
+
+  mat-card, .mat-mdc-card {
+    padding: 0 !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
+  }
+}
+
+// Estilos únicos para User Progress (Ocultar botón crear)
+app-user-progress {
+  .mat-mdc-fab.mat-primary, 
+  button[mat-fab][color="primary"],
+  .btn-create { display: none !important; }
+}
+
+/* ==========================================================================
+   5. SNACKBAR DE ÉXITO (PLATAFORMA ACADÉMICA)
+   ========================================================================== */
+.success-snackbar {
+  // Colores para Angular Material 15+ (MDC)
+  --mdc-snackbar-container-color: #2e7d32 !important; 
+  --mdc-snackbar-supporting-text-color: #ffffff !important;
+  --mat-snack-bar-button-color: #ffffff !important;
+  
+  background-color: #2e7d32 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+
+  .mdc-snackbar__label {
+    font-weight: 500 !important;
+    letter-spacing: 0.3px;
+  }
+
+  .mat-mdc-snack-bar-action {
+    color: white !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+  }
+}
+
+/* ==========================================================================
+   6. VISUALIZACIÓN DE CONTENIDO ACADÉMICO (LECTURA)
+   ========================================================================== */
+
+// Esta clase debe estar en el contenedor padre o en el body cuando entres al curso
+.academic-content {
+
+  /* En tu archivo global para afectar al [innerHTML] */
+  .main-content .html-content > *:first-child {
+    margin-top: 0 !important;
+  }
+  
+  // Estilos para el renderizado de la Página (Page)
+  .content-inner {
+    // Tipografía optimizada para lectura larga
+    h1, h2, h3, h4 {
+      color: #202124;
+      font-family: 'Google Sans', Roboto, Arial, sans-serif;
+      margin-top: 2rem;
+    }
+
+    h1 { font-size: 2.5rem; font-weight: 700; line-height: 1.2; margin-bottom: 1.5rem; }
+    h2 { font-size: 1.8rem; border-bottom: 1px solid #eee; padding-bottom: 0.5rem; }
+
+    p {
+      font-size: 1.15rem;
+      line-height: 1.7;
+      color: #3c4043;
+      margin-bottom: 1.25rem;
+    }
+
+    // Estilo para los Recursos (Resource Entity)
+    .resource-list {
+      margin: 2rem 0;
+      padding: 1rem;
+      background: #f8f9fa;
+      border-radius: 12px;
+      border: 1px solid #dadce0;
+
+      .resource-item {
+        display: flex;
+        align-items: center;
+        padding: 12px;
+        text-decoration: none;
+        color: #1a73e8;
+        transition: background 0.2s;
+        border-radius: 8px;
+
+        &:hover { background: rgba(26, 115, 232, 0.04); }
+        mat-icon { margin-right: 12px; }
+      }
+    }
+
+    // Bloques de código o citas (Contributions/Comments)
+    blockquote {
+      border-left: 4px solid #1a73e8;
+      background: #e8f0fe;
+      margin: 1.5rem 0;
+      padding: 1rem 1.5rem;
+      font-style: italic;
+      border-radius: 0 8px 8px 0;
+    }
+  }
+}
+
+/* ==========================================================================
+   7. AJUSTE DE LA NAVEGACIÓN (JERARQUÍA DE 5 NIVELES)
+   ========================================================================== */
+.academic-sidebar {
+  // Sobrescribimos estilos de Material List para la profundidad
+  .mat-mdc-list-item {
+    &.active-page {
+      --mdc-list-side-padding: 16px;
+      background-color: #e8f0fe !important;
+      color: #1a73e8 !important;
+      
+      .mat-mdc-list-item-title { font-weight: 600 !important; }
+    }
+  }
+}
+
+/* ==========================================================================
+   8. CORRECCIÓN DE VISIBILIDAD DE ÍTEMS (SUBMENÚ ACADÉMICO)
+   ========================================================================== */
+
+.academic-sidebar {
+  // Aseguramos que el acordeón sea transparente para ver el fondo de la sidebar
+  .hierarchy-accordion {
+    background: transparent !important;
+    
+    mat-expansion-panel {
+      background: transparent !important;
+    }
+  }
+
+  // 1. TÍTULOS DE COLECCIONES (Nivel superior)
+  .mat-expansion-panel-header-title {
+    color: #1a1a1a !important;
+    font-size: 0.95rem !important;
+    font-weight: 700 !important;
+  }
+
+  // 2. TÓPICOS Y SUBTÓPICOS (Jerarquía intermedia)
+  .topic-label {
+    color: #202124 !important; // Negro fuerte
+    font-weight: 700 !important;
+  }
+
+  .sub-title {
+    color: #444746 !important; // Gris muy oscuro
+    font-weight: 600 !important;
+    text-transform: uppercase;
+  }
+
+  // 3. ÍTEMS DE PÁGINA (El submenú que no se veía bien)
+  .pages-list {
+    .mat-mdc-list-item {
+      // Forzamos el color de la variable MDC para estado normal (No seleccionado)
+      --mdc-list-item-label-text-color: #202124 !important; 
+      
+      // Target directo a los contenedores de texto internos de Material
+      .mat-mdc-list-item-title, 
+      .mdc-list-item__primary-text,
+      [matlistitemtitle] {
+        color: #202124 !important; // Negro sólido
+        opacity: 1 !important;      // Sin transparencia
+        font-weight: 500 !important;
+      }
+
+      mat-icon {
+        color: #5f6368 !important;
+        opacity: 1 !important;
+      }
+
+      // ESTADO HOVER (Al pasar el mouse)
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.08) !important;
+        --mdc-list-item-label-text-color: #{v.$primary-color} !important;
+        
+        .mat-mdc-list-item-title { color: v.$primary-color !important; }
+        mat-icon { color: v.$primary-color !important; }
+      }
+
+      // ESTADO ACTIVO (Seleccionado)
+      &.active-page {
+        background-color: #e8f0fe !important;
+        --mdc-list-item-label-text-color: #1a73e8 !important;
+
+        .mat-mdc-list-item-title, [matlistitemtitle] {
+          color: #1a73e8 !important;
+          font-weight: 700 !important;
+        }
+
+        mat-icon {
+          color: #1a73e8 !important;
+          opacity: 1 !important;
+        }
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   9. RENDERIZADO DE CONTENIDO DINÁMICO (HTML INYECTADO)
+   ========================================================================== */
+.html-content {
+  font-size: 1.15rem;
+  line-height: 1.75;
+  color: v.$text-color;
+  margin: 40px 0;
+
+  // Estilos para etiquetas dentro de [innerHTML]
+  h2 { 
+    font-size: 1.8rem; 
+    margin-top: 2em; 
+    color: v.$primary-color; 
+    font-weight: 700; 
+  }
+  
+  p { 
+    margin-bottom: 1.5em; 
+  }
+  
+  strong { 
+    color: v.$cursor-color; 
+    font-weight: 700; 
+  } 
+  
+  img { 
+    max-width: 100%; 
+    height: auto; 
+    border-radius: 12px;
+    margin: 30px 0; 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  }
+  
+  ul, ol { 
+    margin-bottom: 1.5em; 
+    padding-left: 1.5em; 
+  }
+  
+  li { 
+    margin-bottom: 0.5em; 
+  }
+}
+
+/* ==========================================================================
+   9. FRANJA INFORMATIVA DE LECCIÓN (STICKY Y UNA SOLA LÍNEA)
+   ========================================================================== */
+.info-header-line {
+  position: -webkit-sticky !important; 
+  position: sticky !important;
+  top: 85px !important; 
+  z-index: 90 !important; 
+  background-color: #d3d3e3 !important; 
+
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: baseline !important;
+  gap: 12px;
+  padding: 12px 5px;
+  
+  // ELIMINADO: margin-bottom: 20px; (Esto creaba el espacio)
+  margin-bottom: 0 !important; 
+  
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  width: 100%;
+  box-sizing: border-box;
+
+  h2.lesson-title {
+    display: inline !important; 
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #1a1a1a;
+    white-space: nowrap;
+    line-height: 1;
+  }
+
+  p.lesson-info {
+    display: inline !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #666;
+    white-space: nowrap;
+    line-height: 1;
+
+    strong {
+      color: #026b68;
+      font-weight: 700;
+    }
+  }
+}
+
+/* ==========================================================================
+   10. CUERPO DE LA LECCIÓN (RESET DE ESPACIOS)
+   ========================================================================== */
+.lesson-body {
+  display: block;
+  width: 100%;
+  padding: 0 5px;
+  position: relative;
+  z-index: 1;
+  
+  // RESET DE MÁRGENES PARA CONTENIDO INYECTADO
+  // Esto quita el espacio blanco que generan los párrafos/títulos del innerHTML
+  & > *:first-child {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+
+  // Opcional: Si quieres que todo el texto tenga un margen consistente pero sin hueco inicial
+  p, h1, h2, h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+  }
+}
+
+/* ==========================================================================
+   11. VISUALIZADOR ACADÉMICO (CORRECCIÓN TOTAL DE CONTRASTE Y RESPONSIVE)
+   ========================================================================== */
+
+app-page-viewer {
+  // --- TEXTO Y CUERPO (Lectura en fondo claro) ---
+  .lesson-body {
+    color: #2c3e50 !important;
+    p, span, li, h1, h2, h3, h4, div { color: #2c3e50 !important; }
+    
+    & > *:first-child { margin-top: 0 !important; }
+
+    a {
+      color: #026b68 !important;
+      text-decoration: underline;
+      font-weight: 600;
+    }
+  }
+
+  // --- SECCIÓN DE RECURSOS (Grid de tarjetas) ---
+  .resources-section {
+    background: #fdfdfd !important;
+    border: 1px solid rgba(2, 107, 104, 0.15) !important;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.02) !important;
+    margin: 30px 20px !important;
+    border-radius: 12px;
+    padding: 20px;
+
+    .resources-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      color: #026b68 !important;
+      mat-icon { color: #026b68 !important; }
+      h3 { color: #026b68 !important; font-weight: 700; margin: 0; }
+    }
+
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 15px;
+    }
+
+    .resource-card {
+      background: #ffffff !important;
+      border: 1px solid #e0e0e0 !important;
+      border-radius: 8px;
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: all 0.2s ease-in-out;
+      position: relative;
+      cursor: pointer;
+
+      .res-info {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        .res-name { color: #333 !important; font-weight: 600; font-size: 0.95rem; }
+        .res-type { color: #666 !important; font-size: 0.7rem; }
+      }
+
+      // --- ESTADO DESHABILITADO (Permite Tooltip pero bloquea acción) ---
+      &.disabled {
+        background: #f8f9fa !important;
+        border: 1px dashed #d1d1d1 !important;
+        opacity: 0.7;
+        filter: grayscale(1);
+        box-shadow: none !important;
+        transform: none !important;
+        cursor: not-allowed !important; // Muestra que no se puede clickear
+
+        // Bloqueamos clics internos pero permitimos el hover en la tarjeta para el Tooltip
+        .resource-icon-wrapper, .res-info, .download-action {
+          pointer-events: none !important;
+        }
+
+        .lock-icon { color: #95a5a6 !important; }
+        
+        .mobile-not-available {
+          display: block;
+          color: #c0392b;
+          font-size: 0.7rem;
+          font-weight: 700;
+          margin-top: 2px;
+        }
+      }
+
+      &:hover:not(.disabled) {
+        border-color: #026b68 !important;
+        background: #f0f9f8 !important;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(2, 107, 104, 0.1) !important;
+      }
+
+      // Iconos por tipo de archivo
+      .resource-icon-wrapper {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 6px !important;
+        &.pdf { background-color: #e74c3c !important; }
+        &.zip, &.rar { background-color: #f1c40f !important; }
+        &.doc, &.docx { background-color: #2980b9 !important; }
+        &.link { background-color: #3498db !important; }
+        mat-icon { color: #ffffff !important; }
+      }
+    }
+  }
+
+  // --- FRANJA INFORMATIVA STICKY ---
+  .info-header-line {
+    background-color: #d3d3e3 !important;
+    border-bottom: 2px solid rgba(2, 107, 104, 0.1) !important;
+    h2.lesson-title { color: #1a1a1a !important; }
+    p.lesson-info { 
+      color: #555 !important; 
+      strong { color: #026b68 !important; }
+    }
+  }
+
+  // --- FOOTER DE NAVEGACIÓN ---
+  .page-footer {
+    background: #f0f0f8 !important;
+    border-top: 1px solid #dcdce6 !important;
+    
+    .nav-card {
+      background: #026b68 !important;
+      border-radius: 8px;
+      .nav-title { color: #ffffff !important; font-weight: 700; }
+      .nav-label { color: #b2dfdb !important; font-size: 0.75rem; }
+      mat-icon { color: #ffffff !important; }
+      
+      &[disabled] {
+        opacity: 0.5;
+        background: #95a5a6 !important;
+        pointer-events: none;
+      }
+    }
+  }
+
+  // --- 3. RESPONSIVE MÓVIL ---
+  @media (max-width: 600px) {
+    .resources-section { margin: 20px 10px !important; padding: 15px; }
+    .resource-grid { grid-template-columns: 1fr !important; }
+    
+    .resource-card {
+      padding: 15px !important;
+      .res-info .res-name {
+        white-space: normal !important;
+        line-height: 1.2;
+      }
+    }
+
+    .nav-buttons-container .nav-text { display: none; }
+  }
+}
+
+.scroll-to-top {
+  background-color: #026b68 !important;
+  color: white !important;
+}
+
+
+/* ==========================================================================
+   12. MENSAJES DE ESTADO (RECURSO NO DISPONIBLE / EMPTY STATES)
+   ========================================================================== */
+
+.no-resource-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  margin: 20px;
+  background: rgba(231, 76, 60, 0.05); // Un tono rojizo muy sutil
+  border: 2px dashed rgba(231, 76, 60, 0.3);
+  border-radius: 16px;
+  text-align: center;
+  transition: all 0.3s ease;
+
+  .error-icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+    color: #e74c3c;
+    margin-bottom: 16px;
+  }
+
+  .error-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #c0392b;
+    margin-bottom: 8px;
+  }
+
+  .error-message {
+    font-size: 1rem;
+    color: #666;
+    max-width: 500px;
+    line-height: 1.5;
+  }
+
+  /* --- RESPONSIVE: AJUSTE PARA MÓVILES --- */
+  @media (max-width: 768px) {
+    margin: 10px 0; // Eliminamos margen lateral en móviles
+    width: 100%;    // Ocupa todo el ancho
+    border-radius: 0; // Estética flat en móvil para ganar espacio
+    padding: 30px 15px;
+    box-sizing: border-box;
+    border-left: none;
+    border-right: none;
+
+    .error-title {
+      font-size: 1.1rem;
+    }
+
+    .error-message {
+      font-size: 0.9rem;
+      width: 100%; // Asegura que el texto use todo el ancho
+    }
+  }
+}
+
+/* ==========================================================================
+   13. ESTADOS DE RECURSO Y RESPONSIVE
+   ========================================================================== */
+app-page-viewer {
+  
+  .resource-card {
+    &.disabled {
+      cursor: not-allowed !important;
+      opacity: 0.7;
+      background: #f0f0f0 !important;
+      border: 1px dashed #ccc !important;
+      filter: grayscale(0.8);
+
+      &:hover {
+        transform: none !important;
+        box-shadow: none !important;
+      }
+
+      .lock-icon {
+        color: #e74c3c !important;
+        opacity: 0.8;
+      }
+    }
+  }
+
+  // Mensaje que aparece solo cuando el recurso está bloqueado
+  .mobile-not-available {
+    display: block;
+    font-size: 0.7rem;
+    color: #e74c3c;
+    font-weight: 700;
+    margin-top: 2px;
+  }
+
+  /* MEDIA QUERY PARA MÓVIL */
+  @media (max-width: 600px) {
+    .resource-grid {
+      grid-template-columns: 1fr !important; // Una sola columna
+      gap: 12px !important;
+    }
+
+    .resource-card {
+      padding: 15px !important;
+      
+      .res-info {
+        // Permitimos que el nombre del recurso use todo el ancho posible
+        white-space: normal !important; 
+        padding-right: 10px;
+        
+        .res-name {
+          font-size: 0.95rem !important;
+          line-height: 1.2;
+        }
+      }
+    }
+
+    .nav-buttons-container {
+      padding: 10px 5px !important;
+      
+      .nav-text {
+        display: none; // En móviles muy pequeños ocultamos el texto largo
+      }
+    }
+  }
+}

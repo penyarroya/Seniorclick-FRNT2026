@@ -1,0 +1,504 @@
+@use 'variables' as v;
+
+/* ==========================================================================
+   6. VISUALIZACIÓN DE CONTENIDO ACADÉMICO Y SIDEBAR
+   ========================================================================== */
+.academic-sidebar {
+  .hierarchy-accordion {
+    background: transparent !important;
+    mat-expansion-panel { background: transparent !important; }
+  }
+  .mat-expansion-panel-header-title { color: #1a1a1a !important; font-size: 0.95rem !important; font-weight: 700 !important; }
+  .topic-label { color: #202124 !important; font-weight: 700 !important; }
+  .sub-title { color: #444746 !important; font-weight: 600 !important; text-transform: uppercase; }
+
+  // .pages-list .mat-mdc-list-item {
+  //   --mdc-list-item-label-text-color: #202124 !important; 
+
+  //   /* NUEVO: Forzamos el color del icono en estado normal */
+  //   mat-icon { 
+  //     color: #2c3e50 !important; 
+  //     opacity: 0.8; /* Un poco de transparencia para que no sea tan pesado, pero oscuro */
+  //   }
+    
+  //   .mat-mdc-list-item-title { color: #202124 !important; opacity: 1 !important; font-weight: 500 !important; }
+    
+  //   &:hover {
+  //     background-color: rgba(0, 0, 0, 0.08) !important;
+  //     .mat-mdc-list-item-title { color: v.$primary-color !important; }
+  //   }
+
+  //   &.active-page {
+  //     background-color: #e8f0fe !important;
+  //     .mat-mdc-list-item-title { color: #1a73e8 !important; font-weight: 700 !important; }
+  //     mat-icon { color: #1a73e8 !important; }
+  //   }
+  // }
+
+  .pages-list .mat-mdc-list-item {
+    --mdc-list-item-label-text-color: #202124 !important; 
+
+    /* Estado normal del icono */
+    mat-icon { 
+      color: #2c3e50 !important; 
+      opacity: 0.8; 
+      transition: all 0.2s ease; /* Permite que el cambio a negro o azul sea fluido */
+    }
+    
+    .mat-mdc-list-item-title { 
+      color: #202124 !important; 
+      opacity: 1 !important; 
+      font-weight: 500 !important; 
+      transition: color 0.2s ease;
+    }
+    
+    /* Estado al pasar el ratón (Hover) */
+    &:hover:not(.active-page) {
+      background-color: rgba(0, 0, 0, 0.08) !important;
+      
+      .mat-mdc-list-item-title { 
+        color: v.$primary-color !important; 
+      }
+
+      mat-icon { 
+        color: #000000 !important; /* El icono de play se vuelve negro total */
+        opacity: 1;
+        transform: scale(1.1);    /* Crece un poco para dar feedback visual */
+      }
+    }
+
+    /* Estado de la página seleccionada (Active) */
+    &.active-page {
+      background-color: #e8f0fe !important;
+      
+      .mat-mdc-list-item-title { 
+        color: #1a73e8 !important; 
+        font-weight: 700 !important; 
+      }
+
+      mat-icon { 
+        color: #1a73e8 !important; 
+        opacity: 1;
+        transform: scale(1); /* Mantiene el tamaño normal cuando está activo */
+      }
+    }
+  }
+
+  .hierarchy-accordion {
+    /* Las nuevas variables de Material 20 para el indicador */
+    --mat-expansion-header-indicator-color: #2c3e50;
+    
+    mat-expansion-panel {
+      /* Reforzamos el color por si hay temas aplicados */
+      .mat-expansion-indicator {
+        color: #2c3e50 !important; 
+        
+        svg {
+          fill: currentColor !important;
+        }
+      }
+
+      /* Color diferente cuando el módulo está abierto */
+      &.mat-expanded {
+        --mat-expansion-header-indicator-color: #3498db;
+      }
+    }
+  }
+}
+
+//
+app-page-viewer {
+  .info-header-line {
+    position: sticky !important; top: 85px !important; z-index: 90 !important; 
+    background-color: #d3d3e3 !important; 
+    display: flex !important; align-items: baseline !important; gap: 12px; padding: 12px 5px;
+    h2.lesson-title { color: #1a1a1a !important; font-size: 1.25rem; font-weight: 800; margin: 0 !important; }
+    p.lesson-info strong { color: #026b68 !important; }
+  }
+
+  .lesson-body {
+    color: #2c3e50 !important;
+    p, span, li, h1, h2, h3, h4, div { color: #2c3e50 !important; }
+    & > *:first-child { margin-top: 0 !important; }
+  }
+
+  .resources-section {
+    background: #fdfdfd !important; border: 1px solid rgba(2, 107, 104, 0.15) !important;
+    margin: 30px 20px !important; border-radius: 12px; padding: 20px;
+    .resource-card {
+      background: #ffffff !important; border: 1px solid #e0e0e0 !important;
+      &.disabled {
+        background: #f0f0f0 !important; border: 1px dashed #ccc !important; filter: grayscale(0.8);
+      }
+      .resource-icon-wrapper {
+        &.pdf { background-color: #e74c3c !important; }
+        &.zip, &.rar { background-color: #f1c40f !important; }
+        &.doc, &.docx { background-color: #2980b9 !important; }
+        mat-icon { color: #ffffff !important; }
+      }
+    }
+  }
+
+  .page-footer .nav-card { background: #026b68 !important; color: white !important; }
+}
+
+.no-resource-container {
+  background: rgba(231, 76, 60, 0.05); border: 2px dashed rgba(231, 76, 60, 0.3);
+  .error-title { color: #c0392b; font-weight: 700; }
+}
+
+/* --- Estilos para el contenido inyectado desde la DB --- */
+app-page-viewer {
+  .html-content {
+    background: #ffffff !important; // Fondo blanco para lectura
+    border-radius: 12px;
+    padding: 30px;
+    margin: 20px 5px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+
+    .lesson-body {
+      line-height: 1.8 !important; // Mejor espacio entre líneas
+      
+      // Selectores para etiquetas que vienen del Backend (Spring Boot)
+      h1, h2, h3 { 
+        color: #1a1a1a !important; 
+        margin-top: 1.5em !important; 
+        font-weight: 800 !important; 
+      }
+      
+      p { margin-bottom: 1.2em !important; }
+      
+      img { 
+        max-width: 100% !important; 
+        height: auto !important; 
+        border-radius: 8px; 
+        margin: 20px 0;
+      }
+
+      ul, ol { padding-left: 25px !important; margin-bottom: 1.2em !important; }
+
+      // Clase para videos de YouTube/Vimeo responsivos
+      .video-container {
+        position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;
+        border-radius: 10px; margin: 25px 0;
+        iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+      }
+    }
+  }
+}
+
+
+
+/* ==========================================================================
+   AJUSTES ESPECÍFICOS PARA EL LAYOUT ACADEMIC (SIN ROMPER LO ANTERIOR)
+   ========================================================================== */
+
+/* Quitamos el padding que Angular Material pone por defecto en el Shell */
+.academic-shell .mat-drawer-content {
+  padding: 0 !important;
+  --mat-drawer-content-container-padding: 0px !important;
+}
+
+/* Forzamos que el visor ocupe todo el ancho cuando está en este layout */
+.academic-shell app-page-viewer {
+  display: block;
+  width: 100%;
+
+  /* Reseteamos los márgenes de 20px/30px que tienes en tus otros estilos */
+  .html-content {
+    margin: 0 !important; 
+    width: 100% !important;
+    max-width: 100% !important;
+    border-radius: 0 !important; /* Para que encaje perfectamente en el shell */
+    box-shadow: none !important; /* Opcional: quita la sombra si quieres que sea plano */
+  }
+
+  /* Ajustamos la sección de recursos para que no tenga márgenes externos */
+  .resources-section {
+    margin: 20px 0 !important; /* Solo margen arriba/abajo, no a los lados */
+    width: 100% !important;
+  }
+}
+
+
+
+/* ==========================================================================
+   RESET ESTRUCTURAL ÚNICO (Solo lo necesario)
+   ========================================================================== */
+
+/* 1. Resetear los contenedores internos de Material */
+.academic-shell {
+  .mat-drawer-content {
+    padding: 0 !important;
+    display: block !important;
+    overflow: hidden !important; /* Evita que el contenedor padre cree márgenes de scroll */
+  }
+
+  /* Este es el div que Material inyecta y que suele tener el margen de 5px */
+  .mat-drawer-inner-container {
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    display: block !important;
+  }
+}
+
+/* 2. Forzar que el host del visor y su contenedor ocupen el 100% real */
+app-page-viewer {
+  display: block !important;
+  width: 100% !important;
+  margin: 0 !important;
+}
+
+.content-inner {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+  display: block !important;
+}
+
+
+/* ==========================================================================
+   PARCHE DE VISIBILIDAD PARA EL VISOR (Añadir al final)
+   ========================================================================== */
+
+/* 1. Forzamos que el contenedor del recurso NO mida 0px */
+#resource-viewer-container {
+  display: block !important;
+  width: 100% !important;
+  height: 600px !important; /* Altura mínima necesaria */
+  min-height: 500px !important;
+  background-color: #1a1a1a !important; /* Fondo oscuro para contraste */
+  position: relative;
+  z-index: 999;
+  border: 4px solid #3498db !important; /* BORDE AZUL PARA CONFIRMAR QUE EXISTE */
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+/* 2. Forzamos que el componente del visor ocupe todo ese espacio */
+app-resource-viewer {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* 3. Corrección de scroll para el visor */
+.academic-shell .mat-drawer-content {
+  overflow-y: auto !important; /* Cambiamos hidden por auto para poder bajar */
+}
+
+
+
+/* ==========================================================================
+   8. PERSONALIZACIÓN DE COMPONENTES DE MATERIAL (GLOBAL)
+   ========================================================================== */
+
+/* Tooltip Moderno: Naranja y Azul Oscuro */
+.mat-mdc-tooltip {
+  --mdc-plain-tooltip-container-color: #2c3e50 !important;
+  --mdc-plain-tooltip-label-text-color: #f39c12 !important;
+  font-weight: 700 !important;
+  border: 1px solid #f39c12 !important;
+  font-size: 13px !important;
+  border-radius: 6px !important;
+}
+
+/* Spinner Moderno: Naranja Universilabs */
+.mat-mdc-progress-spinner {
+  --mdc-circular-progress-active-indicator-color: #f39c12 !important;
+}
+
+/* Barra de Progreso Global */
+.mat-mdc-progress-bar {
+  --mdc-linear-progress-active-indicator-color: #f39c12;
+  --mdc-linear-progress-track-color: rgba(243, 156, 18, 0.1);
+}
+
+/* Overlay Container: Para que el tooltip flote sobre tu :host con z-index 9999 */
+.cdk-overlay-container {
+  z-index: 10001 !important;
+}
+
+/* ==========================================================================
+   9. MEJORAS DE ACCESIBILIDAD Y FOCO
+   ========================================================================== */
+.mat-mdc-button-base {
+  --mat-focus-indicator-color: #f39c12 !important;
+}
+
+
+/* ==========================================================================
+   10. SHARED COMPONENTS: BUSCADOR UNIVERSAL (MODERN SEARCH)
+   ========================================================================== */
+.modern-search {
+  /* Color del cursor (caret) */
+  caret-color: #f39c12 !important;
+
+  /* Variables de Material aplicadas al componente */
+  --mdc-filled-text-field-container-color: rgba(0, 0, 0, 0.04);
+  --mdc-filled-text-field-focus-active-indicator-color: #f39c12;
+  --mdc-filled-text-field-focus-label-text-color: #f39c12;
+  --mdc-filled-text-field-active-indicator-height: 0px;
+  --mdc-filled-text-field-focus-active-indicator-height: 0px;
+
+  /* Icono de lupa por defecto */
+  mat-icon[matPrefix] {
+    color: #2c3e50;
+    opacity: 0.5;
+    transition: all 0.3s ease;
+  }
+
+  /* Estado de foco: usamos la clase específica de Material */
+  &.mat-form-field-focused {
+    mat-icon[matPrefix] {
+      color: #f39c12 !important;
+      opacity: 1;
+      transform: scale(1.1);
+    }
+  }
+
+  /* Color de selección de texto dentro del input */
+  ::selection {
+    background-color: rgba(243, 156, 18, 0.2);
+  }
+
+  /* Botón de borrar (X) */
+  .clear-btn {
+    color: #e74c3c !important; 
+    transition: transform 0.2s ease;
+    
+    &:hover {
+      background-color: rgba(231, 76, 60, 0.1) !important;
+      transform: rotate(90deg); /* Un pequeño toque visual al borrar */
+    }
+  }
+}
+
+/* ==========================================================================
+   11. TARJETAS DE PROYECTO (PROJECT CARDS) - DISEÑO MODERNO
+   ========================================================================== */
+.project-card {
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 16px !important; // Bordes más suaves
+  overflow: hidden;
+
+  /* Efecto de elevación al pasar el ratón */
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1) !important;
+    border-color: rgba(243, 156, 18, 0.3); // Borde naranja sutil
+  }
+
+  .mat-card-title {
+    color: #2c3e50;
+    font-weight: 700;
+  }
+
+  /* El botón "CONTINUAR" / "REVISAR" */
+  .continue-btn {
+    background-color: #f39c12 !important; // Naranja Universilabs
+    color: white !important;
+    border-radius: 8px !important;
+    font-weight: 700;
+    transition: all 0.2s ease;
+
+    mat-icon { margin-left: 4px; }
+
+    &:hover {
+      background-color: #e67e22 !important; // Un tono más oscuro al hover
+      box-shadow: 0 4px 8px rgba(243, 156, 18, 0.3);
+    }
+  }
+
+  /* Estilo para tarjetas completadas (100%) */
+  &.is-completed {
+    border-left: 6px solid #2ecc71 !important; // Verde de éxito
+    
+    .completed-badge {
+      background: rgba(46, 204, 113, 0.1);
+      color: #27ae60;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      mat-icon { font-size: 16px; width: 16px; height: 16px; }
+    }
+  }
+}
+
+
+/* ==========================================================================
+   PARCHE DE VISIBILIDAD Y DISEÑO DE CONTENIDO (DB)
+   ========================================================================== */
+
+/* 1. Forzamos que el contenedor del recurso (PDF/Videos) sea visible */
+#resource-viewer-container {
+  display: block !important;
+  width: 100% !important;
+  min-height: 500px !important;
+  height: 70vh !important; // Usa el 70% de la pantalla para ser más dinámico
+  background-color: #1a1a1a !important; 
+  position: relative;
+  z-index: 999;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 25px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+/* 2. Forzamos que el visor interno ocupe todo el contenedor */
+app-resource-viewer {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* 3. Corrección de scroll para el visor en Layout Academic */
+.academic-shell .mat-drawer-content {
+  overflow-y: auto !important; 
+  scroll-behavior: smooth;
+}
+
+/* 4. EL TRUCO PARA EL INNERHTML: Estilos que sí afectan a la base de datos */
+app-page-viewer .html-content {
+  // Estos estilos funcionarán sobre el HTML inyectado
+  line-height: 1.8 !important;
+  color: #2c3e50 !important;
+
+  h1, h2, h3, h4 { 
+    color: #1a1a1a !important; 
+    margin-top: 1.5em !important; 
+    font-weight: 800 !important; 
+  }
+
+  h2 {
+    border-left: 5px solid #f39c12 !important; // Tu color naranja corporativo
+    padding-left: 15px !important;
+  }
+
+  p { margin-bottom: 1.2em !important; }
+
+  img { 
+    max-width: 100% !important; 
+    height: auto !important; 
+    border-radius: 12px; 
+    margin: 30px auto;
+    display: block;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  }
+
+  /* Si usas contenedores de video en el contenido de la DB */
+  .video-container {
+    position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;
+    border-radius: 10px; margin: 25px 0;
+    iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+  }
+}
+
+

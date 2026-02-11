@@ -1,0 +1,49 @@
+[
+  {
+    "label": "Mi Aula",
+    "icon": "school",
+    "items": [
+      { "label": "Explorar Carreras/Proyectos", "icon": "explore", "route": "/inicio/proyectos" },
+      { "label": "Mi Progreso Académico", "icon": "auto_stories", "route": "/inscripciones" },
+      { "label": "Repositorio de Recursos", "icon": "local_library", "route": "/contenidos/biblioteca" },
+      { "label": "Materiales Abiertos", "icon": "folder_open", "route": "/contenidos/recursos-abiertos" }
+    ]
+  },
+  {
+    "label": "Colaboración",
+    "icon": "forum",
+    "items": [
+      { "label": "Mis Contribuciones", "icon": "article", "route": "/mis-paginas" },
+      { "label": "Centro de Consultas", "icon": "question_answer", "route": "/consultas" }
+    ]
+  },
+  {
+    "label": "Administración",
+    "icon": "settings_suggest",
+    "roles": ["SUPER_ADMIN"],
+    "items": [
+      { "label": "Diseño de Proyectos", "icon": "add_box", "route": "/proyectos/crear" },
+      { "label": "Arquitectura Curricular", "icon": "account_tree", "route": "/proyectos/temas" },
+      { "label": "Gestor de Colecciones", "icon": "collections_bookmark", "route": "/contenidos/colecciones" },
+      { "label": "Editor de Contenidos", "icon": "edit_note", "route": "/proyectos/materiales" }
+    ]
+  },
+  {
+    "label": "La Institución",
+    "icon": "corporate_fare",
+    "items": [
+      { "label": "Conoce Seniorclick", "icon": "info", "route": "/inicio/acerca-de" },
+      { "label": "Misión y Valores", "icon": "flag", "route": "/institucion/mision" },
+      { "label": "Cuerpo Docente/Equipo", "icon": "group", "route": "/institucion/equipo" },
+      { "label": "Atención al Usuario", "icon": "contact_mail", "route": "/institucion/contacto" }
+    ]
+  },
+  {
+    "label": "Soporte",
+    "icon": "help_outline",
+    "items": [
+      { "label": "Manual del Estudiante", "icon": "menu_book", "route": "/ayuda/guias" },
+      { "label": "Base de Conocimientos (FAQ)", "icon": "quiz", "route": "/ayuda/faq" }
+    ]
+  }
+]

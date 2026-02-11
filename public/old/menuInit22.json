@@ -1,0 +1,50 @@
+[
+  {
+    "label": "Institución",
+    "icon": "corporate_fare",
+    "items": [
+      { "label": "Sobre Seniorclick", "icon": "info", "route": "/inicio/acerca-de" },
+      { "label": "Misión y Acción", "icon": "flag", "route": "/institucion/mision" },
+      { "label": "Equipo", "icon": "group", "route": "/institucion/equipo" },
+      { "label": "Contacto", "icon": "contact_mail", "route": "/institucion/contacto" }
+    ]
+  },
+  {
+    "label": "Mi Aprendizaje",
+    "icon": "school",
+    "items": [
+      { "label": "Explorar Proyectos", "icon": "explore", "route": "/proyectos" },
+      { "label": "Mis Inscripciones", "icon": "auto_stories", "route": "/inscripciones" },
+      { "label": "Biblioteca Digital", "icon": "local_library", "route": "/contenidos/biblioteca" },
+      { "label": "Recursos Abiertos", "icon": "folder_open", "route": "/contenidos/recursos-abiertos" }
+    ]
+  },
+  {
+    "label": "Mi Espacio",
+    "icon": "account_circle",
+    "items": [
+      { "label": "Mi Perfil", "icon": "person", "route": "/perfil" },
+      { "label": "Mis Contribuciones", "icon": "article", "route": "/mis-paginas" },
+      { "label": "Mis Consultas", "icon": "question_answer", "route": "/consultas" }
+    ]
+  },
+  {
+    "label": "Gestión Académica",
+    "icon": "settings_suggest",
+    "roles": ["SUPER_ADMIN"],
+    "items": [
+      { "label": "Configurar Proyectos", "icon": "add_box", "route": "/proyectos/crear" },
+      { "label": "Estructura (Temas/Sub)", "icon": "account_tree", "route": "/proyectos/temas" },
+      { "label": "Editor de Materiales", "icon": "edit_note", "route": "/proyectos/materiales" },
+      { "label": "Gestión de Colecciones", "icon": "collections_bookmark", "route": "/contenidos/colecciones" }
+    ]
+  },
+  {
+    "label": "Ayuda",
+    "icon": "help_outline",
+    "items": [
+      { "label": "Guía del Alumno", "icon": "menu_book", "route": "/ayuda/guias" },
+      { "label": "Preguntas Frecuentes", "icon": "quiz", "route": "/ayuda/faq" }
+    ]
+  }
+]

@@ -1,0 +1,15 @@
+.footer {
+  background-color: #154f9f; /* azul verdoso coherente con toolbar */
+  color: #ffffff;
+  padding: 12px 24px;
+  text-align: center;
+  font-size: 14px;
+  box-shadow: 0 -2px 6px rgba(0,0,0,0.1);
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}

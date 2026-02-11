@@ -1,0 +1,127 @@
+<div class="login-wrapper">
+  <div class="login-card">
+    <h2 class="title">Crear Cuenta</h2>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" class="auth-form">
+
+      <div class="name-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre</mat-label>
+          <input #firstNameInput 
+                 matInput 
+                 formControlName="firstName" 
+                 type="text" 
+                 placeholder="Ej: Juan" 
+                 (focus)="onFocus('firstName')" />
+          @if (showError('firstName')) {
+            <mat-error>{{ getControlErrors('firstName')[0] }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Apellido</mat-label>
+          <input matInput 
+                 formControlName="lastName" 
+                 type="text" 
+                 placeholder="Ej: Pérez" 
+                 (focus)="onFocus('lastName')" />
+          @if (showError('lastName')) {
+            <mat-error>{{ getControlErrors('lastName')[0] }}</mat-error>
+          }
+        </mat-form-field>
+      </div>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Nombre de Usuario</mat-label>
+        <input matInput 
+               formControlName="username" 
+               type="text" 
+               placeholder="Usuario123" 
+               (focus)="onFocus('username')" />
+        @if (showError('username')) {
+          @for (err of getControlErrors('username'); track $index) {
+            <mat-error>{{ err }}</mat-error>
+          }
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Correo electrónico</mat-label>
+        <input matInput 
+               formControlName="email" 
+               type="email" 
+               placeholder="correo@ejemplo.com"
+               (focus)="onFocus('email')" />
+        @if (showError('email')) {
+          @for (err of getControlErrors('email'); track $index) {
+            <mat-error>{{ err }}</mat-error>
+          }
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Teléfono</mat-label>
+        <input matInput 
+               formControlName="phone" 
+               type="tel" 
+               placeholder="+34 600 000 000"
+               (focus)="onFocus('phone')" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width password-field">
+        <mat-label>Contraseña</mat-label>
+        <input #passwordInput
+               matInput
+               [type]="showPassword ? 'text' : 'password'"
+               formControlName="password"
+               placeholder="********"
+               (focus)="onFocus('password')" />
+
+        <button mat-icon-button
+                matSuffix
+                type="button"
+                class="password-visibility"
+                (click)="togglePasswordVisibility()">
+          <span class="material-symbols-outlined">
+            {{ showPassword ? 'visibility_off' : 'visibility' }}
+          </span>
+        </button>
+
+        @if (showError('password')) {
+          @for (err of getControlErrors('password'); track $index) {
+            <mat-error>{{ err }}</mat-error>
+          }
+        }
+      </mat-form-field>
+
+      @if (errorMessage()) {
+        <div class="server-error-message">{{ errorMessage() }}</div>
+      }
+
+      @if (successMessage()) {
+        <div class="success-message">{{ successMessage() }}</div>
+      }  
+
+      <div class="button-group">
+        <button mat-raised-button 
+                type="submit" 
+                [disabled]="loading() || form.invalid"
+                class="login-submit-btn">
+          {{ loading() ? 'Registrando…' : 'Crear cuenta' }}
+        </button>
+
+        <button type="button" 
+                class="cancel-btn" 
+                (click)="cancel()">
+          Cancelar
+        </button>
+      </div>
+
+      <div class="login-options">
+        <button type="button" class="link-btn" routerLink="/auth/login">
+          ¿Ya tienes cuenta? Inicia sesión
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,1 +1,110 @@
+// 
+
+// Include theming for Angular Material with `mat.theme()`.
+// This Sass mixin will define CSS variables that are used for styling Angular Material
+// components according to the Material 3 design spec.
+// Learn more about theming and how to use it for your application's
+// custom components at https://material.angular.dev/guide/theming
+@use '@angular/material' as mat;
+
+// Importar los ajustes de Material
+//@use 'styles/variables'; // Si configuraste el includePaths
+//@use 'styles/material-overrides';
+
+// 2. Overrides divididos
+@use 'variables' as v; 
+@use 'auth.scss' as *;
+@use 'shared-material';
+@use 'show-pages';
+@use 'maintenance';
+@use 'academic-viewer';
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  @include mat.theme((
+    color: (
+      primary: mat.$azure-palette,
+      tertiary: mat.$blue-palette,
+    ),
+    typography: Roboto,
+    density: 0,
+  ));
+}
+
+body {
+  // Default the application to a light color theme. This can be changed to
+  // `dark` to enable the dark color theme, or to `light dark` to defer to the
+  // user's system settings.
+
+  // color-scheme: light;
+  color-scheme: dark;
+
+  // Set a default background, font and text colors for the application using
+  // Angular Material's system-level CSS variables. Learn more about these
+  // variables at https://material.angular.dev/guide/system-variables
+  background-color: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+  font: var(--mat-sys-body-medium);
+
+  // Reset the user agent margin.
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
 /* You can add global styles to this file, and also import other style files */
+
+/* =======================================================
+   ESTILOS GLOBALES - SOLUCIÓN DE SCROLL
+   (Anula el scroll en toda la app y lo fuerza en Material)
+   ======================================================= */
+
+/* 1. Control del Lienzo Fijo: Oculta la barra de scroll global. */
+/* EN styles.scss: BLOQUE CORREGIDO */
+html, body { 
+  height: 100%; 
+  width: 100%;
+  overflow: hidden; /* CLAVE: Oculta scroll global */
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  
+  /* Agrega la definición del contenedor principal si tu componente es el único */
+  app-root {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+  }
+}
+
+.mat-drawer-container {
+  /* CLAVE: Ocupa todo el espacio vertical restante bajo la toolbar (70px) */
+  flex: 1; /* Esto hace que el contenedor tome 100% - 70px */
+  overflow: hidden !important; 
+  height: 100% !important; /* Ahora sí se puede usar 100% porque su padre es FLEX */
+  width: 100% !important; // Añade esto
+  border: none !important; // Material a veces añade un borde sutil
+}
+
+// .mat-drawer-content {
+//   overflow: hidden !important; 
+//   height: 100% !important; 
+//   display: flex;
+//   flex-direction: column;
+//   padding: 0 !important;
+// }
+
+.mat-drawer-content {
+  overflow-y: auto !important; // Permite scroll solo aquí
+  overflow-x: hidden !important; // Prohibe scroll horizontal (los 5px suelen venir de aquí)
+  height: 100% !important; 
+  display: block !important; // Cambia FLEX por BLOCK para evitar separaciones de nodos
+  padding: 0 !important;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* =======================================================
+   FIN DE ESTILOS GLOBALES DE SCROLL
+   ======================================================= */
+

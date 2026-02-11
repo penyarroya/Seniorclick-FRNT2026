@@ -1,0 +1,52 @@
+[
+  {
+    "label": "Mi Aprendizaje",
+    "icon": "school",
+    "items": [
+      { "label": "Explorar Proyectos", "icon": "explore", "route": "/inicio/proyectos" },
+      { "label": "Mis Inscripciones", "icon": "auto_stories", "route": "/inicio/mis-inscripciones" },
+      { "label": "Biblioteca de Recursos", "icon": "local_library", "route": "/contenidos/biblioteca" }
+    ]
+  },
+  {
+    "label": "Comunidad",
+    "icon": "groups",
+    "items": [
+      { "label": "Mis Aportaciones", "icon": "edit_document", "route": "/mis-paginas" },
+      { "label": "Consultas y Dudas", "icon": "question_answer", "route": "/consultas" }
+    ]
+  },
+  {
+    "label": "Gestión Académica",
+    "icon": "admin_panel_settings",
+    "roles": ["SUPER_ADMIN"],
+    "items": [
+      { "label": "Panel de Proyectos", "icon": "dashboard", "route": "/proyectos/crear" },
+      { "label": "Estructura Curricular", "icon": "account_tree", "route": "/proyectos/temas" },
+      { "label": "Editor de Contenidos", "icon": "border_color", "route": "/proyectos/materiales" }
+    ]
+  },
+  {
+    "label": "Seniorclick",
+    "icon": "corporate_fare",
+    "items": [
+      { "label": "Quiénes Somos", "icon": "info", "route": "/inicio/acerca-de" },
+      { "label": "Ayuda y FAQ", "icon": "help_center", "route": "/ayuda/faq" },
+      { "label": "Contacto", "icon": "contact_mail", "route": "/institucion/contacto" }
+    ]
+  },
+  {
+    "label": "Configuración",
+    "icon": "settings",
+    "open": false,
+    "items": [
+      { "label": "Mi Perfil", "icon": "person_outline", "route": "/perfil", "description": "Gestionar datos personales"},
+      { "label": "Preferencias", "icon": "tune", "action": "toggleSettings","description": "Idioma y notificaciones"},
+      { "divider": true },
+      { "label": "Mantenimiento", "icon": "build", "roles": ["SUPER_ADMIN"], "route": "/maintenance", "open": false},
+      { "label": "Consola/Administración", "icon": "admin_panel_settings", "roles": ["SUPER_ADMIN"], "route": "/admin/dashboard" },
+      { "divider": true, "roles": ["SUPER_ADMIN"] },
+      { "label": "Cerrar sesión", "icon": "logout", "action": "logout"}
+    ]
+  }
+]

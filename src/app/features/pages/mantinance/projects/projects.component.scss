@@ -1,0 +1,364 @@
+// @use 'variables' as v;
+
+// :host {
+//   display: flex;
+//   flex-direction: column;
+//   width: 100%;
+//   height: 100vh;
+//   background-color: #121826;
+//   color: #fff;
+//   font-family: 'Roboto', sans-serif;
+//   box-sizing: border-box;
+//   padding: 0 !important;
+//   overflow: hidden;
+
+//   // Integración con el Layout de Mantenimiento
+//   ::ng-deep {
+//     app-maintenance-layout {
+//       display: flex;
+//       flex-direction: column;
+//       width: 100%;
+//       flex: 1; // Esto empuja el contenido hacia abajo
+//       height: 100%;
+//     }
+
+//     .maintenance-container {
+//       display: flex;
+//       flex-direction: column;
+//       width: 100%;
+//       height: 100%;
+//       padding: 0 !important;
+//     }
+
+//     .table-wrapper {
+//       flex: 1; // La tabla ocupa el espacio sobrante
+//       width: 100%;
+//       overflow: auto;
+//       background-color: #1f2a38 !important;
+//     }
+
+//     // Paginador siempre al final de la página
+//     .mat-mdc-paginator {
+//       background-color: #1a222c !important;
+//       color: v.$brand-neon !important;
+//       border-top: 1px solid rgba(v.$brand-neon, 0.2) !important;
+//       position: sticky;
+//       bottom: 0;
+//     }
+//   }
+// }
+
+// /* ================= Estilos del Modal Proyectos ================= */
+// .modal {
+//   position: fixed;
+//   inset: 0;
+//   background: rgba(0, 0, 0, 0.85);
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   z-index: 1200;
+//   animation: fadeIn 0.2s ease-in-out;
+
+//   .modal-content {
+//     background: #1f2a38;
+//     padding: 2rem;
+//     border-radius: 8px;
+//     width: 480px; 
+//     max-width: 95%;
+//     max-height: 90vh;
+//     overflow-y: auto;
+//     color: v.$text-color;
+//     box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+//     border: 1px solid rgba(v.$brand-neon, 0.3);
+//     animation: slideUp 0.25s ease-in-out;
+//   }
+
+//   h3 { 
+//     margin: 0 0 1.5rem 0; 
+//     color: v.$brand-neon; 
+//     font-size: 1.5rem; 
+//   }
+
+//   .form-group {
+//     margin-bottom: 1.25rem;
+    
+//     label { 
+//       display: block; 
+//       margin-bottom: 0.5rem; 
+//       color: rgba(v.$text-color, 0.7); 
+//       font-size: 0.9rem;
+//     }
+    
+//     // Unificación de anchos para Inputs nativos y Mat-Select
+//     input[type="text"], 
+//     textarea,
+//     mat-form-field {
+//       width: 100% !important; 
+//       box-sizing: border-box; // Crucial para que el padding no sume al ancho
+//     }
+
+//     input[type="text"], 
+//     textarea {
+//       padding: 0.75rem; 
+//       background: #2c3e50;
+//       color: #fff; 
+//       border: 1px solid #444; 
+//       border-radius: 6px;
+//       font-family: inherit;
+//       transition: all 0.2s;
+
+//       &:focus { 
+//         border-color: v.$brand-neon; 
+//         outline: none; 
+//         box-shadow: 0 0 0 2px rgba(v.$brand-neon, 0.2); 
+//       }
+//     }
+
+//     textarea {
+//       resize: vertical;
+//       min-height: 80px;
+//     }
+//   }
+
+//   .modal-actions {
+//     display: flex; 
+//     justify-content: flex-end; 
+//     gap: 1rem; 
+//     margin-top: 2rem;
+    
+//     button {
+//       padding: 0.65rem 1.5rem; 
+//       border-radius: 4px; 
+//       cursor: pointer; 
+//       font-weight: 600;
+//       transition: all 0.2s;
+
+//       &[type="submit"] { 
+//         background: v.$brand-neon; 
+//         color: #000; 
+//         border: none;
+//         &:disabled { 
+//           background: #4a5568; 
+//           cursor: not-allowed; 
+//           opacity: 0.7; 
+//         }
+//       }
+      
+//       &[type="button"] { 
+//         background: transparent; 
+//         color: v.$text-color; 
+//         border: 1px solid #444; 
+//       }
+//     }
+//   }
+// }
+
+// @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+// @keyframes slideUp { 
+//   from { transform: translateY(20px); opacity: 0; } 
+//   to { transform: translateY(0); opacity: 1; } 
+// }
+
+@use 'variables' as v;
+
+/* ==========================================================================
+   0. Configuración del Host & Tokens (Sin ng-deep)
+   ========================================================================== */
+:host {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  background-color: #121826;
+  color: #fff;
+  font-family: 'Roboto', sans-serif;
+  box-sizing: border-box;
+  padding: 0 !important;
+  overflow: hidden;
+
+  // TOKENS PARA COMPONENTES MATERIAL (Reemplaza overrides profundos)
+  --mat-table-background-color: transparent;
+  --mat-table-header-container-background-color: #2c3e50;
+  --mat-table-header-headline-color: #ffffff;
+  --mat-table-row-item-label-text-color: #cbd5e0;
+  --mat-table-row-item-outline-color: #334155;
+
+  --mat-paginator-container-background-color: #1a222c;
+  --mat-paginator-container-text-color: #{v.$brand-neon};
+
+  // Form Fields de Material (Mat-Select, etc.)
+  --mdc-filled-text-field-container-color: #2c3e50;
+  --mdc-filled-text-field-input-text-color: #ffffff;
+  --mdc-filled-text-field-placeholder-text-color: rgba(255, 255, 255, 0.75);
+  --mdc-filled-text-field-focus-active-indicator-color: #{v.$brand-neon};
+  --mdc-filled-text-field-focus-label-text-color: #{v.$brand-neon};
+
+  app-maintenance-layout {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    flex: 1;
+    height: 100%;
+  }
+}
+
+/* ==========================================================================
+   1. Estructura de Contenedores
+   ========================================================================== */
+.maintenance-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  padding: 0 !important;
+}
+
+.table-wrapper {
+  flex: 1;
+  width: 100%;
+  overflow: auto;
+  background-color: #1f2a38 !important;
+
+  &::-webkit-scrollbar { width: 8px; }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(v.$brand-neon, 0.2);
+    border-radius: 10px;
+  }
+}
+
+mat-paginator {
+  position: sticky;
+  bottom: 0;
+  border-top: 1px solid rgba(v.$brand-neon, 0.2) !important;
+  z-index: 10;
+}
+
+/* ==========================================================================
+   2. Modal Proyectos (Estilo Unificado)
+   ========================================================================== */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1200;
+  backdrop-filter: blur(8px);
+  animation: fadeIn 0.2s ease-in-out;
+
+  .modal-content {
+    background: #1f2a38;
+    padding: 2rem;
+    border-radius: 12px;
+    width: 500px; 
+    max-width: 95%;
+    max-height: 90vh;
+    overflow-y: auto;
+    color: v.$text-color;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+    border: 1px solid rgba(v.$brand-neon, 0.3);
+    animation: slideUp 0.25s ease-in-out;
+
+    h3 { 
+      margin: 0 0 1.5rem 0; 
+      color: v.$brand-neon; 
+      font-size: 1.4rem;
+      font-weight: 600;
+      border-bottom: 1px solid rgba(v.$brand-neon, 0.1);
+      padding-bottom: 0.5rem;
+    }
+  }
+
+  .form-group {
+    margin-bottom: 1.25rem;
+    
+    label { 
+      display: block; 
+      margin-bottom: 0.5rem; 
+      color: rgba(v.$text-color, 0.7); 
+      font-size: 0.9rem;
+    }
+    
+    input[type="text"], 
+    textarea {
+      width: 100%; 
+      padding: 0.8rem; 
+      background: #2c3e50;
+      color: #fff; 
+      border: 1px solid #444; 
+      border-radius: 8px;
+      box-sizing: border-box;
+      font-family: inherit;
+      transition: all 0.2s;
+
+      // PLACEHOLDER CLARO
+      &::placeholder {
+        color: rgba(255, 255, 255, 0.75);
+        opacity: 1;
+      }
+
+      &:focus { 
+        border-color: v.$brand-neon; 
+        outline: none; 
+        box-shadow: 0 0 0 2px rgba(v.$brand-neon, 0.15); 
+      }
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 90px;
+    }
+
+    // Compatibilidad con mat-form-field dentro del modal
+    mat-form-field {
+      width: 100% !important;
+    }
+  }
+
+  /* Acciones: Actualizar y Cerrar a la derecha */
+  .modal-actions {
+    display: flex; 
+    justify-content: flex-end; 
+    align-items: center;
+    gap: 1rem; 
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    
+    button {
+      padding: 0.7rem 1.6rem; 
+      border-radius: 8px; 
+      cursor: pointer; 
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+
+      &[type="submit"] { 
+        background: v.$brand-neon; 
+        color: #000; 
+        border: none;
+        &:hover:not(:disabled) { 
+          transform: translateY(-2px);
+          box-shadow: 0 5px 15px rgba(v.$brand-neon, 0.4); 
+        }
+        &:disabled { background: #4a5568; color: #a0aec0; opacity: 0.6; cursor: not-allowed; }
+      }
+      
+      &[type="button"] { 
+        background: rgba(255, 255, 255, 0.05); 
+        color: #fff; 
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        &:hover { background: rgba(255, 255, 255, 0.1); border-color: #fff; }
+      }
+    }
+  }
+}
+
+/* ================= ANIMACIONES ================= */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }

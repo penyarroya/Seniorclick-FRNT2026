@@ -1,0 +1,59 @@
+<div class="homepage-container">
+
+  <app-toolbar 
+    toolbarTitle="Iniciar Sesión"
+    [logoLabel]="logoLabel"
+    [showMenu]="false"
+    [showCarouselControls]="false"
+    [showLoginButtonSignal]="showLoginButtonSignal"
+    (prev)="prevSlide()"
+    (next)="nextSlide()"
+  ></app-toolbar>
+
+  <main class="main-content">
+    <div class="background-container">
+
+      @for (img of getImages(); track img) {
+        <div class="background-slide"
+             [style.background-image]="'url(' + img + ')'"
+             [class.active]="getImages().indexOf(img) === activeIndex()">
+        </div>
+      } @empty {
+        <div class="background-slide no-images">
+          <p>No hay imágenes disponibles.</p>
+        </div>
+      }
+
+      <div class="overlay"></div>
+
+      @if (showBackendDown()) {
+        <div class="backend-overlay">
+          <div class="backend-message-box">
+            <h1>⚠️ Servicio Temporalmente No Disponible</h1>
+            <p>Nuestro servicio principal está caído o la conexión de red falló.</p>
+            <p class="status-detail">Intentaremos reconectar automáticamente en breve.</p>
+            <button class="retry-button" (click)="reloadPage()">Recargar Página Ahora</button>
+          </div>
+        </div>
+      }
+
+      <div class="content">
+        <h1>Bienvenidos a SeniorClick</h1>
+        <h2>La UniversiLab Ciudadana</h2>
+      </div>
+
+      <div class="dots">
+        @for (img of getImages(); track img) {
+          <span class="dot"
+                [class.active]="getImages().indexOf(img) === activeIndex()"
+                (click)="goToSlide(getImages().indexOf(img))">
+          </span>
+        } @empty { <span></span> }
+      </div>
+
+    </div>
+  </main>
+
+  <app-footer></app-footer>
+</div>
+

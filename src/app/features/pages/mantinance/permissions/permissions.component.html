@@ -1,0 +1,63 @@
+<div class="maintenance-container">
+  
+  <app-maintenance-layout
+    title="Catálogo de Permisos"
+    [showViewAction]="false" 
+    [columns]="columns"
+    [service]="permissionService"
+    (onEdit)="editPermission($event)"
+    (onCreate)="openCreateModal()"
+  >
+    <ng-template let-row="row" column="description">
+      <span class="text-secondary" style="opacity: 0.7;">
+        {{ row.description || 'N/A' }}
+      </span>
+    </ng-template>
+  </app-maintenance-layout>
+
+  @if (showModal) {
+  <div class="modal" (click)="closeModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      
+      <div class="modal-header">
+        <mat-icon class="header-icon" style="color: #00ffcc;">
+          {{ isEdit ? 'edit_note' : 'verified_user' }}
+        </mat-icon>
+        <h3>{{ isEdit ? 'Editar Permiso' : 'Nuevo Permiso' }}</h3>
+      </div>
+
+      <form [formGroup]="form" (ngSubmit)="save()">
+        <div class="form-body">
+          
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Identificador Técnico</mat-label>
+            <input matInput formControlName="name" placeholder="Ej: USER_CREATE" autocomplete="off">
+            <mat-icon matPrefix>key</mat-icon>
+            <mat-hint>Mayúsculas y guiones bajos (SNAKE_CASE)</mat-hint>
+            
+            @if (form.get('name')?.hasError('required')) {
+              <mat-error>El nombre es obligatorio</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Descripción / Función</mat-label>
+            <textarea matInput formControlName="description" rows="2"></textarea>
+            <mat-icon matPrefix>description</mat-icon>
+          </mat-form-field>
+
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn-cancel" (click)="closeModal()">
+            Cancelar
+          </button>
+          <button type="submit" class="btn-save" [disabled]="form.invalid">
+             {{ isEdit ? 'Actualizar' : 'Registrar' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  }
+</div>

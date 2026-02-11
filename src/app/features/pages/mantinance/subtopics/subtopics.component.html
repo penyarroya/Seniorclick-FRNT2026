@@ -1,0 +1,48 @@
+
+<app-maintenance-layout
+  title="Gestión de Subtemas (Subtopics)"
+  [showViewAction]="false" 
+  [columns]="columns"
+  [service]="subtopicService"
+  (onCreate)="createSubtopic()"
+  (onEdit)="editSubtopic($event)"
+  (onDelete)="deleteSubtopic($event)"
+></app-maintenance-layout>
+
+<div class="modal" *ngIf="showModal">
+  <div class="modal-content">
+    <h3>{{ isEditing ? 'Editar Subtema' : 'Nuevo Subtema' }}</h3>
+
+    <form [formGroup]="form" (ngSubmit)="saveSubtopic()">
+      
+      <div class="form-group">
+        <label>Título del Subtema</label>
+        <mat-form-field appearance="outline">
+          <input matInput formControlName="title" placeholder="Ej: Operadores de Filtro">
+          <mat-error *ngIf="form.get('title')?.invalid">El título es obligatorio</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-group">
+        <label>Tema al que pertenece</label>
+        <mat-form-field appearance="outline">
+          <mat-select formControlName="topicId" placeholder="Seleccione un tema superior">
+            <mat-option *ngFor="let t of topics" [value]="t.id">
+              {{ t.title }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="form.get('topicId')?.invalid">Debe asignar un tema</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="modal-actions">
+        <button type="submit" class="btn-save" [disabled]="form.invalid">
+          {{ isEditing ? 'Guardar' : 'Crear' }}
+        </button>
+        <button type="button" class="btn-cancel" (click)="closeModal()">
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,131 @@
+<div class="lesson-article" style="font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #333; line-height: 1.8; width: 100%; margin: 0; background-color: #fff; padding: 50px; border-radius: 0; box-shadow: none; border: none; text-align: justify; font-size: 1.35em; box-sizing: border-box;">
+
+  <div style="position: sticky; top: 0; z-index: 1000; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); margin: -50px -50px 40px -50px; padding: 20px 50px; border-bottom: 2px solid #3498db; box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; gap: 20px;">
+    
+    <div style="flex: 1;">
+      <h1 style="margin: 0; color: #2c3e50; font-size: 1.2em; line-height: 1.2;">El Sistema Operativo y la Seguridad</h1>
+      <h2 style="margin: 5px 0 0 0; color: #3498db; font-weight: 300; font-size: 0.7em; text-transform: uppercase; letter-spacing: 1px;">Sincronizado con AudioLección</h2>
+    </div>
+
+    <div style="background: #2c3e50; padding: 10px 20px; border-radius: 12px; display: flex; align-items: center; gap: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+      <div style="display: flex; flex-direction: column; align-items: flex-start;">
+        <span style="font-size: 0.45em; color: #3498db; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">Escuchar</span>
+        <span style="font-size: 0.6em; color: white; font-weight: 500;">Lección Audio</span>
+      </div>
+      <audio controls style="height: 32px; width: 220px; filter: invert(1) hue-rotate(180deg) brightness(1.5);">
+        <source src="/public/audio/SistemaOperativo.m4a" type="audio/mpeg">
+        Tu navegador no soporta la reproducción de audio.
+      </audio>
+    </div>
+  </div>
+
+  <p style="font-size: 1.1em; color: #2c3e50; border-left: 8px solid #3498db; padding-left: 25px; margin-bottom: 40px; font-style: italic;">
+    Ningún programa, por potente que sea, puede hablar directamente con el procesador o escribir en el disco duro por su cuenta. Necesita un intermediario que ponga orden y garantice la seguridad del sistema. Ese intermediario es el <strong>Sistema Operativo</strong>.
+  </p>
+
+  <p>Si el hardware es el cuerpo y el código binario es el pulso eléctrico, el Sistema Operativo es el director de orquesta que decide quién usa qué y cuándo. Técnicamente, el Sistema Operativo, o SO, es el software principal o conjunto de programas de un sistema informático que gestiona los recursos de hardware y provee servicios a los programas de aplicación. Su función primordial es ocultar la complejidad del hardware y presentar una interfaz sencilla y manejable tanto al usuario como a las aplicaciones.</p>
+
+  <p>Sin un sistema operativo, cada programa individual debería conocer los detalles técnicos exactos de cada componente electrónico —como los sectores físicos del disco duro o las direcciones exactas de memoria RAM— para poder realizar incluso la tarea más sencilla.</p>
+
+  <div style="text-align: center; margin: 15px 0;">
+    <img src="/public/img/Pages/SistemaOperativo/SistemasOperativos.jpg" 
+         alt="Puertas Lógicas" 
+         style="width: 400px; height: 250px; border-radius: 8px; border: 1px solid #ddd; background: white;">
+         <p style="font-size: 0.6em; color: #999; margin-top: 5px;"> Sistemas Operativos</p>
+  </div>
+  
+  <h3 style="color: #2c3e50; border-bottom: 2px solid #3498db; display: inline-block; margin-top: 20px;">El Kernel:</h3>
+  <p>En el núcleo de todo sistema operativo se encuentra el Kernel, o núcleo. Es la parte que tiene el control total sobre todo lo que sucede en la computadora desde que se enciende hasta que se apaga. Sus responsabilidades son críticas y se dividen principalmente en tres áreas:</p>
+  
+  <ul style="padding-left: 40px; margin-bottom: 30px;">
+    <li><strong>Gestión de Procesos:</strong> Se encarga de decidir qué programa recibe atención de la Unidad Central de Procesamiento, la CPU, en cada milisegundo, permitiendo la multitarea.</li>
+    <li><strong>Gestión de Memoria:</strong> Asigna a cada programa un espacio seguro y exclusivo en la memoria RAM para que no se interfieran ni espíen entre sí.</li>
+    <li><strong>Controladores o Drivers:</strong> Actúa como un traductor universal entre el software y los componentes físicos, como impresoras o tarjetas gráficas, permitiendo órdenes genéricas que el hardware entiende.</li>
+  </ul>
+
+  <div style="text-align: center; margin: 15px 0;">
+    <img src="/public/img/Pages/SistemaOperativo/ElKernel.png" 
+         alt="Puertas Lógicas" 
+         style="width: 400px; height: 250px; border-radius: 8px; border: 1px solid #ddd; background: white;">
+         <p style="font-size: 0.6em; color: #999; margin-top: 5px;"> Kernel</p>
+  </div>
+
+  <h3 style="color: #2c3e50; border-bottom: 2px solid #3498db; display: inline-block; margin-top: 20px;">Interfaz y Clasificación:</h3>
+  <p>El Sistema Operativo nos permite comunicarnos con esta compleja arquitectura a través de la Interfaz Gráfica de Usuario, conocida como GUI, basada en ventanas, o mediante la Línea de Comandos para instrucciones técnicas directas. Según su uso, se clasifican en sistemas de Escritorio, como Windows, macOS o Linux; Móviles, como Android e iOS; o de Servidores, optimizados para gestionar el hardware de su entorno específico. Es el software encargado de gestionar que el hardware no se sature.</p>
+
+  <p style="margin-top: 30px;">Si el Sistema Operativo gestiona los recursos, también decide quién tiene permiso para verlos, modificarlos o eliminarlos. En un mundo conectado, la seguridad es el pilar que evita el caos.</p>
+
+
+  <div style="text-align: center; margin: 15px 0;">
+    <img src="/public/img/Pages/SistemaOperativo/Interface.webp" 
+         alt="Puertas Lógicas" 
+         style="width: 400px; height: 250px; border-radius: 8px; border: 1px solid #ddd; background: white;">
+         <p style="font-size: 0.6em; color: #999; margin-top: 5px;">Diferentes tipos de Interface</p>
+  </div>
+
+  <!-- <hr style="border: 0; height: 1px; background: #eee; margin: 50px 0;"> -->
+
+  <h3 style="color: #2c3e50; border-bottom: 2px solid #3498db; display: inline-block; margin-top: 20px;">Modos de Ejecución: El Sistema de Privilegios:</h3>
+  <p>Para evitar daños irreparables, el hardware y el Sistema Operativo trabajan en dos niveles de poder:</p>
+
+  <ul style="padding-left: 40px; margin-bottom: 30px;">
+    <li><strong>El Modo Usuario:</strong> Es el nivel restringido donde corren aplicaciones cotidianas como Chrome o Word. Aquí, los programas tienen prohibido tocar el hardware directamente.</li>
+    <li><strong>El Modo Kernel o Modo Privilegiado:</strong> Reservado exclusivamente para el Sistema Operativo, con acceso total a la CPU y memoria. Si un programa en modo usuario intenta una acción crítica, el Sistema Operativo interviene y lo detiene.</li>
+  </ul>
+
+  <div style="background-color: #f0f7ff; border-radius: 12px; padding: 30px; margin-bottom: 40px; border: 1px solid #cfe2f3;">
+    <h4 style="margin-top: 0; color: #2c3e50;">Las Tres Capas de la Seguridad Informática:</h4>
+    Para que la informática sea confiable, el Sistema Operativo protege la información basándose en la <strong>Tríada de la Seguridad (CID)</strong>:
+    <br><br>
+    • <strong>Confidencialidad:</strong> Solo acceden los autorizados.<br>
+    • <strong>Integridad:</strong> Los datos no se alteran sin permiso.<br>
+    • <strong>Disponibilidad:</strong> El sistema y los datos están listos cuando el usuario los necesite.
+  </div>
+
+  <div style="text-align: center; margin: 15px 0;">
+    <img src="/public/img/Pages/SistemaOperativo/Privilegios.png" 
+         alt="Puertas Lógicas" 
+         style="width: 400px; height: 250px; border-radius: 8px; border: 1px solid #ddd; background: white;">
+         <p style="font-size: 0.6em; color: #999; margin-top: 5px;">Anillo de Privilegios del x86</p>
+  </div>
+
+  <h3 style="color: #2c3e50; border-bottom: 2px solid #3498db; display: inline-block; margin-top: 20px;">Amenazas y Mecanismos de Defensa Activa:</h3>
+  <p>El Sistema Operativo actúa como un escudo mediante:</p>
+  
+  <ul style="padding-left: 40px; margin-bottom: 30px;">
+    <li><strong>Autenticación:</strong> Verificación por contraseñas o biometría.</li>
+    <li><strong>Firewall:</strong> Filtro que bloquea conexiones de red sospechosas.</li>
+    <li><strong>Actualizaciones de Seguridad:</strong> Parches para cerrar vulnerabilidades.</li>
+    <li><strong>Cifrado de Datos:</strong> Convierte la información en código ilegible.</li>
+    <li><strong>Aislamiento de Procesos o Sandboxing:</strong> Crea una "burbuja" para cada programa para evitar infecciones en cadena.</li>
+  </ul>
+
+  <div style="text-align: center; margin: 15px 0;">
+    <img src="/public/img/Pages/SistemaOperativo/DefensaEnElMundoDigital.png" 
+         alt="Puertas Lógicas" 
+         style="width: 600px; height: 250px; border-radius: 8px; border: 1px solid #ddd; background: white;">
+         <p style="font-size: 0.6em; color: #999; margin-top: 5px;">defensa activa o la inteligencia - Inciber</p>
+  </div>
+
+  <hr style="border: 0; height: 1px; background: #eee; margin: 50px 0;">
+
+  <h3 style="color: #2c3e50; border-bottom: 2px solid #3498db; display: inline-block; margin-top: 20px;">Conceptos Avanzados:</h3>
+
+  <p><strong>Memoria Virtual:</strong> Permite ejecutar programas más grandes que la RAM física usando parte del almacenamiento (SSD o HDD) para simular memoria adicional mediante "páginas".</p>
+
+  <p><strong>El Sistema de Interrupciones:</strong> El hardware envía señales eléctricas a la CPU cuando necesita algo. El Sistema Operativo detiene lo que está haciendo, atiende la interrupción y regresa a su tarea en nanosegundos.</p>
+
+  <p><strong>Principio de Menor Privilegio:</strong> Cada proceso tiene solo los permisos estrictos para su función. Esto limita el "radio de explosión" en caso de hackeo.</p>
+
+  <p><strong>El Rol del Sistema de Archivos:</strong> Crea estructuras lógicas como NTFS o APFS para la <strong>Indexación de bits</strong>, el <strong>Journaling</strong> (un registro para evitar archivos corrompidos tras un fallo eléctrico) y el <strong>control de Permisos</strong>.</p>
+
+  <div style="background-color: #f8f9fa; border-radius: 12px; padding: 30px; margin: 40px 0; border: 1px solid #eee;">
+    <p>Como <strong>dato técnico adicional</strong>, la transición entre el Modo Usuario y el Modo Kernel se realiza mediante una "instrucción trampa" o <em>trap instruction</em>. Es el único momento en que un programa de usuario puede pedirle al procesador que eleve sus privilegios.</p>
+  </div>
+
+  <div style="background-color: #2c3e50; color: #fff; padding: 40px; border-radius: 15px; margin-top: 50px; text-align: center;">
+    <h3 style="color: #fff; border: none; margin-top: 0; font-size: 1.2em;">Conclusión:</h3>
+    <p style="margin-bottom: 0;">El Sistema Operativo es la capa de inteligencia esencial que permite que el software se despreocupe de la física de la máquina. La seguridad no es un extra, sino la garantía de que toda funcione de forma predecible y blindada. En conjunto, representan el traductor universal y el guardián entre la mente humana y la electrónica binaria.</p>
+  </div>
+
+</div>

@@ -1,0 +1,256 @@
+// html, body {
+//   height: 100%;
+//   margin: 0;
+//   padding: 0;
+//   overflow: hidden;
+// }
+
+// .homepage-container {
+//   display: flex;
+//   flex-direction: column;
+//   height: 100%;
+// }
+
+// .main-content {
+//   flex: 1 1 auto;
+//   position: relative;
+//   overflow: hidden;
+// }
+
+// .background-container {
+//   position: relative;
+//   width: 100%;
+//   height: 100%;
+
+//   /* ================= Slides de fondo ================= */
+//   .background-slide {
+//     position: absolute;
+//     top: 0; left: 0;
+//     width: 100%; height: 100%;
+//     background-size: cover;
+//     background-position: center;
+//     opacity: 0;
+//     transition: opacity 1s ease-in-out;
+//     z-index: 0;
+
+//     &.active {
+//       opacity: 1;
+//     }
+//   }
+
+//   /* ================= Overlay oscuro ================= */
+//   .overlay {
+//     position: absolute;
+//     top: 0; left: 0;
+//     width: 100%; height: 100%;
+//     background-color: rgba(0,0,0,0.3);
+//     z-index: 5;
+//     pointer-events: none;
+//   }
+
+//   /* ================= Contenido centrado ================= */
+//   .content {
+//     position: absolute;          /* Absoluto para centrar sobre el contenedor */
+//     top: 50%;
+//     left: 50%;
+//     transform: translate(-50%, -50%);
+//     text-align: center;
+//     color: white;
+//     z-index: 10;
+
+//     h1 {
+//       font-size: clamp(2rem, 5vw, 3.5rem);
+//       margin: 0 0 0.5rem 0;
+//       font-weight: 700;
+//       line-height: 1.2;
+//       text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+//     }
+
+//     h2 {
+//       font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+//       margin: 0;
+//       font-weight: 600;
+//       line-height: 1.3;
+//       text-shadow: 1px 1px 8px rgba(0,0,0,0.5);
+//       background: linear-gradient(90deg, #ff3ca0, #ff7fc4, #ffd6e9);
+//       /* Para Chrome, Safari, Edge (WebKit) */
+//       -webkit-background-clip: text;
+//       -webkit-text-fill-color: transparent;
+//       /* Estándar: Firefox y otros navegadores */
+//       background-clip: text;
+//       color: transparent;
+//     }
+//   }
+
+//   /* ================= Dots del carrusel ================= */
+//   .dots {
+//     position: absolute;
+//     bottom: 20px;
+//     width: 100%;
+//     text-align: center;
+//     z-index: 15;
+
+//     .dot {
+//       width: 12px; height: 12px;
+//       margin: 0 5px;
+//       border-radius: 50%;
+//       background: rgba(255,255,255,0.5);
+//       cursor: pointer;
+//       display: inline-block;
+//       transition: transform 0.3s, background-color 0.3s;
+
+//       &.active {
+//         background: white;
+//       }
+
+//       &:hover {
+//         transform: scale(1.2);
+//       }
+//     }
+//   }
+// }
+
+// /* ================= Responsive ================= */
+// @media (max-width: 1024px) {
+//   .content h1 { font-size: clamp(1.8rem, 4vw, 3rem); }
+//   .content h2 { font-size: clamp(1.3rem, 3vw, 2rem); }
+// }
+
+// @media (max-width: 600px) {
+//   .content h1 { font-size: 1.8rem; }
+//   .content h2 { font-size: 1.3rem; }
+
+//   .dots .dot { width: 10px; height: 10px; }
+// }
+
+
+
+
+
+.homepage-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Ocupa toda la ventana */
+}
+
+.main-content {
+  flex: 1 1 auto; /* Toma el espacio entre toolbar y footer */
+  position: relative;
+  overflow: hidden;
+}
+
+.background-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+  /* Slides de fondo */
+  .background-slide {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    z-index: 0;
+
+    &.active {
+      opacity: 1;
+    }
+  }
+
+  /* Overlay oscuro */
+  .overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.3);
+    z-index: 5;
+    pointer-events: none;
+  }
+
+  /* Contenido centrado */
+  .content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+    z-index: 10;
+
+    h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      margin: 0 0 0.5rem 0;
+      font-weight: 700;
+      line-height: 1.2;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.6); /* del código antiguo */
+    }
+
+    h2 {
+      font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+      margin: 0;
+      font-weight: 600;
+      line-height: 1.3;
+      text-shadow: 1px 1px 8px rgba(0,0,0,0.5); /* del código antiguo */
+      background: linear-gradient(90deg, #ff3ca0, #ff7fc4, #ffd6e9);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
+    }
+  }
+
+  /* Dots del carrusel */
+  .dots {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    text-align: center;
+    z-index: 15;
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      margin: 0 5px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.5);
+      cursor: pointer;
+      display: inline-block;
+      transition: transform 0.3s, background-color 0.3s;
+
+      &.active {
+        background: white;
+      }
+
+      &:hover {
+        transform: scale(1.2);
+      }
+    }
+  }
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .content h1 {
+    font-size: clamp(1.8rem, 4vw, 3rem);
+  }
+  .content h2 {
+    font-size: clamp(1.3rem, 3vw, 2rem);
+  }
+}
+
+@media (max-width: 600px) {
+  .content h1 {
+    font-size: 1.8rem;
+  }
+  .content h2 {
+    font-size: 1.3rem;
+  }
+
+  .dots .dot {
+    width: 10px;
+    height: 10px;
+  }
+}

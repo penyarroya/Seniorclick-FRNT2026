@@ -1,0 +1,139 @@
+/* ==========================================================================
+   CONFIGURACIÓN GLOBAL PARA MATERIAL 20 (ALTO CONTRASTE UNIFICADO)
+   ========================================================================== */
+
+.high-contrast-field {
+  /* 1. TEXTO PRINCIPAL (Inputs, Textareas y Selects) */
+  input.mat-mdc-input-element, 
+  textarea.mat-mdc-input-element,
+  .mat-mdc-select-value-text {
+    color: #000000 !important;
+    font-weight: 700 !important;
+    /* Asegura que en navegadores basados en Webkit el texto sea negro puro */
+    -webkit-text-fill-color: #000000 !important;
+  }
+
+  /* 2. ETIQUETA (Label) - Estilo base */
+  .mdc-floating-label {
+    font-weight: 800 !important;
+    color: #2c3e50 !important;
+  }
+
+  /* 3. LABEL FLOTANTE (Arriba) */
+  /* Ajuste preciso para que no se encime con el borde del input */
+  .mdc-floating-label--float-above {
+    background: white !important; 
+    padding: 0 8px !important;
+    transform: translateY(-33px) scale(0.85) !important;
+    color: #3498db !important; 
+    font-weight: 900 !important;
+  }
+
+  /* 4. ICONOS Y FLECHAS (Suffix, Prefix y Select Arrow) */
+  .mat-mdc-select-arrow, 
+  mat-icon[matSuffix],
+  mat-icon[matPrefix],
+  .mat-mdc-form-field-icon-suffix mat-icon {
+    color: #1a1a1a !important;
+    opacity: 1 !important;
+    font-size: 22px;
+  }
+
+  /* 5. ESTADO DE ENFOQUE (Focus) */
+  &.mat-focused {
+    .mdc-floating-label--float-above { 
+        color: #f39c12 !important; 
+    }
+    .mat-mdc-select-arrow, 
+    mat-icon { 
+        color: #f39c12 !important; 
+    }
+  }
+
+  /* 6. MENSAJES DE ERROR (Mat-Error) */
+  /* Añadimos esto para que los errores también tengan alto contraste */
+  .mat-mdc-form-field-error {
+    color: #d32f2f !important;
+    font-weight: 700 !important;
+    font-size: 0.75rem;
+  }
+
+  /* Ajuste para el borde cuando hay error */
+  &.mat-form-field-invalid {
+    .mdc-outlined-text-field-outline-color {
+      --mdc-outlined-text-field-outline-color: #d32f2f !important;
+    }
+  }
+
+  /* === SOLO CAMBIO DE HOVER EN AZUL === */
+  &:hover:not(.mat-form-field-invalid):not(.mat-focused) {
+    .mdc-notched-outline__leading, 
+    .mdc-notched-outline__notch, 
+    .mdc-notched-outline__trailing {
+    //   border-color: #3498db !important; // Borde azul en hover
+      border-color: #00070c !important; // Borde azul en hover
+      border-width: 2px !important;
+      opacity: 1 !important;
+    }
+
+    // Esto es lo que rellena el espacio de la izquierda
+    .mdc-notched-outline__leading {
+    //   background-color: transparent !important; // O 'white' si quieres que tape lo de atrás
+      background-color: rgb(249, 205, 178) !important; // O 'white' si quieres que tape lo de atrás
+      width: 12px !important; // Forzamos a que la pieza tenga ancho y no desaparezca
+    }
+  }
+}
+
+/* OPCIONAL: Si usas el panel del Select (las opciones que bajan) */
+.mat-mdc-select-panel {
+    background-color: #ffffff !important;
+    .mat-mdc-option {
+        .mdc-list-item__primary-text {
+            color: #000000 !important;
+            font-weight: 600 !important;
+        }
+        &:hover:not(.mat-mdc-option-disabled) {
+            background-color: rgba(52, 152, 219, 0.1) !important;
+        }
+    }
+}
+
+/* ==========================================================================
+   FIX GLOBAL PARA BOTONES MATERIAL 20 (ALTO CONTRASTE)
+   ========================================================================== */
+
+/* 1. Forzamos la visibilidad de TODOS los botones deshabilitados de la app */
+.mat-mdc-flat-button:disabled, 
+.mat-mdc-raised-button:disabled,
+.add-btn:disabled {
+  /* Variables mágicas de Material 20 para anular transparencias */
+  --mdc-flat-button-disabled-container-opacity: 1 !important;
+  --mdc-flat-button-disabled-label-text-opacity: 1 !important;
+  --mat-flat-button-disabled-state-container-color: #546e7a !important; /* Gris Slate fuerte */
+  --mat-flat-button-disabled-state-label-text-color: #ffffff !important;
+
+  /* Forzamos colores sólidos */
+  background-color: #546e7a !important; 
+  color: #ffffff !important;
+  opacity: 1 !important;
+  cursor: not-allowed !important;
+
+  /* Iconos visibles */
+  .mat-icon, .mat-mdc-button-icon {
+    color: #ffffff !important;
+    opacity: 1 !important;
+  }
+}
+
+/* 2. Estilo específico para tu clase .add-btn cuando está activa */
+.add-btn:not(:disabled) {
+  background-color: #f39c12 !important;
+  color: #ffffff !important;
+  opacity: 1 !important;
+}
+
+/* 3. Estilo específico para modo edición cuando está activo */
+.add-btn.edit-mode-btn:not(:disabled) {
+  background-color: #3498db !important;
+}

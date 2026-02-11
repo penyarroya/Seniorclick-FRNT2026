@@ -1,0 +1,77 @@
+ <div class="login-wrapper">
+  <div class="login-card">
+    <h2 class="title">Iniciar Sesión</h2>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" class="auth-form">
+
+      <!-- Identificador -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Correo o usuario</mat-label>
+        <input matInput
+               formControlName="identifier"
+               #identifierInput
+               type="text"
+               placeholder="Correo o usuario"
+               (focus)="onFocus('identifier')" />
+
+        @if (showError('identifier')) {
+          @for (err of identifierErrors(); track $index) {
+            <mat-error>{{ err }}</mat-error>
+          }
+        }
+      </mat-form-field>
+
+      <!-- Password -->
+      <mat-form-field appearance="outline" class="full-width password-field">
+        <mat-label>Contraseña</mat-label>
+        <input matInput
+               [type]="showPassword ? 'text' : 'password'"
+               formControlName="password"
+               #passwordInput
+               placeholder="Contraseña"
+               (focus)="onFocus('password')" />
+
+        <button mat-icon-button
+                matSuffix
+                type="button"
+                class="password-visibility"
+                (click)="togglePasswordVisibility()">
+          <span class="material-symbols-outlined">
+              {{ passwordIcon }}
+            </span>
+        </button>
+
+        @if (showError('password')) {
+          @for (err of passwordErrors(); track $index) {
+            <mat-error>{{ err }}</mat-error>
+          }
+        }
+      </mat-form-field>
+
+      @if (errorMessage()) {
+        <div class="server-error-message">{{ errorMessage() }}</div>
+      }
+
+      <div class="button-group">
+        <button mat-raised-button type="submit"
+                class="login-submit-btn"
+                [disabled]="loading() || form.invalid">
+          {{ loading() ? 'Ingresando…' : 'Iniciar Sesión' }}
+        </button>
+        <button mat-raised-button type="button"
+                class="cancel-btn"
+                (click)="goToHome()">
+          Cancelar
+        </button>
+      </div>
+
+      <div class="login-options">
+        <button type="button" class="link-btn" (click)="goToRegister()">Crear nueva cuenta</button>
+        <button type="button" class="link-btn" (click)="goToForgotPassword()">¿Olvidaste tu contraseña?</button>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+

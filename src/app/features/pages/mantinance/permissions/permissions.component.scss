@@ -1,0 +1,317 @@
+// @use 'variables' as v;
+
+// // Estilo para el contenedor del modal (Fondo oscuro semitransparente)
+// .modal {
+//   position: fixed;
+//   top: 0;
+//   left: 0;
+//   width: 100vw;
+//   height: 100vh;
+//   background: rgba(0, 0, 0, 0.7); // Un poco más oscuro para resaltar el neón
+//   backdrop-filter: blur(6px);    // Desenfoque más profundo
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   z-index: 1000;
+//   animation: fadeIn 0.3s ease;
+
+//   // El recuadro del formulario adaptado a tu Dark Mode
+//   .modal-content {
+//     background: #1f2a38; // Fondo coherente con tu table-wrapper
+//     padding: 2rem;
+//     border-radius: 12px; // Coherente con tus otros modales
+//     width: 90%;
+//     max-width: 500px;
+//     box-shadow: 0 0 20px rgba(v.$brand-neon, 0.15); // Brillo neón sutil
+//     border: 1px solid rgba(v.$brand-neon, 0.3); // Borde neón marca
+
+//     .modal-header {
+//       display: flex;
+//       align-items: center;
+//       gap: 12px;
+//       margin-bottom: 1.5rem;
+//       color: v.$text-color;
+//       border-bottom: 1px solid rgba(v.$brand-neon, 0.2);
+//       padding-bottom: 1rem;
+
+//       .header-icon {
+//         color: v.$brand-neon; // Cambiado de morado a tu neón
+//         font-size: 28px;
+//         width: 28px;
+//         height: 28px;
+//       }
+
+//       h3 {
+//         margin: 0;
+//         font-size: 1.3rem;
+//         font-weight: 600;
+//         text-transform: uppercase;
+//         letter-spacing: 1px;
+//       }
+//     }
+//   }
+// }
+
+// // Configuración de los campos de Material
+// .full-width {
+//   width: 100%;
+//   margin-bottom: 1rem;
+// }
+
+// // Estilo de los botones usando tus clases globales
+// .modal-actions {
+//   display: flex;
+//   justify-content: flex-end;
+//   gap: 12px;
+//   margin-top: 1.5rem;
+
+//   button {
+//     padding: 0.6rem 1.8rem;
+//     border-radius: 8px;
+//     font-weight: 700;
+//     cursor: pointer;
+//     transition: all 0.2s ease;
+//     border: none;
+//     display: flex;
+//     align-items: center;
+//     gap: 8px;
+//     text-transform: uppercase;
+//     font-size: 12px;
+//   }
+
+//   .btn-cancel {
+//     background: transparent;
+//     color: v.$text-color;
+//     border: 1px solid rgba(v.$text-color, 0.3);
+//     &:hover { 
+//       background: rgba(v.$text-color, 0.1); 
+//     }
+//   }
+
+//   .btn-save {
+//     background: v.$brand-neon; // Tu color neón
+//     color: #1a222c; // Texto oscuro para contraste
+//     &:hover:not(:disabled) {
+//       box-shadow: 0 0 15px v.$brand-neon;
+//       transform: translateY(-2px);
+//     }
+//     &:disabled {
+//       background: #444;
+//       color: rgba(255, 255, 255, 0.3);
+//       cursor: not-allowed;
+//     }
+//   }
+// }
+
+// // Ajuste para el cuerpo del formulario (espaciado de iconos)
+// .form-body {
+//   mat-icon {
+//     color: v.$brand-neon !important;
+//     opacity: 0.8;
+//   }
+  
+//   // Estilo para los hints/ayudas debajo de los inputs
+//   mat-hint {
+//     color: rgba(v.$text-color, 0.5) !important;
+//   }
+// }
+
+// // Celda de descripción en la tabla (Estilo secundario)
+// .text-secondary {
+//   color: rgba(v.$text-color, 0.6) !important;
+//   font-size: 0.9rem;
+// }
+
+// // Animaciones
+// @keyframes fadeIn {
+//   from { opacity: 0; transform: translateY(-15px); }
+//   to { opacity: 1; transform: translateY(0); }
+// }
+
+@use 'variables' as v;
+
+/* ==========================================================================
+   0. CONFIGURACIÓN DEL HOST (Tokens & Solución de Colisión)
+   ========================================================================== */
+:host {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  background-color: #121826;
+  color: #fff;
+  overflow: hidden;
+
+  // TOKENS MATERIAL
+  --mdc-filled-text-field-container-color: rgba(0, 0, 0, 0.2);
+  --mdc-filled-text-field-input-text-color: #ffffff;
+  --mdc-filled-text-field-placeholder-text-color: rgba(255, 255, 255, 0.85);
+  --mat-select-placeholder-text-color: rgba(255, 255, 255, 0.85);
+  
+  --mdc-filled-text-field-label-text-color: rgba(255, 255, 255, 0.6);
+  --mdc-filled-text-field-focus-label-text-color: #{v.$brand-neon};
+  --mdc-filled-text-field-focus-active-indicator-color: #{v.$brand-neon};
+
+  // SOLUCIÓN: Forzamos que la etiqueta siempre flote arriba para dejar espacio al placeholder
+  --mat-form-field-floating-label-scale: 0.75;
+}
+
+/* ==========================================================================
+   1. CONTROL DE VISIBILIDAD (Evita mostrar ambos a la vez)
+   ========================================================================== */
+::ng-deep {
+  // Ocultar placeholder por defecto
+  .mat-mdc-form-field:not(.mat-focused) {
+    .mdc-text-field__input::placeholder {
+      opacity: 0 !important;
+      transition: opacity 0.2s ease;
+    }
+  }
+
+  // Mostrar placeholder solo cuando el campo tiene el foco
+  .mat-mdc-form-field.mat-focused {
+    .mdc-text-field__input::placeholder {
+      opacity: 1 !important;
+      transition: opacity 0.2s ease;
+    }
+  }
+}
+
+/* ==========================================================================
+   2. ESTRUCTURA DEL MODAL
+   ========================================================================== */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1200;
+  animation: fadeIn 0.2s ease-out;
+
+  .modal-content {
+    background: #1f2a38;
+    padding: 2.5rem;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9);
+    border: 1px solid rgba(v.$brand-neon, 0.3);
+    animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid rgba(v.$brand-neon, 0.1);
+      padding-bottom: 1rem;
+
+      .header-icon {
+        color: v.$brand-neon;
+        font-size: 26px;
+        width: 26px;
+        height: 26px;
+      }
+
+      h3 {
+        margin: 0;
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: v.$brand-neon;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   3. CUERPO DEL FORMULARIO
+   ========================================================================== */
+.form-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  .full-width {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+
+  mat-icon {
+    color: v.$brand-neon !important;
+    opacity: 0.8;
+  }
+  
+  mat-hint {
+    color: rgba(255, 255, 255, 0.5) !important;
+    font-size: 11px;
+  }
+}
+
+/* ==========================================================================
+   4. ACCIONES (Botones)
+   ========================================================================== */
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+  button {
+    padding: 0.8rem 1.6rem;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+
+    &.btn-cancel {
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      &:hover { 
+        background: rgba(255, 255, 255, 0.1);
+        border-color: #fff;
+      }
+    }
+
+    &.btn-save {
+      background: v.$brand-neon;
+      color: #121826;
+      &:hover:not(:disabled) {
+        box-shadow: 0 5px 20px rgba(v.$brand-neon, 0.4);
+        transform: translateY(-2px);
+      }
+      &:disabled {
+        background: #4a5568;
+        color: rgba(255, 255, 255, 0.3);
+        cursor: not-allowed;
+        opacity: 0.6;
+      }
+    }
+  }
+}
+
+.text-secondary {
+  color: rgba(255, 255, 255, 0.6) !important;
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { 
+  from { transform: translateY(20px); opacity: 0; } 
+  to { transform: translateY(0); opacity: 1; } 
+}

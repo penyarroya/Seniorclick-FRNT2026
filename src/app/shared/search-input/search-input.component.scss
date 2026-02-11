@@ -1,0 +1,181 @@
+// :host {
+//   display: block;
+//   width: 100%;
+
+//   // 1. FORZAMOS LOS TOKENS DE ALTURA
+//   --mdc-outlined-text-field-container-height: 38px !important;
+//   --mat-form-field-container-height: 38px !important;
+//   --mdc-outlined-text-field-container-shape: 10px;
+
+//   // 2. TOKENS DE COLOR PARA BOTONES (Base)
+//   --mdc-icon-button-icon-color: #02f99e !important;
+//   --mdc-icon-button-hover-icon-color: #02f99e !important;
+//   --mdc-icon-button-focus-icon-color: #02f99e !important;
+// }
+
+// .search-field {
+//   width: 100%;
+//   max-width: 325px; 
+//   display: block;
+//   transition: all 0.4s ease;
+
+//   --mdc-outlined-text-field-outline-color: rgba(255, 255, 255, 0.2);
+//   --mdc-outlined-text-field-hover-outline-color: #02f99e;
+//   --mdc-outlined-text-field-focus-outline-color: #02f99e;
+
+//   mat-form-field {
+//     width: 100%;
+
+//     .mat-mdc-form-field-subscript-wrapper { display: none !important; }
+
+//     .mat-mdc-text-field-wrapper {
+//       height: 38px !important;
+//       background-color: rgba(255, 255, 255, 0.05) !important;
+//       padding: 0 10px !important;
+//       display: flex;
+//       align-items: center;
+//     }
+
+//     .mat-mdc-form-field-flex {
+//       height: 38px !important;
+//       align-items: center !important;
+//     }
+
+//     .mat-mdc-form-field-infix {
+//       padding: 0 !important;
+//       min-height: unset !important;
+//       display: flex;
+//       align-items: center;
+//       height: 100% !important;
+//     }
+
+//     // LUPA (Prefix)
+//     mat-icon[matPrefix] {
+//       color: #02f99e !important;
+//       margin-right: 8px !important;
+//       font-size: 18px !important;
+//       width: 18px !important;
+//       height: 18px !important;
+//     }
+
+//     // LA "X" (Suffix) - REFUERZO POR HERENCIA
+//     .mat-mdc-form-field-icon-suffix {
+//       display: flex;
+//       align-items: center;
+//       // Forzamos el color en el contenedor del sufijo
+//       color: #02f99e !important; 
+
+//       .mat-mdc-icon-button {
+//         width: 28px !important;
+//         height: 28px !important;
+//         display: flex !important;
+//         align-items: center;
+//         justify-content: center;
+        
+//         // Obligamos al botón a heredar el color del padre (#02f99e)
+//         --mdc-icon-button-icon-color: inherit !important;
+//         color: inherit !important;
+
+//         mat-icon {
+//           color: inherit !important; 
+//           font-size: 18px !important;
+//           width: 18px !important;
+//           height: 18px !important;
+//           opacity: 1 !important;
+//         }
+
+//         &:hover {
+//           filter: drop-shadow(0 0 5px #02f99e);
+//         }
+//       }
+//     }
+
+//     // Efectos de foco y hover en el recuadro
+//     &:hover .mat-mdc-text-field-wrapper {
+//       background-color: rgba(2, 249, 158, 0.05) !important;
+//     }
+//   }
+
+//   input.mat-mdc-input-element {
+//     color: white !important;
+//     font-size: 13px;
+//     caret-color: #02f99e;
+//     line-height: 1 !important;
+//   }
+// }
+
+// Al usar ViewEncapsulation.None, usamos el nombre del componente como contenedor
+app-search-input {
+  display: block;
+  width: 100%;
+
+  // 1. TOKENS DE ALTURA Y COLOR BASE
+  --mdc-outlined-text-field-container-height: 48px !important;
+  --mat-form-field-container-height: 48px !important;
+  --mdc-outlined-text-field-container-shape: 12px;
+
+  // TOKENS PARA EL PLACEHOLDER (Color del texto de ayuda)
+  --mdc-outlined-text-field-input-text-placeholder-color: rgba(2, 249, 158, 0.4) !important;
+
+  .search-field {
+    width: 100%;
+    max-width: 325px; 
+    display: block;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &:focus-within {
+      max-width: 480px; 
+      filter: drop-shadow(0 0 10px rgba(2, 249, 158, 0.2));
+    }
+
+    mat-form-field {
+      width: 100%;
+
+      .mat-mdc-form-field-subscript-wrapper { display: none !important; }
+
+      .mat-mdc-text-field-wrapper {
+        height: 48px !important;
+        background-color: rgba(255, 255, 255, 0.05) !important;
+        padding: 0 14px !important;
+      }
+
+      // LUPA
+      mat-icon[matPrefix] {
+        color: #02f99e !important;
+        font-size: 22px !important;
+        width: 22px !important;
+        height: 22px !important;
+      }
+
+      // LA "X"
+      .mat-mdc-form-field-icon-suffix {
+        color: #02f99e !important; 
+        .mat-mdc-icon-button {
+          --mdc-icon-button-icon-color: inherit !important;
+          color: inherit !important;
+          mat-icon { color: inherit !important; }
+        }
+      }
+    }
+
+    // 2. CONFIGURACIÓN DEL INPUT (TEXTO, CURSOR Y PLACEHOLDER)
+    input.mat-mdc-input-element {
+      color: white !important;           // Color del texto que escribes
+      font-size: 15px !important;
+      line-height: 1 !important;
+
+      // EL CURSOR (Caret)
+      caret-color: #02f99e !important;   // El "palito" que parpadea ahora es neón
+
+      // EL PLACEHOLDER (Soporte para diferentes navegadores)
+      &::placeholder {
+        color: rgba(2, 249, 158, 0.4) !important; // Verde neón semi-transparente
+        font-style: italic;                       // Opcional: un toque distinto
+      }
+
+      // Refuerzo para navegadores específicos si fuera necesario
+      &::-webkit-input-placeholder { color: rgba(2, 249, 158, 0.4) !important; }
+      &::-moz-placeholder { color: rgba(2, 249, 158, 0.4) !important; }
+    }
+  }
+}

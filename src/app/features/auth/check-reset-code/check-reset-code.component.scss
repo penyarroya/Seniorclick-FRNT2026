@@ -1,0 +1,449 @@
+// @use '../../../../styles/variables' as *;
+
+// // // ---------------- Variables ----------------
+// // $primary-color: #6c63ff;
+// // $primary-hover: #9f8fff;
+// // $secondary-color: #e74c3c;
+// // $secondary-hover: #ff6b6b;
+// // $card-bg: #2c2a3e;
+// // $input-bg: #686182;
+// // $text-color: #f1f1f5;
+// // $error-color: #ff6b6b;
+// // $success-color: #4ade80;
+// // $label-color: #070bf1;
+// // $label-focus-color: #f6f4f4;
+// //  $cursor-color: #02fad1;
+
+// // ---------------- Wrapper ----------------
+// .reset-code-wrapper {
+//   width: 100%;
+//   height: 100%;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+
+//   .reset-code-container {
+//     max-width: 900px;
+//     width: 100%;
+//     padding: 50px 60px;
+//     background: $card-bg;
+//     border-radius: 16px;
+//     box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+//     transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+//     &:hover {
+//       transform: translateY(-4px);
+//       box-shadow: 0 30px 60px rgba(0, 0, 0, 0.35);
+//     }
+
+//     h2 {
+//       text-align: center;
+//       font-size: 2rem;
+//       color: $text-color;
+//       margin-bottom: 30px;
+//       font-weight: 700;
+//     }
+
+//     form {
+//       display: flex;
+//       flex-direction: column;
+//     }
+
+//     // ---------------- Inputs ----------------
+//     mat-form-field {
+//       width: 100%;
+//       margin-bottom: 20px;
+
+//       ::ng-deep .mat-mdc-text-field-wrapper {
+//         background: $input-bg !important;
+//         border-radius: 8px;
+//         transition: all 0.3s ease;
+//       }
+
+//       ::ng-deep .mat-mdc-input-element {
+//         caret-color: $cursor-color !important;
+//         font-weight: 500;
+//         color: $text-color;
+
+//         &::placeholder {
+//           color: rgba(255,255,255,0.6);
+//         }
+
+//         &:focus {
+//           text-shadow: 0 0 2px #770606;
+//         }
+
+//         &::selection {
+//           background-color: rgba(119, 6, 6, 0.35);
+//         }
+//       }
+
+//       ::ng-deep .mdc-floating-label {
+//         font-weight: 600;
+//         color: $label-color;
+//         font-size: 1.2rem;
+//         transition: all 0.25s ease;
+//       }
+
+//       ::ng-deep .mdc-floating-label--float-above,
+//       ::ng-deep .mdc-text-field--focused .mdc-floating-label {
+//         color: $label-focus-color !important;
+//         font-size: 1.3rem !important;
+//         font-weight: 700;
+//       }
+
+//       mat-error {
+//         font-size: 0.85rem;
+//         color: $error-color;
+//         animation: fadeIn 0.3s ease-in;
+//       }
+//     }
+
+//     // ---------------- Mensajes ----------------
+//     .server-error-message,
+//     .success-message {
+//       text-align: center;
+//       margin-bottom: 15px;
+//       font-weight: 600;
+//       animation: fadeIn 0.3s ease-in;
+//     }
+
+//     .server-error-message { color: $error-color; }
+//     .success-message { color: $success-color; }
+
+//     // ---------------- Botones ----------------
+//     .button-group {
+//       display: flex;
+//       gap: 12px;
+//       margin-top: 20px;
+
+//       // ---------------- Modificación: Colores de botones ----------------
+//       ::ng-deep button.login-submit-btn {
+//         flex: 1;
+//         min-height: 50px;
+//         font-weight: 600;
+//         border-radius: 10px;
+//         font-size: 1rem;
+//         padding: 0;
+//         color: #fff;
+//         display: flex;
+//         justify-content: center;
+//         align-items: center;
+//         transition: all 0.25s ease;
+
+//         background: linear-gradient(90deg, $primary-color, $primary-hover) !important;
+//         color: #fff !important;
+
+//         &:hover:not(:disabled) {
+//           background: linear-gradient(90deg, $primary-hover, $primary-color) !important;
+//         }
+
+//         &:disabled {
+//           background: linear-gradient(90deg, $primary-color, $primary-hover) !important;
+//           color: #fff !important;
+//         }
+//       }
+
+//       ::ng-deep button.cancel-btn {
+//         flex: 1;
+//         min-height: 50px;
+//         font-weight: 600;
+//         border-radius: 10px;
+//         font-size: 1rem;
+//         padding: 0;
+//         color: #fff;
+//         display: flex;
+//         justify-content: center;
+//         align-items: center;
+//         transition: all 0.25s ease;
+
+//         background: linear-gradient(90deg, $secondary-color, $secondary-hover) !important;
+//         color: #fff !important;
+
+//         &:hover:not(:disabled) {
+//           background: linear-gradient(90deg, $secondary-hover, $secondary-color) !important;
+//         }
+//       }
+//     }
+
+//     // ---------------- Link Volver ----------------
+//     .login-options {
+//       display: flex;
+//       flex-direction: column;
+//       align-items: center;
+//       gap: 2px;
+//       margin-top: 15px;
+
+//       button {
+//         background: transparent !important;
+//         color: $text-color !important;
+//         border: none !important;
+//         box-shadow: none !important;
+//         padding: 0 !important;
+//         font-weight: 500;
+//         font-size: 0.95rem;
+//         cursor: pointer;
+
+//         &:hover {
+//           color: $label-focus-color !important;
+//         }
+
+//         &:focus {
+//           outline: none;
+//           text-decoration: underline;
+//         }
+//       }
+//     }
+//   }
+// }
+
+// // ---------------- Countdown Timer ----------------
+// .countdown-timer {
+//   text-align: center;
+//   font-size: 1rem;
+//   font-weight: 700;
+//   color: #0086e6;
+//   margin-bottom: 15px;
+//   transition: color 0.3s ease;
+
+//   &.low {
+//     color: #ff5252;
+//   }
+// }
+
+// // ---------------- Animaciones ----------------
+// @keyframes fadeIn {
+//   from { opacity: 0; transform: translateY(-3px); }
+//   to { opacity: 1; transform: translateY(0); }
+// }
+
+// // ---------------- Responsivo ----------------
+// @media (max-width: 1024px) {
+//   .reset-code-container { max-width: 80%; }
+// }
+
+// @media (max-width: 480px) {
+//   .reset-code-container {
+//     padding: 30px 20px;
+//     width: 90%;
+//     box-shadow: none;
+
+//     &:hover { transform: none; box-shadow: none; }
+
+//     h2 { font-size: 1.6rem; }
+//     input { padding: 12px; }
+//     button { font-size: 0.95rem; padding: 12px; }
+
+//     .button-group { flex-direction: column; gap: 10px; }
+//   }
+// }
+
+@use '../../../../styles/variables' as *;
+
+// ---------------- Wrapper Principal ----------------
+.reset-code-wrapper {
+  width: 100%;
+  min-height: calc(100vh - 64px); 
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; 
+  padding-top: 80px; 
+  padding-bottom: 30px;
+  box-sizing: border-box;
+}
+
+// ---------------- Contenedor de la Tarjeta ----------------
+.reset-code-container {
+  max-width: 420px; // 🔹 Más estrecho para enfoque en el código
+  width: 100%;
+  padding: 30px 40px; 
+  background: $card-bg;
+  border-radius: 16px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45);
+  }
+
+  h2 {
+    text-align: center;
+    font-size: 1.6rem;
+    color: $text-color;
+    margin-bottom: 8px;
+    font-weight: 700;
+  }
+
+  .subtitle {
+    text-align: center;
+    color: rgba($text-color, 0.7);
+    font-size: 0.9rem;
+    margin-bottom: 25px;
+    display: block;
+    line-height: 1.4;
+  }
+
+  // ---------------- Personalización de Material 20 ----------------
+  mat-form-field {
+    width: 100%;
+    margin-bottom: 10px;
+
+    --mdc-filled-tonal-container-color: #{$input-bg};
+    --mdc-filled-tonal-container-shape: 10px;
+    --mat-form-field-state-layer-color: #{$text-color};
+    --mat-form-field-label-text-color: #{$label-color};
+    --mat-form-field-focus-label-text-color: #{$label-focus-color};
+    --mat-form-field-focus-active-indicator-color: #{$cursor-color};
+    --mat-form-field-container-height: 60px; 
+
+    input {
+      color: $text-color;
+      caret-color: $cursor-color;
+      font-size: 1.5rem; // 🔹 Código más grande
+      text-align: center; // 🔹 Código centrado
+      letter-spacing: 8px; // 🔹 Espaciado entre dígitos
+      font-weight: 700;
+
+      &::placeholder {
+        color: rgba(255, 255, 255, 0.3) !important;
+        letter-spacing: normal;
+        font-size: 0.9rem;
+        font-weight: 400;
+      }
+    }
+
+    mat-error {
+      font-size: 0.75rem;
+      color: $cursor-color; // Usamos el color cian para resaltar errores en fondo oscuro
+      text-align: center;
+      width: 100%;
+      display: block;
+      animation: fadeIn 0.3s ease-in;
+    }
+  }
+
+  // ---------------- Contador de Tiempo ----------------
+  .countdown-timer {
+    text-align: center;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #49a7ff; 
+    margin: 20px 0;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+
+    strong { 
+      font-size: 1.1rem;
+      font-family: monospace; // Estilo digital
+    }
+
+    &.low { 
+      color: #ff5252;
+      background: rgba(255, 82, 82, 0.1);
+      border-color: rgba(255, 82, 82, 0.2);
+    }
+  }
+
+  // ---------------- Mensajes del Servidor ----------------
+  .server-error-message, .success-message {
+    text-align: center;
+    margin-bottom: 12px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 8px;
+    border-radius: 6px;
+  }
+  .server-error-message { color: $error-color; background: rgba($error-color, 0.1); }
+  .success-message { color: $success-color; background: rgba($success-color, 0.1); }
+
+  // ---------------- Grupo de Botones ----------------
+  .button-group {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+
+    button {
+      flex: 1;
+      min-height: 48px;
+      font-weight: 700;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      border: none;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      transition: all 0.25s ease;
+
+      &:disabled { 
+        opacity: 0.5; 
+        cursor: not-allowed;
+        filter: grayscale(0.5);
+      }
+    }
+
+    .login-submit-btn {
+      background: linear-gradient(90deg, $primary-color, $primary-hover) !important;
+      color: #fff !important;
+      box-shadow: 0 4px 15px rgba($primary-color, 0.3);
+
+      &:hover:not(:disabled) {
+        box-shadow: 0 6px 20px rgba($primary-color, 0.4);
+        transform: translateY(-1px);
+      }
+    }
+
+    .cancel-btn {
+      background: linear-gradient(90deg, $secondary-color, $secondary-hover) !important;
+      color: #fff !important;
+      
+      &:hover:not(:disabled) {
+        transform: translateY(-1px);
+      }
+    }
+  }
+
+  // ---------------- Opciones Inferiores ----------------
+  .login-options {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+
+    button {
+      background: transparent;
+      color: rgba($text-color, 0.6);
+      border: none;
+      font-size: 0.85rem;
+      cursor: pointer;
+      font-weight: 500;
+      transition: color 0.2s;
+
+      &:hover { 
+        color: $text-color; 
+        text-decoration: underline; 
+      }
+    }
+  }
+}
+
+// ---------------- Animaciones ----------------
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+// ---------------- Responsivo ----------------
+@media (max-width: 480px) {
+  .reset-code-wrapper {
+    padding-top: 40px;
+  }
+  .reset-code-container {
+    padding: 25px 20px;
+    max-width: 90%;
+    
+    .button-group {
+      flex-direction: column; // Botones uno sobre otro en móvil
+    }
+  }
+}

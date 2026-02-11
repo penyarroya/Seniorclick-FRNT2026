@@ -1,0 +1,560 @@
+// @use 'variables' as v;
+
+// /* ==========================================================================
+//    1. ESTRUCTURA BASE Y HOST
+//    ========================================================================== */
+// :host {
+//   display: flex;
+//   flex-direction: column;
+//   width: 100%;
+//   height: 100vh; 
+//   background-color: #121826;
+//   color: #fff;
+//   overflow: hidden;
+
+//   app-maintenance-layout {
+//     flex: 1; 
+//     display: flex;
+//     flex-direction: column;
+//     height: 100%;
+//   }
+// }
+
+// /* ==========================================================================
+//    2. MINIATURA EN TABLA (AVATAR)
+//    ========================================================================== */
+// .table-avatar-wrapper {
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   height: 40px;
+
+//   .img-table-avatar {
+//     width: 32px;
+//     height: 32px;
+//     border-radius: 50%;
+//     object-fit: cover;
+//     border: 1px solid v.$brand-neon;
+//     box-shadow: 0 0 8px rgba(v.$brand-neon, 0.4);
+//   }
+
+//   .icon-table-avatar {
+//     color: rgba(v.$brand-neon, 0.4);
+//     font-size: 28px;
+//     width: 28px;
+//     height: 28px;
+//   }
+// }
+
+// /* ==========================================================================
+//    3. MODAL Y ANIMACIONES
+//    ========================================================================== */
+// .modal {
+//   position: fixed;
+//   inset: 0;
+//   background: rgba(0, 0, 0, 0.85);
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   z-index: 1200;
+//   backdrop-filter: blur(8px);
+//   padding: 20px;
+
+//   .modal-content {
+//     background: #1f2a38;
+//     padding: 2rem;
+//     border-radius: 16px;
+//     width: 100%;
+//     max-width: 550px; 
+//     max-height: 90vh; 
+//     overflow-y: auto; 
+//     border: 1px solid rgba(v.$brand-neon, 0.3);
+//     box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9);
+//     animation: modalAppear 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+//     h3 {
+//       margin-top: 0;
+//       margin-bottom: 1.5rem;
+//       font-weight: 600;
+//       color: v.$brand-neon;
+//       text-align: center;
+//       letter-spacing: 0.5px;
+//       text-transform: uppercase;
+//     }
+
+//     &::-webkit-scrollbar { width: 6px; }
+//     &::-webkit-scrollbar-thumb { 
+//       background: rgba(v.$brand-neon, 0.2); 
+//       border-radius: 10px; 
+//     }
+//   }
+// }
+
+// @keyframes modalAppear {
+//   from { opacity: 0; transform: translateY(30px) scale(0.95); }
+//   to { opacity: 1; transform: translateY(0) scale(1); }
+// }
+
+// /* ==========================================================================
+//    4. VISTA PREVIA DEL AVATAR (FORMULARIO)
+//    ========================================================================== */
+// .avatar-preview {
+//   display: flex;
+//   justify-content: center;
+//   margin-bottom: 1.5rem;
+  
+//   img {
+//     width: 110px;
+//     height: 110px;
+//     border-radius: 50%;
+//     object-fit: cover;
+//     border: 3px solid v.$brand-neon;
+//     padding: 3px;
+//     background: #121826;
+//     box-shadow: 0 0 25px rgba(v.$brand-neon, 0.25);
+//   }
+
+//   .avatar-placeholder {
+//     width: 110px;
+//     height: 110px;
+//     border-radius: 50%;
+//     background: rgba(v.$brand-neon, 0.05);
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     border: 2px dashed rgba(v.$brand-neon, 0.3);
+    
+//     mat-icon {
+//       font-size: 48px;
+//       width: 48px;
+//       height: 48px;
+//       color: rgba(v.$brand-neon, 0.2);
+//     }
+//   }
+// }
+
+// /* ==========================================================================
+//    5. FORMULARIO Y BUSCADOR EXTRA-ANCHO (CORREGIDO)
+//    ========================================================================== */
+// .form-grid {
+//   display: flex;
+//   flex-direction: column;
+//   gap: 0.5rem;
+
+//   .row {
+//     display: grid;
+//     grid-template-columns: 1fr 1fr;
+//     gap: 1rem;
+//     @media (max-width: 600px) { grid-template-columns: 1fr; }
+//   }
+
+//   .full-width { width: 100%; }
+
+//   mat-form-field {
+//     width: 100%;
+//     min-width: 300px;
+//     mat-icon[matPrefix], mat-icon[matSuffix] {
+//       color: v.$brand-neon;
+//       opacity: 0.6;
+//     }
+//   }
+
+//   .select-search-header {
+//     display: flex;
+//     align-items: center;
+    
+//     /* TAMAÑO EXTRA */
+//     min-height: 70px;          /* Mucho más alto que un input normal */
+//     padding: 0 24px;           /* Más margen lateral interno */
+    
+//     /* FORZAR EXPANSIÓN */
+//     width: calc(100% + 32px);  /* Hack: lo hacemos más ancho que el propio panel */
+//     margin-left: -16px;        /* Lo centramos tras expandirlo */
+//     margin-top: -8px;
+//     margin-bottom: 15px;
+    
+//     box-sizing: border-box;
+//     position: sticky;
+//     top: 0;
+//     background: #252f3f;       /* Fondo diferente para que resalte */
+//     z-index: 100;
+//     border-bottom: 3px solid v.$brand-neon; /* Borde inferior muy grueso */
+
+//     mat-icon:not(.clear-search-icon) {
+//       margin-right: 15px;
+//       color: v.$brand-neon;
+//       font-size: 28px;         /* Lupa más grande */
+//       width: 28px;
+//       height: 28px;
+//       flex-shrink: 0;
+//     }
+
+//     input {
+//       background: transparent;
+//       border: none;
+//       color: #fff;
+//       outline: none;
+//       flex: 1; 
+//       height: 100%;
+//       font-size: 1.2rem;       /* Fuente grande para visibilidad total */
+//       font-weight: 500;
+//       cursor: text;
+//       caret-color: v.$brand-neon;
+//       min-width: 0;
+//       &::placeholder { color: rgba(255, 255, 255, 0.5); }
+//     }
+
+//     .clear-search-icon {
+//       cursor: pointer;
+//       font-size: 24px !important; 
+//       width: 24px !important;
+//       height: 24px !important;
+//       opacity: 0.7;
+//       color: v.$brand-neon;
+//       margin-left: 12px;
+//       flex-shrink: 0;
+//       transition: all 0.2s ease;
+      
+//       &:hover { 
+//         opacity: 1; 
+//         transform: scale(1.2);
+//         filter: drop-shadow(0 0 8px v.$brand-neon);
+//       }
+//     }
+//   }
+// }
+
+// mat-error {
+//   font-size: 0.75rem;
+//   color: #ff5252;
+//   font-weight: 500;
+//   margin-top: 2px;
+// }
+
+// mat-hint {
+//   color: rgba(255, 255, 255, 0.4) !important;
+//   font-size: 11px;
+// }
+
+// mat-option {
+//   small {
+//     color: rgba(v.$brand-neon, 0.5);
+//     margin-left: 4px;
+//     font-size: 0.85em;
+//   }
+// }
+
+// /* ==========================================================================
+//    6. ACCIONES (BOTONES)
+//    ========================================================================== */
+// .modal-actions {
+//   display: flex;
+//   justify-content: flex-end;
+//   gap: 1rem;
+//   margin-top: 1.5rem;
+//   padding-top: 1.5rem;
+//   border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+//   button {
+//     padding: 0.7rem 1.6rem;
+//     border-radius: 8px;
+//     font-weight: 600;
+//     text-transform: uppercase;
+//     cursor: pointer;
+//     font-size: 0.8rem;
+//     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+
+//     &.btn-save {
+//       background: v.$brand-neon;
+//       color: #000;
+//       border: none;
+      
+//       &:hover:not(:disabled) { 
+//         box-shadow: 0 0 20px rgba(v.$brand-neon, 0.5);
+//         transform: translateY(-2px);
+//       }
+
+//       &:disabled { 
+//         background: #374151; 
+//         color: #9ca3af;
+//         cursor: not-allowed; 
+//       }
+//     }
+
+//     &.btn-cancel {
+//       background: transparent;
+//       color: #9ca3af;
+//       border: 1px solid rgba(156, 163, 175, 0.3);
+//       &:hover { 
+//         color: #fff; 
+//         border-color: #fff;
+//         background: rgba(255, 255, 255, 0.05);
+//       }
+//     }
+//   }
+// }
+
+@use 'variables' as v;
+
+/* ==========================================================================
+   0. CONFIGURACIÓN DEL HOST (Tokens & Material Overrides)
+   ========================================================================== */
+:host {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh; 
+  background-color: #121826;
+  color: #fff;
+  overflow: hidden;
+
+  // TOKENS MATERIAL: Brillo máximo para placeholders y consistencia
+  --mdc-filled-text-field-container-color: rgba(0, 0, 0, 0.2);
+  --mdc-filled-text-field-input-text-color: #ffffff;
+  --mdc-filled-text-field-placeholder-text-color: rgba(255, 255, 255, 0.85); // Placeholder ultra-claro
+  --mat-select-placeholder-text-color: rgba(255, 255, 255, 0.85);
+  
+  --mdc-filled-text-field-label-text-color: rgba(255, 255, 255, 0.65);
+  --mdc-filled-text-field-focus-label-text-color: #{v.$brand-neon};
+  --mdc-filled-text-field-focus-active-indicator-color: #{v.$brand-neon};
+
+  app-maintenance-layout {
+    flex: 1; 
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+}
+
+/* ==========================================================================
+   1. ELEMENTOS VISUALES (Avatares en Tabla)
+   ========================================================================== */
+.table-avatar-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+
+  .img-table-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid v.$brand-neon;
+    box-shadow: 0 0 8px rgba(v.$brand-neon, 0.4);
+  }
+
+  .icon-table-avatar {
+    color: rgba(v.$brand-neon, 0.4);
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
+  }
+}
+
+/* ==========================================================================
+   2. MODAL Y ANIMACIONES (Unificado)
+   ========================================================================== */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1200;
+  backdrop-filter: blur(8px);
+  padding: 20px;
+
+  .modal-content {
+    background: #1f2a38;
+    padding: 2.5rem; // Unificado
+    border-radius: 16px;
+    width: 100%;
+    max-width: 550px; 
+    max-height: 90vh; 
+    overflow-y: auto; 
+    border: 1px solid rgba(v.$brand-neon, 0.3);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9);
+    animation: slideUp 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+    h3 {
+      margin-top: 0;
+      margin-bottom: 1.5rem;
+      font-weight: 700; // Unificado
+      color: v.$brand-neon;
+      text-align: left; // Unificado a la izquierda
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      border-bottom: 1px solid rgba(v.$brand-neon, 0.1);
+      padding-bottom: 0.5rem;
+    }
+
+    &::-webkit-scrollbar { width: 6px; }
+    &::-webkit-scrollbar-thumb { 
+      background: rgba(v.$brand-neon, 0.2); 
+      border-radius: 10px; 
+    }
+  }
+}
+
+/* ==========================================================================
+   3. AVATAR PREVIEW (Formulario)
+   ========================================================================== */
+.avatar-preview {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+  
+  img {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid v.$brand-neon;
+    padding: 3px;
+    background: #121826;
+    box-shadow: 0 0 25px rgba(v.$brand-neon, 0.25);
+  }
+
+  .avatar-placeholder {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    background: rgba(v.$brand-neon, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed rgba(v.$brand-neon, 0.3);
+    
+    mat-icon {
+      font-size: 48px;
+      width: 48px;
+      height: 48px;
+      color: rgba(v.$brand-neon, 0.2);
+    }
+  }
+}
+
+/* ==========================================================================
+   4. FORMULARIO Y BUSCADOR (Placeholders Nítidos)
+   ========================================================================== */
+.form-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  .row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    @media (max-width: 600px) { grid-template-columns: 1fr; }
+  }
+
+  .full-width { width: 100%; }
+
+  mat-form-field {
+    width: 100%;
+    mat-icon[matPrefix], mat-icon[matSuffix] {
+      color: v.$brand-neon;
+      opacity: 0.8; // Más brillo para iconos
+    }
+  }
+
+  /* Buscador dentro del Select */
+  .select-search-header {
+    display: flex;
+    align-items: center;
+    min-height: 60px;
+    padding: 0 20px;
+    width: calc(100% + 32px);
+    margin: -8px -16px 15px -16px;
+    box-sizing: border-box;
+    position: sticky;
+    top: 0;
+    background: #252f3f;
+    z-index: 100;
+    border-bottom: 2px solid v.$brand-neon;
+
+    mat-icon:not(.clear-search-icon) {
+      margin-right: 12px;
+      color: v.$brand-neon;
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
+    }
+
+    input {
+      background: transparent;
+      border: none;
+      color: #fff;
+      outline: none;
+      flex: 1; 
+      font-size: 1.1rem;
+      font-weight: 500;
+      caret-color: v.$brand-neon;
+      
+      &::placeholder { 
+        color: rgba(255, 255, 255, 0.85) !important; // Placeholder ultra-claro
+        opacity: 1;
+      }
+    }
+
+    .clear-search-icon {
+      cursor: pointer;
+      color: v.$brand-neon;
+      opacity: 0.7;
+      transition: all 0.2s;
+      &:hover { opacity: 1; transform: scale(1.1); }
+    }
+  }
+}
+
+/* ==========================================================================
+   5. ACCIONES (Botones Unificados)
+   ========================================================================== */
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+  button {
+    padding: 0.8rem 1.6rem;
+    border-radius: 8px;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+    transition: all 0.25s ease;
+
+    &.btn-save {
+      background: v.$brand-neon;
+      color: #000;
+      border: none;
+      &:hover:not(:disabled) { 
+        box-shadow: 0 5px 15px rgba(v.$brand-neon, 0.4);
+        transform: translateY(-2px);
+      }
+      &:disabled { background: #4a5568; opacity: 0.6; }
+    }
+
+    &.btn-cancel {
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      &:hover { background: rgba(255, 255, 255, 0.1); border-color: #fff; }
+    }
+  }
+}
+
+/* Estilos de error y ayuda */
+mat-error { font-size: 0.75rem; color: #ff5252; font-weight: 600; margin-top: 4px; }
+mat-hint { color: rgba(255, 255, 255, 0.5) !important; font-size: 11px; }
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}

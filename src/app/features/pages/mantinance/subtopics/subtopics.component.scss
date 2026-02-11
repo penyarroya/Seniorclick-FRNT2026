@@ -1,0 +1,343 @@
+// @use 'variables' as v; // Asegúrate de que la ruta a tu archivo de variables sea correcta
+
+// :host {
+//   display: flex;
+//   flex-direction: column;
+//   width: 100%;
+//   height: 100vh;
+//   background-color: #121826;
+//   color: #fff;
+//   padding: 0;
+//   overflow: hidden;
+
+//   // Ajuste para que el layout de mantenimiento ocupe el espacio disponible
+//   app-maintenance-layout {
+//     display: flex;
+//     flex-direction: column;
+//     flex: 1;
+//     height: 100%;
+//   }
+// }
+
+// /* ==========================================================================
+//    Estructura del Modal (Neon-Dark Style)
+//    ========================================================================== */
+// .modal {
+//   position: fixed;
+//   inset: 0;
+//   background: rgba(0, 0, 0, 0.85); // Fondo oscuro semi-transparente
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   z-index: 1200;
+//   backdrop-filter: blur(6px); // Efecto esmerilado profesional
+
+//   .modal-content {
+//     background: #1f2a38;
+//     padding: 2.5rem;
+//     border-radius: 12px;
+//     width: 550px; 
+//     max-width: 90%;
+//     border: 1px solid rgba(v.$brand-neon, 0.3); // Borde sutil con tu color neon
+//     box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9);
+//     max-height: 85vh;
+//     overflow-y: auto;
+
+//     h3 { 
+//       margin: 0 0 1.5rem 0; 
+//       color: v.$brand-neon; 
+//       text-align: center;
+//       text-transform: uppercase;
+//       font-weight: 800;
+//       letter-spacing: 1.5px;
+//       font-size: 1.25rem;
+//     }
+
+//     .form-group {
+//       margin-bottom: 1.5rem;
+      
+//       label { 
+//         display: block; 
+//         margin-bottom: 0.6rem; 
+//         color: rgba(v.$text-color, 0.7);
+//         font-size: 0.8rem;
+//         font-weight: 600;
+//         text-transform: uppercase;
+//         letter-spacing: 0.5px;
+//       }
+      
+//       // Estilos específicos para Angular Material dentro del modal
+//       mat-form-field { 
+//         width: 100%; 
+        
+//         // Personalización de colores de Material para modo oscuro
+//         ::v-deep .mat-mdc-form-field-subscript-wrapper {
+//           font-size: 11px;
+//         }
+//       }
+//     }
+//   }
+
+//   /* Acciones de los Botones */
+//   .modal-actions {
+//     display: flex; 
+//     flex-direction: row;      
+//     justify-content: flex-end; 
+//     gap: 1.2rem;
+//     margin-top: 2rem;
+
+//     button {
+//       padding: 0.8rem 1.8rem; 
+//       border-radius: 6px; 
+//       cursor: pointer;
+//       font-weight: 700;
+//       min-width: 130px;
+//       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+//       text-transform: uppercase;
+//       font-size: 0.85rem;
+
+//       &.btn-save { 
+//         background: v.$brand-neon; 
+//         color: #000; 
+//         border: none;
+//         box-shadow: 0 4px 15px rgba(v.$brand-neon, 0.2);
+
+//         &:disabled { 
+//           background: #374151; 
+//           color: rgba(255, 255, 255, 0.3);
+//           cursor: not-allowed;
+//           box-shadow: none;
+//           opacity: 0.6;
+//         }
+
+//         &:hover:not(:disabled) { 
+//           filter: brightness(1.2);
+//           box-shadow: 0 0 25px rgba(v.$brand-neon, 0.5);
+//           transform: translateY(-2px);
+//         }
+//       }
+
+//       &.btn-cancel { 
+//         background: transparent; 
+//         color: #9ca3af; 
+//         border: 1px solid rgba(156, 163, 175, 0.3);
+
+//         &:hover { 
+//           background: rgba(255, 255, 255, 0.05);
+//           color: #fff;
+//           border-color: #fff;
+//         }
+//       }
+//     }
+//   }
+// }
+
+// /* ==========================================================================
+//    Scrollbar Personalizado para el Modal
+//    ========================================================================== */
+// .modal-content::-webkit-scrollbar {
+//   width: 6px;
+// }
+
+// .modal-content::-webkit-scrollbar-track {
+//   background: rgba(0, 0, 0, 0.1);
+// }
+
+// .modal-content::-webkit-scrollbar-thumb {
+//   background: rgba(v.$brand-neon, 0.3);
+//   border-radius: 10px;
+  
+//   &:hover {
+//     background: v.$brand-neon;
+//   }
+// }
+
+@use 'variables' as v;
+
+/* ==========================================================================
+   0. Host & Design Tokens (Limpieza de v-deep)
+   ========================================================================== */
+:host {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  background-color: #121826;
+  color: #fff;
+  padding: 0;
+  overflow: hidden;
+
+  // TOKENS MATERIAL: Brillo máximo para placeholders y etiquetas
+  --mdc-filled-text-field-container-color: #2c3e50;
+  --mdc-filled-text-field-input-text-color: #ffffff;
+  --mdc-filled-text-field-placeholder-text-color: rgba(255, 255, 255, 0.85);
+  --mat-select-placeholder-text-color: rgba(255, 255, 255, 0.85);
+  
+  --mdc-filled-text-field-label-text-color: rgba(255, 255, 255, 0.65);
+  --mdc-filled-text-field-focus-label-text-color: #{v.$brand-neon};
+  --mdc-filled-text-field-focus-active-indicator-color: #{v.$brand-neon};
+
+  app-maintenance-layout {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    height: 100%;
+  }
+}
+
+/* ==========================================================================
+   1. Estructura del Modal (Neon-Dark Premium)
+   ========================================================================== */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1200;
+  backdrop-filter: blur(8px); // Aumentado para mayor elegancia
+  animation: fadeIn 0.2s ease-in-out;
+
+  .modal-content {
+    background: #1f2a38;
+    padding: 2.5rem;
+    border-radius: 12px;
+    width: 550px; 
+    max-width: 90%;
+    border: 1px solid rgba(v.$brand-neon, 0.3);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9);
+    max-height: 85vh;
+    overflow-y: auto;
+    animation: slideUp 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Scrollbar Personalizado */
+    &::-webkit-scrollbar { width: 6px; }
+    &::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.1); }
+    &::-webkit-scrollbar-thumb {
+      background: rgba(v.$brand-neon, 0.3);
+      border-radius: 10px;
+      &:hover { background: v.$brand-neon; }
+    }
+
+    h3 { 
+      margin: 0 0 1.5rem 0; 
+      color: v.$brand-neon; 
+      text-align: left; // Unificado a la izquierda
+      text-transform: uppercase;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      font-size: 1.25rem;
+      border-bottom: 1px solid rgba(v.$brand-neon, 0.1);
+      padding-bottom: 0.5rem;
+    }
+  }
+
+  /* ==========================================================================
+     2. Form-Groups (Placeholders Nítidos)
+     ========================================================================== */
+  .form-group {
+    margin-bottom: 1.5rem;
+    
+    label { 
+      display: block; 
+      margin-bottom: 0.6rem; 
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    // Inputs nativos con placeholder claro
+    input, textarea {
+      width: 100%;
+      padding: 0.8rem;
+      background: #2c3e50;
+      color: #fff;
+      border: 1px solid #444;
+      border-radius: 8px;
+
+      &::placeholder {
+        color: rgba(255, 255, 255, 0.85) !important;
+        opacity: 1;
+      }
+
+      &:focus {
+        border-color: v.$brand-neon;
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(v.$brand-neon, 0.15);
+      }
+    }
+
+    mat-form-field { 
+      width: 100%; 
+    }
+  }
+
+  /* ==========================================================================
+     3. Acciones de los Botones (Alineación Derecha)
+     ========================================================================== */
+  .modal-actions {
+    display: flex; 
+    justify-content: flex-end; 
+    gap: 1.2rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+    button {
+      padding: 0.8rem 1.8rem; 
+      border-radius: 8px; // Unificado a 8px
+      cursor: pointer;
+      font-weight: 700;
+      min-width: 130px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &.btn-save { 
+        background: v.$brand-neon; 
+        color: #000; 
+        border: none;
+        box-shadow: 0 4px 15px rgba(v.$brand-neon, 0.2);
+
+        &:disabled { 
+          background: #374151; 
+          color: rgba(255, 255, 255, 0.3);
+          cursor: not-allowed;
+          box-shadow: none;
+          opacity: 0.6;
+        }
+
+        &:hover:not(:disabled) { 
+          transform: translateY(-2px);
+          filter: brightness(1.2);
+          box-shadow: 0 0 25px rgba(v.$brand-neon, 0.5);
+        }
+      }
+
+      &.btn-cancel { 
+        background: rgba(255, 255, 255, 0.05); 
+        color: #9ca3af; 
+        border: 1px solid rgba(156, 163, 175, 0.3);
+
+        &:hover { 
+          background: rgba(255, 255, 255, 0.1);
+          color: #fff;
+          border-color: #fff;
+        }
+      }
+    }
+  }
+}
+
+/* ================= ANIMACIONES ================= */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { 
+  from { transform: translateY(20px); opacity: 0; } 
+  to { transform: translateY(0); opacity: 1; } 
+}

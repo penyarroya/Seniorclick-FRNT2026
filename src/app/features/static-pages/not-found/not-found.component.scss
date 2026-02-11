@@ -1,0 +1,195 @@
+// /* Contenedor principal entre toolbar y footer */
+// .not-found-container {
+//   position: absolute;    /* ocupa toda la zona disponible */
+//   top: 50px;             /* altura de la toolbar */
+//   bottom: 40px;          /* altura del footer */
+//   left: 0;
+//   right: 0;
+
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   justify-content: center;
+//   text-align: center;
+
+//   background-image: url('/img/FondoNotFound.jpg'); /* imagen de fondo */
+//   background-size: cover;
+//   background-position: center;
+//   background-repeat: no-repeat;
+
+//   /* Overlay oscuro */
+//   &::before {
+//     content: '';
+//     position: absolute;
+//     inset: 0;
+//     background-color: rgba(0, 0, 0, 0.5);
+//     z-index: 1;
+//   }
+// }
+
+// /* Textos dentro del contenedor */
+// .not-found-texts {
+//   position: relative;
+//   z-index: 2;              /* encima del overlay */
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   gap: 6px;               /* espacio entre h1, p y botón */
+//   color: #ffd700;
+// }
+
+// /* Título 404 */
+// .not-found-texts h1 {
+//   font-size: 96px;
+//   margin: 0;
+// }
+
+// /* Texto descriptivo */
+// .not-found-texts p {
+//   font-size: 16px;
+//   margin: 0;
+//    color: #f5f4f2;
+// }
+
+// /* Botón volver al inicio */
+// .not-found-texts button {
+//   margin-top: 24px;        /* separación del texto */
+//   background-color: #ffd700;
+//   color: #154f9f;
+//   font-weight: 600;
+//   font-size: 16px;
+//   padding: 10px 24px;
+//   border-radius: 8px;
+//   border: none;
+//   cursor: pointer;
+//   transition: all 0.2s ease-in-out;
+//   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+
+//   &:hover {
+//     background-color: #e6c200;
+//     transform: scale(1.05);
+//   }
+
+//   &:active {
+//     transform: scale(0.98);
+//   }
+// }
+
+// /* Footer */
+// .footer {
+//   height: 40px;
+//   width: 100%;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   background-color: #154f9f;
+//   color: #ffd700;
+//   font-weight: 500;
+//   position: fixed;
+//   bottom: 0;
+//   left: 0;
+// }
+
+
+// Aseguramos que el componente ocupe todo el alto disponible
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Contenedor principal con imagen de fondo */
+.not-found-container {
+  flex: 1; // Ocupa todo el espacio entre toolbar y footer de forma dinámica
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative; // Necesario para el overlay (::before)
+
+  background-image: url('/img/FondoNotFound.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 20px;
+
+  /* Overlay oscuro */
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.6); // Un poco más oscuro para mejor contraste
+    z-index: 1;
+  }
+}
+
+/* Textos dentro del contenedor */
+.not-found-texts {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  color: #ffd700; // Dorado SeniorClick
+  max-width: 600px;
+
+  h1 {
+    font-size: clamp(5rem, 15vw, 8rem); // Tamaño responsivo según pantalla
+    margin: 0;
+    font-weight: 900;
+    line-height: 1;
+    text-shadow: 2px 4px 10px rgba(0,0,0,0.5);
+  }
+
+  h2 {
+    font-size: 1.8rem;
+    color: #f5f4f2;
+    margin: 0;
+  }
+
+  p {
+    font-size: 1.1rem;
+    margin: 0;
+    color: #f5f4f2;
+    opacity: 0.9;
+  }
+
+  button {
+    margin-top: 30px;
+    background-color: #ffd700;
+    color: #154f9f;
+    font-weight: 700;
+    font-size: 18px;
+    padding: 12px 32px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+
+    &:hover {
+      background-color: #fceabb;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+}
+
+/* Footer sólido al final */
+.footer {
+  height: 50px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #154f9f;
+  color: #ffd700;
+  font-weight: 500;
+  z-index: 10;
+}

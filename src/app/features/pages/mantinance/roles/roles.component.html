@@ -1,0 +1,82 @@
+<app-maintenance-layout
+  title="Configuración de Roles"
+  [showViewAction]="false" 
+  [columns]="columns"
+  [service]="roleService" 
+  (onEdit)="editRole($event)"
+  (onCreate)="openCreateModal()"
+>
+  <ng-template let-row="row" column="permissions">
+    <div class="status-container">
+      <span class="status-pill active">
+        <mat-icon inline>lock_open</mat-icon>
+        {{ (row.permissions?.length) || 0 }} permisos
+      </span>
+    </div>
+  </ng-template>
+</app-maintenance-layout>
+
+@if (showModal) {
+<div class="modal" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    
+    <div class="modal-header">
+      <h3>
+        <mat-icon>{{ isEdit ? 'edit_note' : 'add_moderator' }}</mat-icon>
+        {{ isEdit ? 'Editar Rol Existente' : 'Nuevo Rol de Sistema' }}
+      </h3>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="saveRole()">
+      <div class="form-grid">
+        
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Nombre del Rol</mat-label>
+          <input matInput formControlName="name" placeholder="Ej: ROLE_ADMIN" autocomplete="off">
+          <mat-icon matPrefix>verified_user</mat-icon>
+          
+          @if (form.get('name')?.hasError('required')) {
+            <mat-error>El nombre es obligatorio</mat-error>
+          }
+          @if (form.get('name')?.hasError('maxlength')) {
+            <mat-error>Máximo 50 caracteres</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Asignar Permisos</mat-label>
+          <mat-select formControlName="permissions" multiple>
+            <mat-select-trigger>
+              {{ form.get('permissions')?.value?.length || 0 }} permisos seleccionados
+            </mat-select-trigger>
+            
+            @for (perm of availablePermissions; track perm.id) {
+              <mat-option [value]="perm.name">
+                <div class="option-content">
+                  <span class="perm-name">{{ perm.name }}</span>
+                </div>
+              </mat-option>
+            }
+          </mat-select>
+          <mat-icon matPrefix>key</mat-icon>
+          <mat-hint>El rol debe tener al menos una acción permitida</mat-hint>
+          
+          @if (form.get('permissions')?.hasError('required') || form.get('permissions')?.hasError('minlength')) {
+            <mat-error>Debes asignar al menos un permiso</mat-error>
+          }
+        </mat-form-field>
+
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="btn-cancel" (click)="closeModal()">
+          Cancelar
+        </button>
+        <button type="submit" class="btn-save" [disabled]="form.invalid">
+          {{ isEdit ? 'Actualizar Cambios' : 'Confirmar Registro' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+}

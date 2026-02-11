@@ -1,0 +1,349 @@
+// @use 'variables' as v;
+
+// // Estilos base del componente
+// :host {
+//   display: flex;
+//   flex-direction: column;
+//   width: 100%;
+//   height: 100vh;
+//   background-color: #121826;
+//   color: #fff;
+//   padding: 0;
+//   overflow: hidden;
+
+//   // El componente layout se expande para llenar el host
+//   app-maintenance-layout {
+//     display: flex;
+//     flex-direction: column;
+//     flex: 1;
+//     height: 100%;
+//   }
+// }
+
+// /* ================= Badges de Roles ================= */
+// .role-badge {
+//   padding: 4px 12px;
+//   border-radius: 20px;
+//   font-size: 0.75rem;
+//   font-weight: 700;
+//   letter-spacing: 0.5px;
+//   display: inline-block;
+//   text-transform: uppercase;
+  
+//   &.learner { 
+//     background: rgba(0, 255, 157, 0.1); 
+//     color: #00ff9d; 
+//     border: 1px solid rgba(0, 255, 157, 0.3); 
+//   }
+//   &.mentor { 
+//     background: rgba(0, 183, 255, 0.1); 
+//     color: #00b7ff; 
+//     border: 1px solid rgba(0, 183, 255, 0.3); 
+//   }
+//   &.collaborator { 
+//     background: rgba(255, 174, 0, 0.1); 
+//     color: #ffae00; 
+//     border: 1px solid rgba(255, 174, 0, 0.3); 
+//   }
+// }
+
+// /* ================= Estilos del Modal ================= */
+// .modal {
+//   position: fixed;
+//   inset: 0;
+//   background: rgba(0, 0, 0, 0.85); // Fondo oscurecido (overlay)
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   z-index: 1200;
+//   backdrop-filter: blur(4px); // Efecto de desenfoque moderno
+
+//   .modal-content {
+//     background: #1f2a38;
+//     padding: 2.5rem;
+//     border-radius: 12px;
+//     width: 520px; 
+//     max-width: 95%;
+//     border: 1px solid rgba(v.$brand-neon, 0.3);
+//     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+//     max-height: 90vh;
+//     overflow-y: auto;
+
+//     h3 { 
+//       margin: 0 0 1.5rem 0; 
+//       color: v.$brand-neon; 
+//       text-align: center;
+//       text-transform: uppercase;
+//       font-weight: 800;
+//       letter-spacing: 1px;
+//     }
+
+//     .form-group {
+//       margin-bottom: 1.5rem;
+      
+//       label { 
+//         display: block; 
+//         margin-bottom: 0.6rem; 
+//         color: rgba(v.$text-color, 0.8);
+//         font-size: 0.9rem;
+//       }
+      
+//       mat-form-field { 
+//         width: 100%; 
+//       }
+//     }
+//   }
+
+//   /* Acciones del formulario (Botones) */
+//   .modal-actions {
+//     display: flex; 
+//     flex-direction: row;      // Botones en horizontal
+//     justify-content: flex-end; // Alineados a la derecha
+//     gap: 1rem;
+//     margin-top: 2rem;
+
+//     button {
+//       padding: 0.85rem 1.5rem; 
+//       border-radius: 6px; 
+//       cursor: pointer;
+//       font-weight: 600;
+//       min-width: 140px;
+//       transition: all 0.2s ease;
+//       text-transform: uppercase;
+//       font-size: 0.85rem;
+
+//       &.btn-save { 
+//         background: v.$brand-neon; 
+//         color: #000; 
+//         border: none;
+//         box-shadow: 0 0 15px rgba(v.$brand-neon, 0.2);
+
+//         &:disabled { 
+//           background: #4a5568; 
+//           opacity: 0.6; 
+//           cursor: not-allowed;
+//           box-shadow: none;
+//         }
+
+//         &:hover:not(:disabled) { 
+//           filter: brightness(1.1);
+//           box-shadow: 0 0 20px rgba(v.$brand-neon, 0.4);
+//         }
+
+//         &:active:not(:disabled) {
+//           transform: scale(0.98);
+//         }
+//       }
+
+//       &.btn-cancel { 
+//         background: transparent; 
+//         color: v.$text-color; 
+//         border: 1px solid rgba(255, 255, 255, 0.2);
+
+//         &:hover { 
+//           background: rgba(255, 255, 255, 0.05);
+//           border-color: rgba(255, 255, 255, 0.5);
+//         }
+//       }
+//     }
+//   }
+// }
+
+@use 'variables' as v;
+
+/* ==========================================================================
+   0. Host & Design Tokens (Sin ng-deep)
+   ========================================================================== */
+:host {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  background-color: #121826;
+  color: #fff;
+  padding: 0;
+  overflow: hidden;
+
+  // TOKENS MATERIAL: Placeholders claros y coherencia visual
+  --mdc-filled-text-field-container-color: #2c3e50;
+  --mdc-filled-text-field-input-text-color: #ffffff;
+  --mdc-filled-text-field-placeholder-text-color: rgba(255, 255, 255, 0.85);
+  --mat-select-placeholder-text-color: rgba(255, 255, 255, 0.85);
+  
+  --mdc-filled-text-field-label-text-color: rgba(255, 255, 255, 0.6);
+  --mdc-filled-text-field-focus-label-text-color: #{v.$brand-neon};
+  --mdc-filled-text-field-focus-active-indicator-color: #{v.$brand-neon};
+
+  app-maintenance-layout {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    height: 100%;
+  }
+}
+
+/* ==========================================================================
+   1. Badges de Roles (Manteniendo tus estilos funcionales)
+   ========================================================================== */
+.role-badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  display: inline-block;
+  text-transform: uppercase;
+  
+  &.learner { 
+    background: rgba(0, 255, 157, 0.1); color: #00ff9d; border: 1px solid rgba(0, 255, 157, 0.3); 
+  }
+  &.mentor { 
+    background: rgba(0, 183, 255, 0.1); color: #00b7ff; border: 1px solid rgba(0, 183, 255, 0.3); 
+  }
+  &.collaborator { 
+    background: rgba(255, 174, 0, 0.1); color: #ffae00; border: 1px solid rgba(255, 174, 0, 0.3); 
+  }
+}
+
+/* ==========================================================================
+   2. Modal Unificado (Placeholders Claros y Blur Premium)
+   ========================================================================== */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1200;
+  backdrop-filter: blur(8px); // Aumentado para coherencia
+  animation: fadeIn 0.2s ease-in-out;
+
+  .modal-content {
+    background: #1f2a38;
+    padding: 2.5rem;
+    border-radius: 12px;
+    width: 520px; 
+    max-width: 95%;
+    border: 1px solid rgba(v.$brand-neon, 0.3);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7);
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: slideUp 0.25s ease-out;
+
+    &::-webkit-scrollbar { width: 8px; }
+    &::-webkit-scrollbar-thumb {
+      background: rgba(v.$brand-neon, 0.2);
+      border-radius: 10px;
+    }
+
+    h3 { 
+      margin: 0 0 1.5rem 0; 
+      color: v.$brand-neon; 
+      text-align: left; // Alineado a la izquierda como el resto
+      font-weight: 600;
+      font-size: 1.3rem;
+      border-bottom: 1px solid rgba(v.$brand-neon, 0.1);
+      padding-bottom: 0.5rem;
+    }
+  }
+
+  .form-group {
+    margin-bottom: 1.5rem;
+    
+    label { 
+      display: block; 
+      margin-bottom: 0.6rem; 
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.9rem;
+    }
+    
+    // Soporte para inputs nativos con placeholder claro
+    input, textarea {
+      width: 100%;
+      padding: 0.8rem;
+      background: #2c3e50;
+      color: #fff;
+      border: 1px solid #444;
+      border-radius: 8px;
+
+      &::placeholder {
+        color: rgba(255, 255, 255, 0.85) !important;
+        opacity: 1;
+      }
+
+      &:focus {
+        border-color: v.$brand-neon;
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(v.$brand-neon, 0.15);
+      }
+    }
+
+    mat-form-field { 
+      width: 100%; 
+    }
+  }
+
+  /* ==========================================================================
+     3. Acciones Finales (Actualizar y Cerrar a la derecha)
+     ========================================================================== */
+  .modal-actions {
+    display: flex; 
+    justify-content: flex-end; 
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+    button {
+      padding: 0.75rem 1.6rem; 
+      border-radius: 8px; 
+      cursor: pointer;
+      font-weight: 700;
+      transition: all 0.2s ease;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      &.btn-save { 
+        background: v.$brand-neon; 
+        color: #000; 
+        border: none;
+
+        &:disabled { 
+          background: #4a5568; 
+          color: #a0aec0;
+          opacity: 0.6; 
+          cursor: not-allowed;
+          box-shadow: none;
+        }
+
+        &:hover:not(:disabled) { 
+          transform: translateY(-2px);
+          box-shadow: 0 5px 15px rgba(v.$brand-neon, 0.4);
+        }
+      }
+
+      &.btn-cancel { 
+        background: rgba(255, 255, 255, 0.05); 
+        color: #fff; 
+        border: 1px solid rgba(255, 255, 255, 0.2);
+
+        &:hover { 
+          background: rgba(255, 255, 255, 0.1);
+          border-color: #fff;
+        }
+      }
+    }
+  }
+}
+
+/* ================= ANIMACIONES ================= */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { 
+  from { transform: translateY(20px); opacity: 0; } 
+  to { transform: translateY(0); opacity: 1; } 
+}

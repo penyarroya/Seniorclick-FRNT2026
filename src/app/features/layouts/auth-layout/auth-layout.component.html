@@ -1,0 +1,26 @@
+<div class="auth-layout-container">
+
+  <app-toolbar
+    toolbarTitle="Autenticación"
+    [logoUrl]="'/icon/universidad.png'"
+    [logoLabel]="'SeniorClick'"
+    [showTitle]="false"
+    [showLogin]="false"
+    [isLoggedIn]="false"
+    [showMenu]="false"
+    [showProfile]="false"
+    [showCarouselControls]="false">
+  </app-toolbar>
+
+  <main class="auth-main">
+    <div class="background-container">
+
+      <div class="auth-content">
+        <router-outlet></router-outlet>
+      </div>
+
+    </div>
+  </main>
+
+  <app-footer></app-footer>
+</div>

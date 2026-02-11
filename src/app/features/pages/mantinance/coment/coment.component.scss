@@ -1,0 +1,634 @@
+// @use 'variables' as v;
+
+// /* ==========================================================================
+//    1. ESTRUCTURA BASE (Idéntica a tus Pages)
+//    ========================================================================== */
+// :host {
+//   display: flex;
+//   flex-direction: column;
+//   width: 100%;
+//   height: 100vh;
+//   background-color: #121826;
+//   color: #fff;
+//   overflow: hidden;
+
+//   // Si decides usar tu layout común
+//   app-maintenance-layout {
+//     flex: 1;
+//   }
+// }
+
+// /* ==========================================================================
+//    2. TOOLBAR / HEADER (Misma estética que la zona de filtros/recursos)
+//    ========================================================================== */
+// .header {
+//   height: 64px;
+//   padding: 0 1.5rem;
+//   display: flex;
+//   align-items: center; 
+//   justify-content: space-between; 
+//   background: #1a222c;
+//   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+//   flex-shrink: 0;
+
+//   .header-title-group {
+//     display: flex;
+//     align-items: center;
+//     gap: 0.75rem;
+
+//     .back-btn {
+//       color: #9ca3af !important;
+//       &:hover { 
+//         color: #fff !important; 
+//         background-color: rgba(255, 255, 255, 0.08) !important;
+//       }
+//     }
+
+//     h2 { 
+//       margin: 0; 
+//       font-size: 1.1rem; 
+//       font-weight: 700; 
+//       color: #fff; 
+//       letter-spacing: -0.01em;
+//     }
+//   }
+
+//   /* BUSCADORES (Estilo resource-quick-add que me pasaste) */
+//   .header-filters-group {
+//     display: flex;
+//     align-items: center;
+//     gap: 1rem;
+
+//     .native-search {
+//       position: relative;
+//       display: flex;
+//       align-items: center;
+
+//       mat-icon {
+//         position: absolute;
+//         left: 10px;
+//         font-size: 18px;
+//         width: 18px;
+//         height: 18px;
+//         color: #6b7280;
+//       }
+
+//       input {
+//         background: #121826;
+//         border: 1px solid rgba(v.$brand-neon, 0.2);
+//         border-radius: 4px;
+//         color: #fff;
+//         padding: 8px 12px 8px 35px;
+//         height: 40px;
+//         width: 250px;
+//         font-size: 0.85rem;
+//         transition: all 0.3s ease;
+
+//         &:focus {
+//           outline: none;
+//           border-color: v.$brand-neon;
+//           box-shadow: 0 0 8px rgba(v.$brand-neon, 0.2);
+//         }
+//         &::placeholder { color: #6b7280; }
+//       }
+//     }
+//   }
+// }
+
+// /* ==========================================================================
+//    3. TABLA Y CELDAS (Estética de .resource-item)
+//    ========================================================================== */
+// .user-name-cell {
+//   font-weight: 600;
+//   color: v.$brand-neon;
+//   display: flex;
+//   align-items: center;
+//   gap: 8px;
+// }
+
+// .comment-text-cell {
+//   max-width: 450px;
+
+//   .collapsed-content { 
+//     font-style: italic; 
+//     color: #9ca3af; 
+//   }
+
+//   /* El comentario expandido usa el estilo de tus items de recursos */
+//   .expanded-content { 
+//     color: #e5e7eb; 
+//     padding: 0.8rem; 
+//     background: rgba(255, 255, 255, 0.03); 
+//     border-radius: 6px; 
+//     border-left: 3px solid v.$brand-neon; // Tu sello de identidad
+//     word-break: break-word; 
+//     margin: 8px 0;
+//     animation: fadeIn 0.3s ease; 
+//   }
+// }
+
+// /* Botón de Lección (Estilo de tus botones secundarios/cancel) */
+// .page-id-btn {
+//   background: transparent !important;
+//   color: #9ca3af !important;
+//   border: 1px solid rgba(156, 163, 175, 0.3) !important;
+//   height: 30px;
+//   font-size: 0.75rem !important;
+//   font-weight: 700;
+//   &:hover {
+//     color: #fff !important;
+//     border-color: v.$brand-neon !important;
+//   }
+// }
+
+// /* Botón de eliminar (Estilo btn-delete-small que pasaste) */
+// .btn-delete {
+//   background: transparent;
+//   border: none;
+//   color: #9ca3af;
+//   cursor: pointer;
+//   &:hover { color: #ef4444; }
+//   mat-icon { font-size: 20px; }
+// }
+
+// /* ==========================================================================
+//    4. MODALES (He copiado exactamente tu bloque de modal)
+//    ========================================================================== */
+// .modal {
+//   position: fixed;
+//   inset: 0;
+//   background: rgba(0, 0, 0, 0.85);
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   z-index: 1200;
+//   backdrop-filter: blur(8px);
+
+//   .modal-content {
+//     background: #1f2a38;
+//     padding: 1.5rem;
+//     border-radius: 12px;
+//     width: 550px; 
+//     transition: all 0.3s ease;
+//     border: 1px solid rgba(v.$brand-neon, 0.3);
+//     box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9);
+//     max-height: 85vh;
+//     overflow-y: auto;
+//     display: flex;
+//     flex-direction: column;
+
+//     &.large { width: 900px; max-width: 95vw; }
+
+//     h3 { 
+//       margin-bottom: 1.2rem;
+//       color: v.$brand-neon; 
+//       text-align: center;
+//       text-transform: uppercase;
+//       letter-spacing: 2px;
+//       font-weight: 800;
+//       font-size: 1.2rem;
+//     }
+
+//     /* Scrollbar neón de tus modales */
+//     &::-webkit-scrollbar { width: 6px; }
+//     &::-webkit-scrollbar-thumb {
+//       background: rgba(v.$brand-neon, 0.2);
+//       border-radius: 10px;
+//     }
+//   }
+// }
+
+// /* ==========================================================================
+//    5. COMPORTAMIENTOS EXTRAS
+//    ========================================================================== */
+// @keyframes fadeIn {
+//   from { opacity: 0; transform: translateY(-5px); }
+//   to { opacity: 1; transform: translateY(0); }
+// }
+
+// .loading-overlay {
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   justify-content: center;
+//   padding: 2rem;
+//   color: v.$brand-neon;
+// }
+
+
+// @use 'sass:color';
+// @use 'variables' as v;
+
+// /* ==========================================================================
+//    1. ESTRUCTURA BASE
+//    ========================================================================== */
+// :host {
+//   display: flex;
+//   flex-direction: column;
+//   width: 100%;
+//   height: 100vh;
+//   background-color: #121826;
+//   color: #fff;
+//   overflow: hidden;
+
+//   app-maintenance-layout {
+//     flex: 1;
+//     display: flex;
+//     flex-direction: column;
+//   }
+// }
+
+// /* ==========================================================================
+//    2. FORMULARIOS DENTRO DEL MODAL
+//    ========================================================================== */
+// .form-grid {
+//   display: grid;
+//   grid-template-columns: repeat(2, 1fr);
+//   gap: 1.5rem;
+//   margin-top: 1rem;
+
+//   .form-group {
+//     display: flex;
+//     flex-direction: column;
+//     gap: 0.5rem;
+
+//     label {
+//       font-size: 0.85rem;
+//       font-weight: 600;
+//       color: #9ca3af;
+//       text-transform: uppercase;
+//       letter-spacing: 0.5px;
+//     }
+
+//     &.full-width {
+//       grid-column: span 2;
+//     }
+//   }
+// }
+
+// /* ==========================================================================
+//    3. CLASES DE ESTADO (CONTADOR NEÓN)
+//    ========================================================================== */
+// .text-neon {
+//   color: v.$brand-neon !important;
+//   text-shadow: 0 0 8px rgba(v.$brand-neon, 0.5);
+//   font-weight: 800;
+//   transition: all 0.3s ease;
+// }
+
+// /* ==========================================================================
+//    4. MODALES (Optimizado para Formularios)
+//    ========================================================================== */
+// .modal {
+//   position: fixed;
+//   inset: 0;
+//   background: rgba(0, 0, 0, 0.85);
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   z-index: 1200;
+//   backdrop-filter: blur(8px);
+
+//   .modal-content {
+//     background: #1f2a38;
+//     padding: 2rem;
+//     border-radius: 12px;
+//     width: 550px;
+//     border: 1px solid rgba(v.$brand-neon, 0.3);
+//     box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9);
+//     max-height: 90vh;
+//     overflow-y: auto;
+//     animation: fadeIn 0.3s ease-out;
+
+//     &.large { width: 850px; max-width: 95vw; }
+
+//     h3 {
+//       margin-bottom: 1.5rem;
+//       color: v.$brand-neon;
+//       display: flex;
+//       align-items: center;
+//       justify-content: center;
+//       gap: 0.75rem;
+//       text-transform: uppercase;
+//       letter-spacing: 2px;
+//       font-weight: 800;
+      
+//       mat-icon { font-size: 28px; width: 28px; height: 28px; }
+//     }
+//   }
+// }
+
+// /* ==========================================================================
+//    5. ACCIONES Y BOTONES
+//    ========================================================================== */
+// .modal-actions {
+//   display: flex;
+//   justify-content: flex-end;
+//   gap: 1rem;
+//   margin-top: 2rem;
+//   padding-top: 1.5rem;
+//   border-top: 1px solid rgba(255, 255, 255, 0.05);
+
+//   button {
+//     padding: 0.75rem 1.5rem;
+//     border-radius: 6px;
+//     font-weight: 700;
+//     cursor: pointer;
+//     display: flex;
+//     align-items: center;
+//     gap: 0.5rem;
+//     transition: all 0.3s ease;
+//     border: none;
+//   }
+
+//   // .btn-save {
+//   //   background: v.$brand-neon;
+//   //   color: #000;
+//   //   &:hover:not(:disabled) { 
+//   //     background: lighten(v.$brand-neon, 10%); 
+//   //     transform: translateY(-2px); 
+//   //     box-shadow: 0 0 15px rgba(v.$brand-neon, 0.4);
+//   //   }
+//   //   &:disabled { opacity: 0.3; cursor: not-allowed; filter: grayscale(1); }
+//   // }
+
+//   .btn-save {
+//   background: v.$brand-neon;
+//     color: #000;
+    
+//     &:hover:not(:disabled) { 
+//       // Cambiamos lighten() por color.adjust()
+//       background: color.adjust(v.$brand-neon, $lightness: 10%); 
+      
+//       transform: translateY(-2px); 
+//       box-shadow: 0 0 15px rgba(v.$brand-neon, 0.4);
+//     }
+    
+//     &:disabled { 
+//       opacity: 0.3; 
+//       cursor: not-allowed; 
+//       filter: grayscale(1); 
+//     }
+//   }
+
+//   .btn-cancel {
+//     background: transparent;
+//     color: #9ca3af;
+//     border: 1px solid rgba(156, 163, 175, 0.3);
+//     &:hover { color: #fff; border-color: #fff; background: rgba(255,255,255, 0.05); }
+//   }
+
+//   .btn-view-lesson {
+//     background: rgba(v.$brand-neon, 0.1);
+//     color: v.$brand-neon;
+//     border: 1px solid v.$brand-neon;
+//     margin-right: auto; 
+//     &:hover { background: v.$brand-neon; color: #000; }
+//   }
+// }
+
+// /* ==========================================================================
+//    6. SOBREESCRITURA ANGULAR MATERIAL (DARK THEME)
+//    ========================================================================== */
+// ::ng-deep {
+//   .mat-mdc-form-field {
+//     width: 100%;
+    
+//     .mdc-text-field--outlined {
+//       background-color: rgba(0, 0, 0, 0.2) !important;
+//     }
+    
+//     // Borde Neón al hacer foco
+//     &.mat-focused .mdc-notched-outline__character {
+//       border-color: v.$brand-neon !important;
+//       color: v.$brand-neon !important;
+//     }
+    
+//     input, textarea {
+//       color: #e5e7eb !important;
+//     }
+
+//     .mat-mdc-form-field-hint {
+//       color: #64748b;
+//       font-family: 'Fira Code', monospace;
+//       font-size: 0.7rem;
+//     }
+
+//     .mat-mdc-form-field-error {
+//       color: #ff5252 !important;
+//       font-size: 0.75rem;
+//       font-weight: 600;
+//     }
+//   }
+// }
+
+// @keyframes fadeIn {
+//   from { opacity: 0; transform: translateY(-10px); }
+//   to { opacity: 1; transform: translateY(0); }
+// }
+
+@use 'sass:color';
+@use 'variables' as v;
+
+/* ==========================================================================
+   0. CONFIGURACIÓN DEL HOST (Tokens & Placeholders)
+   ========================================================================== */
+:host {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  background-color: #121826;
+  color: #fff;
+  overflow: hidden;
+
+  // TOKENS MATERIAL: Máxima claridad para placeholders y textos de ayuda
+  --mdc-filled-text-field-container-color: rgba(0, 0, 0, 0.2);
+  --mdc-filled-text-field-input-text-color: #ffffff;
+  --mdc-filled-text-field-placeholder-text-color: rgba(255, 255, 255, 0.85); // Placeholder ultra-claro
+  --mat-select-placeholder-text-color: rgba(255, 255, 255, 0.85);
+  
+  --mdc-filled-text-field-label-text-color: rgba(255, 255, 255, 0.65);
+  --mdc-filled-text-field-focus-label-text-color: #{v.$brand-neon};
+  --mdc-filled-text-field-focus-active-indicator-color: #{v.$brand-neon};
+
+  app-maintenance-layout {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+/* ==========================================================================
+   1. FORMULARIOS GRID (Placeholders Nativos)
+   ========================================================================== */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-top: 1rem;
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.7);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    // Input nativo con placeholder adaptado
+    input, textarea {
+      width: 100%;
+      padding: 0.8rem;
+      background: rgba(0, 0, 0, 0.2);
+      color: #fff;
+      border: 1px solid #444;
+      border-radius: 8px;
+
+      &::placeholder {
+        color: rgba(255, 255, 255, 0.85) !important;
+        opacity: 1;
+      }
+
+      &:focus {
+        border-color: v.$brand-neon;
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(v.$brand-neon, 0.15);
+      }
+    }
+
+    &.full-width { grid-column: span 2; }
+  }
+}
+
+/* ==========================================================================
+   2. CLASES DE ESTADO (Contador Neón)
+   ========================================================================== */
+.text-neon {
+  color: v.$brand-neon !important;
+  text-shadow: 0 0 8px rgba(v.$brand-neon, 0.5);
+  font-weight: 800;
+}
+
+/* ==========================================================================
+   3. MODALES (Blur & Animación Unificada)
+   ========================================================================== */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1200;
+  backdrop-filter: blur(8px);
+
+  .modal-content {
+    background: #1f2a38;
+    padding: 2.5rem;
+    border-radius: 12px;
+    width: 550px;
+    border: 1px solid rgba(v.$brand-neon, 0.3);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9);
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: slideUp 0.3s ease-out;
+
+    &.large { width: 850px; max-width: 95vw; }
+
+    h3 {
+      margin-bottom: 1.5rem;
+      color: v.$brand-neon;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start; // Unificado a la izquierda
+      gap: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-weight: 700;
+      border-bottom: 1px solid rgba(v.$brand-neon, 0.1);
+      padding-bottom: 0.5rem;
+      
+      mat-icon { font-size: 24px; width: 24px; height: 24px; }
+    }
+
+    /* Scrollbar estética */
+    &::-webkit-scrollbar { width: 6px; }
+    &::-webkit-scrollbar-thumb {
+      background: rgba(v.$brand-neon, 0.3);
+      border-radius: 10px;
+    }
+  }
+}
+
+/* ==========================================================================
+   4. ACCIONES Y BOTONES (Alineación Derecha)
+   ========================================================================== */
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+  button {
+    padding: 0.8rem 1.6rem;
+    border-radius: 8px; // Unificado a 8px
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+  }
+
+  .btn-save {
+    background: v.$brand-neon;
+    color: #000;
+    border: none;
+    
+    &:hover:not(:disabled) { 
+      background: color.adjust(v.$brand-neon, $lightness: 10%); 
+      transform: translateY(-2px); 
+      box-shadow: 0 5px 15px rgba(v.$brand-neon, 0.4);
+    }
+    
+    &:disabled { 
+      background: #4a5568; 
+      opacity: 0.5; 
+      cursor: not-allowed; 
+      filter: grayscale(1); 
+    }
+  }
+
+  .btn-cancel {
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    &:hover { border-color: #fff; background: rgba(255, 255, 255, 0.1); }
+  }
+
+  .btn-view-lesson {
+    background: rgba(v.$brand-neon, 0.1);
+    color: v.$brand-neon;
+    border: 1px solid v.$brand-neon;
+    margin-right: auto; // Empuja los otros botones a la derecha
+    &:hover { background: v.$brand-neon; color: #000; }
+  }
+}
+
+/* ================= ANIMACIONES ================= */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}

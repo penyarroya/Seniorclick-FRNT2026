@@ -1,0 +1,271 @@
+<!-- <app-maintenance-layout
+  title="Gestión de Usuarios (Perfiles)"
+  [columns]="columns"
+  [showViewAction]="false"
+  [service]="profileService"
+  (onEdit)="editProfile($event)"
+  (onCreate)="openCreateModal()"
+  (onDelete)="deleteProfile($event)"
+>
+  <ng-template let-row="row" column="avatarUrl">
+    <div class="table-avatar-wrapper">
+      @if (row.avatarUrl) {
+        <img [src]="row.avatarUrl" class="img-table-avatar" (error)="handleImageError($event)">
+      } @else {
+        <mat-icon class="icon-table-avatar">account_circle</mat-icon>
+      }
+    </div>
+  </ng-template>
+</app-maintenance-layout>
+
+@if (showModal) {
+<div class="modal" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    
+    <h3>{{ isEdit ? 'Editar Perfil de Usuario' : 'Crear Nuevo Perfil' }}</h3>
+
+    <div class="avatar-preview">
+      @if (form.get('avatarUrl')?.value && !form.get('avatarUrl')?.errors) {
+        <img [src]="form.get('avatarUrl')?.value" alt="Avatar" (error)="handleImageError($event)">
+      } @else {
+        <div class="avatar-placeholder">
+          <mat-icon>account_circle</mat-icon>
+        </div>
+      }
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="saveProfile()">
+      <div class="form-grid">
+        
+        @if (!isEdit) {
+          <mat-form-field appearance="outline" class="full-width" floatLabel="always">
+            <mat-label>Seleccionar Usuario</mat-label>
+            <mat-select 
+              (selectionChange)="onUserChange($event.value)" 
+              (openedChange)="onSelectOpened($event)"
+              required>
+              
+              <div class="select-search-header">
+                <mat-icon>search</mat-icon>
+                <input 
+                  #searchInput
+                  type="text"
+                  placeholder="Buscar por usuario o email..." 
+                  [(ngModel)]="searchQuery"
+                  [ngModelOptions]="{standalone: true}"
+                  (input)="filterUsers($event)"
+                  (click)="$event.stopPropagation()"
+                  (keydown)="$event.stopPropagation()">
+                
+                @if (searchQuery) {
+                  <mat-icon 
+                    class="clear-search-icon"
+                    (click)="resetSearch($event)">
+                    close
+                  </mat-icon>
+                }
+              </div>
+
+              <mat-divider></mat-divider>
+
+              @for (user of filteredUsers; track user.id) {
+                <mat-option [value]="user.id">
+                  {{ user.username }} <small style="opacity: 0.7">({{ user.email }})</small>
+                </mat-option>
+              }
+
+              @if (filteredUsers.length === 0) {
+                <mat-option disabled style="font-style: italic; opacity: 0.6;">
+                  No se encontraron coincidencias para "{{searchQuery}}"
+                </mat-option>
+              }
+            </mat-select>
+            <mat-hint>Vincula este perfil a una cuenta existente</mat-hint>
+          </mat-form-field>
+        }
+
+        <div class="row">
+          <mat-form-field appearance="outline">
+            <mat-label>Nombre</mat-label>
+            <input matInput formControlName="firstName" placeholder="Ej. Juan">
+            <mat-icon matPrefix>person</mat-icon>
+            @if (form.get('firstName')?.hasError('required')) {
+              <mat-error>El nombre es obligatorio</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Apellido</mat-label>
+            <input matInput formControlName="lastName" placeholder="Ej. Pérez">
+            @if (form.get('lastName')?.hasError('required')) {
+              <mat-error>El apellido es obligatorio</mat-error>
+            }
+          </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Teléfono</mat-label>
+          <input 
+            matInput 
+            formControlName="phone" 
+            placeholder="+34 600 000 000"
+            (input)="onPhoneInput($event)"> 
+          <mat-icon matSuffix>phone</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>URL del Avatar</mat-label>
+          <input matInput formControlName="avatarUrl" placeholder="https://ejemplo.com/foto.jpg">
+          <mat-icon matSuffix>link</mat-icon>
+          <mat-hint>Enlace directo (.jpg, .png, .webp)</mat-hint>
+        </mat-form-field>
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="btn-cancel" (click)="closeModal()">
+          Cancelar
+        </button>
+        <button type="submit" class="btn-save" [disabled]="form.invalid || (!isEdit && !selectedId)">
+          {{ isEdit ? 'Actualizar Perfil' : 'Guardar Perfil' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+} -->
+
+<app-maintenance-layout
+  title="Gestión de Usuarios (Perfiles)"
+  [columns]="columns"
+  [showViewAction]="false"
+  [service]="profileService"
+  (onEdit)="editProfile($event)"
+  (onCreate)="openCreateModal()"
+  (onDelete)="deleteProfile($event)"
+>
+  <ng-template let-row="row" column="avatarUrl">
+    <div class="table-avatar-wrapper">
+      @if (row.avatarUrl) {
+        <img [src]="row.avatarUrl" class="img-table-avatar" (error)="handleImageError($event)">
+      } @else {
+        <mat-icon class="icon-table-avatar">account_circle</mat-icon>
+      }
+    </div>
+  </ng-template>
+</app-maintenance-layout>
+
+@if (showModal) {
+<div class="modal" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    
+    <h3>{{ isEdit ? 'Editar Perfil de Usuario' : 'Crear Nuevo Perfil' }}</h3>
+
+    <div class="avatar-preview">
+      @if (form.get('avatarUrl')?.value && !form.get('avatarUrl')?.errors) {
+        <img [src]="form.get('avatarUrl')?.value" alt="Avatar" (error)="handleImageError($event)">
+      } @else {
+        <div class="avatar-placeholder">
+          <mat-icon>account_circle</mat-icon>
+        </div>
+      }
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="saveProfile()">
+      <div class="form-grid">
+        
+        @if (!isEdit) {
+          <mat-form-field appearance="outline" class="full-width" floatLabel="always">
+            <mat-label>Seleccionar Usuario</mat-label>
+            <mat-select 
+              (selectionChange)="onUserChange($event.value)" 
+              (openedChange)="onSelectOpened($event)"
+              required>
+              
+              <div class="select-search-header">
+                <mat-icon>search</mat-icon>
+                <input 
+                  #searchInput
+                  type="text"
+                  placeholder="Buscar por usuario o email..." 
+                  [(ngModel)]="searchQuery"
+                  [ngModelOptions]="{standalone: true}"
+                  (input)="filterUsers($event)"
+                  (click)="$event.stopPropagation()"
+                  (keydown)="$event.stopPropagation()">
+                
+                @if (searchQuery) {
+                  <mat-icon 
+                    class="clear-search-icon"
+                    (click)="resetSearch($event)">
+                    close
+                  </mat-icon>
+                }
+              </div>
+
+              <mat-divider></mat-divider>
+
+              @for (user of filteredUsers; track user.id) {
+                <mat-option [value]="user.id">
+                  {{ user.username }} <small style="opacity: 0.7">({{ user.email }})</small>
+                </mat-option>
+              }
+
+              @if (filteredUsers.length === 0) {
+                <mat-option disabled style="font-style: italic; opacity: 0.6;">
+                  No se encontraron coincidencias para "{{searchQuery}}"
+                </mat-option>
+              }
+            </mat-select>
+            <mat-hint>Vincula este perfil a una cuenta existente</mat-hint>
+          </mat-form-field>
+        }
+
+        <div class="row">
+          <mat-form-field appearance="outline" floatLabel="always">
+            <mat-label>Nombre</mat-label>
+            <input matInput formControlName="firstName" placeholder="Ej. Juan">
+            <mat-icon matPrefix>person</mat-icon>
+            @if (form.get('firstName')?.hasError('required')) {
+              <mat-error>El nombre es obligatorio</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" floatLabel="always">
+            <mat-label>Apellido</mat-label>
+            <input matInput formControlName="lastName" placeholder="Ej. Pérez">
+            @if (form.get('lastName')?.hasError('required')) {
+              <mat-error>El apellido es obligatorio</mat-error>
+            }
+          </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="outline" class="full-width" floatLabel="always">
+          <mat-label>Teléfono</mat-label>
+          <input 
+            matInput 
+            formControlName="phone" 
+            placeholder="+34 600 000 000"
+            (input)="onPhoneInput($event)"> 
+          <mat-icon matSuffix>phone</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width" floatLabel="always">
+          <mat-label>URL del Avatar</mat-label>
+          <input matInput formControlName="avatarUrl" placeholder="https://ejemplo.com/foto.jpg">
+          <mat-icon matSuffix>link</mat-icon>
+          <mat-hint>Enlace directo (.jpg, .png, .webp)</mat-hint>
+        </mat-form-field>
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="btn-cancel" (click)="closeModal()">
+          Cancelar
+        </button>
+        <button type="submit" class="btn-save" [disabled]="form.invalid || (!isEdit && !selectedId)">
+          {{ isEdit ? 'Actualizar Perfil' : 'Guardar Perfil' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+}

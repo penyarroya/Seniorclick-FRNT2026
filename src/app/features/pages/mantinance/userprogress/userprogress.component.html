@@ -1,0 +1,55 @@
+<app-maintenance-layout
+  title="Seguimiento de Progreso"
+  [columns]="columns"
+  [service]="serviceAdapter"
+  (onView)="viewPageAsStudent($event)"
+  (onEdit)="editProgress($event)"
+></app-maintenance-layout>
+
+@if (showModal) {
+  <div class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Detalle del Progreso</h3>
+      </div>
+      
+      <form [formGroup]="form">
+        <div class="form-grid">
+          
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Estado</mat-label>
+            <input matInput formControlName="status" readonly>
+            <mat-icon matPrefix>info</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Mensaje de Motivación</mat-label>
+            <textarea matInput formControlName="motivationMessage" rows="3"></textarea>
+            <mat-icon matPrefix>format_quote</mat-icon>
+          </mat-form-field>
+
+          <div class="info-row" style="background: #f5f5f5; padding: 1rem; border-radius: 8px; margin-top: 10px;">
+            <p style="margin: 5px 0;">
+              <mat-icon style="vertical-align: middle; font-size: 18px;">timer</mat-icon> 
+              <strong>Tiempo invertido:</strong> {{ (form.get('timeSpentSeconds')?.value / 60) | number:'1.0-0' }} minutos
+            </p>
+            <p style="margin: 5px 0;">
+              <mat-icon style="vertical-align: middle; font-size: 18px;">calendar_today</mat-icon> 
+              <strong>Último acceso:</strong> {{ form.get('lastAccess')?.value | date:'dd/MM/yyyy HH:mm' }}
+            </p>
+          </div>
+
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn-save" (click)="saveProgress()">
+            Actualizar
+          </button>
+          <button type="button" class="btn-cancel" (click)="closeModal()">
+            Cerrar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+}

@@ -1,0 +1,35 @@
+@if (backendStatus.backendDown() || backendStatus.reconnected()) {
+  <div [@fadeInOut] class="overlay">
+    <div class="card">
+      <div class="icon">⚠️</div>
+      
+      <h2>{{ backendStatus.reconnected() ? '¡Conexión Recuperada!' : 'Servidor fuera de línea' }}</h2>
+      
+      @if (backendStatus.backendDown() && !backendStatus.reconnected()) {
+        <p>No se puede establecer conexión con el servidor.</p>
+        
+        @if (backendStatus.countdown(); as sec) {
+          <div class="countdown-bar">
+            <div class="progress-track">
+              <div class="bar" [style.width.%]="(sec / 10) * 100"></div>
+            </div>
+            <p class="countdown-text">
+              Reintento automático en <strong>{{ sec }}s</strong>...
+            </p>
+          </div>
+        }
+      }
+
+      @if (backendStatus.reconnected()) {
+        <div class="success-loader">
+          <div class="spinner"></div>
+          <p>Restableciendo el sistema...</p>
+        </div>
+      }
+
+      <button class="btn-retry" (click)="backendStatus.retryBackend()">
+        🔄 Reintentar ahora
+      </button>
+    </div>
+  </div>
+}

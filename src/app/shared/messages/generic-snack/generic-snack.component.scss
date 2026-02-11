@@ -1,0 +1,79 @@
+@use "sass:color";
+@use 'variables' as v;
+
+.snack-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1.5rem;
+    width: 100%;
+    // Añadimos un pequeño padding interno para que el contenido no pegue al borde neón
+    padding: 0.5rem;
+}
+
+.message {
+    font-size: 1.1rem;
+    color: #ffffff !important; // Texto blanco brillante sobre fondo oscuro
+    font-weight: 500;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.actions {
+    display: flex;
+    gap: 12px;
+    width: 100%;
+    justify-content: center;
+
+    button {
+        font-weight: 700;
+        border-radius: 10px;
+        text-transform: uppercase;
+        padding: 0.7rem 1.2rem;
+        flex: 1;
+        max-width: 160px;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        border: none;
+        cursor: pointer;
+
+        // Botón Principal: INSCRIBIRME (Fondo Neón)
+        &[color="accent"] {
+            background-color: v.$brand-neon;
+            color: #000000; // Texto negro para legibilidad sobre neón
+            box-shadow: 0 4px 15px rgba(v.$brand-neon, 0.3);
+            
+            &:hover {
+                // background-color: darken(v.$brand-neon, 10%);
+                background-color: color.adjust(v.$brand-neon, $lightness: -10%); // 2. Usa color.adjust
+                transform: translateY(-2px) scale(1.05);
+                box-shadow: 0 6px 20px rgba(v.$brand-neon, 0.5);
+            }
+
+            &:active {
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        // Botón Secundario: CANCELAR (Transparente/Gris)
+        &:not([color="accent"]) {
+            background-color: rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+
+            &:hover {
+                background-color: rgba(255, 255, 255, 0.15);
+                border-color: rgba(255, 255, 255, 0.4);
+            }
+        }
+    }
+
+    // Mejora para móviles muy pequeños
+    @media (max-width: 400px) {
+        flex-direction: column;
+        button {
+            max-width: 100%;
+            width: 100%;
+        }
+    }
+}

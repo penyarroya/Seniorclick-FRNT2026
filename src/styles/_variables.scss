@@ -1,0 +1,44 @@
+// _variables.scss
+
+// ---------------- Variables de colores ----------------
+$primary-color: #6c63ff;
+$primary-hover: #9f8fff;
+$secondary-color: #e74c3c;
+$secondary-hover: #ff6b6b;
+$card-bg: #2c2a3e;
+$input-bg: #686182;           // fondo de inputs
+$text-color: #f1f1f5;
+$error-color: #ff6b6b;
+$success-color: #4ade80;
+$label-color: #070bf1;
+$label-focus-color: #f6f4f4;
+$cursor-color: #02fad1;
+$toolbar-bg: #154f9f;
+$footer-bg: #154f9f;
+$menu-icon-color-default: rgb(74, 41, 3);
+$menu-icon-color-hover: #1df597; 
+$menu-label-color-default: white;
+$menu-label-color-hover: black;
+$separator-color: rgb(74, 41, 3);
+
+$google-blue: #1a73e8;
+$text-dark: #202124;
+$text-light: #5f6368;
+$auth-label-color: #fe680b;
+
+// ---------------- Colores de marca específicos ----------------
+$brand-neon: #02f99e;         // El verde que estás usando en el mantenimiento
+$bg-light: #f4f7f9;           // Fondo suave para el catálogo
+
+// ---------------- Efectos y Sombras ----------------
+$card-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+$card-shadow-hover: 0 12px 30px rgba(25, 118, 210, 0.15);
+
+// ---------------- Variables de medidas ----------------
+$toolbar-height: 64px;        // Ajustado para el catálogo (antes 45px)
+$footer-height: 30px;
+$offset: 25px;
+
+// ---------------- Tamaños de iconos y botones ----------------
+$menu-icon-size: 32px;
+$menu-button-size: 48px;

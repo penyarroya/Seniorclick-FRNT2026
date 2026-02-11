@@ -1,0 +1,103 @@
+src/
+├── app/
+│   ├── core/           # 1. Componentes y Servicios de Infraestructura (Eager Loaded)
+│   │   ├── services/   # AuthService (la lógica de la API), ApiService, LoggerService
+│   │   ├── components/
+│   │   │   └── not-found/ # <-- Componente 404 (Página de Error)
+│   │   └── ...
+│   │
+│   ├── shared/         # 2. Componentes UI Reutilizables
+│   │   └── ...
+│   │
+│   ├── features/       # 3. Módulos de Dominio/Funcionalidad (Lazy Loaded)
+│   │   
+│   │   ├── auth/       # <-- 🎯 MÓDULO DE AUTENTICACIÓN
+│   │   │   ├── components/ 
+│   │   │   │   ├── login/         # <-- 🎯 Aquí va la vista de Login
+│   │   │   │   ├── register/      # <-- 🎯 Aquí va la vista de Registro
+│   │   │   │   └── forgot-password/ # <-- 🎯 Aquí va la vista de Recuperación
+│   │   │   └── auth.routes.ts   # Define /auth/login, /auth/register, etc.
+│   │   │
+│   │   ├── home/       # Módulo Dashboard principal (HomeComponent)
+│   │   │   └── ... 
+│   │   │
+│   │   ├── static-pages/ # Páginas estáticas (About, FAQ)
+│   │   │   └── about/
+│   │   │
+│   │   ├── product-management/ # Mantenimiento Entidad 1
+│   │   └── ... (Tus 15+ entidades)
+│   │
+│   └── app.routes.ts   # Aquí se cargan perezosamente 'auth', 'home', 'static-pages', etc.
+│
+└── ...
+
+Proyecto (Carrera): Ej. "Grado en Historia del Arte" o "Diplomado en Competencias Digitales".
+   Colección (Año/Cuatrimestre o Área): Ej. "Primer Curso" o "Bloque de Humanidades".
+      Tema (Asignatura/Materia): Ej. "Historia Antigua".
+         Subtema (Unidad Didáctica): Ej. "El Arte en Mesopotamia".
+            Página (Lección/Clase): Ej. "Arquitectura de los Zigurat".
+
+
+
+Esquema Funcional de Universilabs
+
+ESTRUCTURA UNIVERSILABS
+=======================
+
+Institución (Seniorclick)
+│
+└─── Proyecto / Curso (Project)
+     │   [Atributos: título, descripción, nivel, activo]
+     │
+     ├─── Inscripciones (Enrollment) <───> Usuarios (UserEntity)
+     │    └─ Roles de Curso: [LEARNER, MENTOR, COLLABORATOR]
+     │
+     └─── JERARQUÍA DE CONTENIDO
+          └─ Colección (CollectionEntity)
+             └─ Tema (Topic)
+                └─ Subtema (Subtopic)
+                   └─ Página (Page)
+                      ├─ Atributos: [Título, Contenido, Autor]
+                      ├─ Recursos (Resource) ──► [Título, Tipo, URL, Orden]
+                      ├─ Comentarios (Comment)
+                      ├─ Contribuciones (Contribution)
+                      └─ Progreso (UserProgress)
+                         └─ [Estado, Tiempo, Último Acceso, Motivación]
+
+SEGURIDAD Y PERFILES
+====================
+
+Usuarios (UserEntity)
+│   [Seguridad: email, username, password, activo, verificado]
+│
+├─── Perfil (UserProfile) ───► (Relación 1:1)
+│    └─ [Nombre, Apellido, Teléfono, Avatar]
+│
+├─── Roles Globales (RoleEntity)
+│    └─ [ADMIN, USER, INSTRUCTOR]
+│
+└─── Permisos (PermissionEntity)
+     └─ [READ_USERS, WRITE_PROJECTS, etc.]
+
+     
+
+
+**  Lista de Entidades Confirmadas
+
+UserEntity (En UserEntity.java)
+Institution (En Institution.java)
+Project (En Project.java)
+Enrollment/Inscripciones (En Enrollment.java)
+CollectionEntity (En CollectionEntity.java)
+Topic (En Topic.java)
+Subtopic (En Subtopic.java)
+Page (En Page.java)
+Resource (En Resource.java)  -  PageViewerComponent( para mostrar los Recursos)
+Comment (En Comment.java)
+Contribution (En Contribution.java)
+UserProgress (En UserProgress.java)
+
+UserProfile (En UserProfile.java)
+
+RoleEntity (Referenciada en UserEntity como roles)
+Permission/Authority (Gestionada lógicamente en UserEntity a través de los roles)

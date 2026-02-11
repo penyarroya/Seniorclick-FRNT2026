@@ -1,0 +1,546 @@
+// :host {
+//   display: flex;
+//   flex-direction: column;
+//   width: 100%;
+//   height: 100vh;
+//   background-color: #121826;
+//   color: #fff;
+//   font-family: 'Roboto', sans-serif;
+//   box-sizing: border-box;
+//   padding: 0 !important;
+//   overflow: hidden;
+
+//   ::ng-deep {
+//     app-maintenance-layout {
+//       display: flex;
+//       flex-direction: column;
+//       width: 100%;
+//       flex: 1;
+//       height: 100%;
+//     }
+
+//     .maintenance-container {
+//       display: flex;
+//       flex-direction: column;
+//       width: 100%;
+//       height: 100%;
+//       padding: 0 !important;
+//       background-color: transparent;
+//       gap: 0;
+//     }
+
+//     .header { padding: 1.5rem; box-sizing: border-box; }
+
+//     .table-wrapper {
+//       flex: 1;
+//       width: 100%;
+//       overflow: auto;
+//       background-color: #1f2a38 !important;
+//       border-radius: 0;
+//     }
+
+//     .mat-mdc-table {
+//       width: 100% !important;
+//       background-color: transparent !important;
+//     }
+
+//     .mat-mdc-header-cell {
+//       background-color: #2c3e50 !important;
+//       color: #fff !important;
+//       border-bottom: 1px solid #444 !important;
+//     }
+
+//     .mat-mdc-cell {
+//       color: #cbd5e0 !important;
+//       border-bottom: 1px solid #334155 !important;
+//     }
+
+//     .mat-mdc-paginator {
+//       background-color: #1f2a38 !important;
+//       color: #fff !important;
+//       border-top: 1px solid #444;
+//     }
+//   }
+// }
+
+// /* ================= Modal Corregido ================= */
+// .modal {
+//   position: fixed;
+//   inset: 0;
+//   background: rgba(0, 0, 0, 0.85);
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   z-index: 1200;
+//   animation: fadeIn 0.2s ease-in-out;
+
+//   .modal-content {
+//     background: #1f2a38;
+//     padding: 2rem;
+//     border-radius: 8px;
+//     width: 450px;
+//     max-width: 95%;
+//     max-height: 90vh;
+//     overflow-y: auto;
+//     color: #fff;
+//     box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+//     animation: slideUp 0.25s ease-in-out;
+//     border: 1px solid #444;
+//   }
+
+//   h3 { margin: 0 0 1.5rem 0; color: #6c63ff; font-size: 1.5rem; }
+
+//   .form-group {
+//     margin-bottom: 1.25rem;
+//     label { display: block; margin-bottom: 0.5rem; color: #a0aec0; }
+    
+//     /* Agregado textarea y box-sizing para ancho idéntico */
+//     input, textarea {
+//       width: 100%; 
+//       padding: 0.75rem; 
+//       background: #2c3e50;
+//       color: #fff; 
+//       border: 1px solid #444; 
+//       border-radius: 6px;
+//       box-sizing: border-box; /* Esto hace que el padding no ensanche el campo */
+//       font-family: inherit;
+
+//       &:focus { 
+//         border-color: #6c63ff; 
+//         outline: none; 
+//         box-shadow: 0 0 0 2px rgba(108, 99, 255, 0.2); 
+//       }
+//     }
+
+//     textarea {
+//       resize: vertical;
+//       min-height: 100px;
+//     }
+
+//     .error { color: #fc8181; font-size: 0.85rem; margin-top: 0.4rem; }
+//   }
+
+//   .modal-actions {
+//     display: flex; 
+//     justify-content: flex-end; 
+//     gap: 1rem; 
+//     margin-top: 2rem;
+    
+//     button {
+//       padding: 0.6rem 1.2rem; 
+//       border-radius: 4px; 
+//       cursor: pointer; 
+//       font-weight: 600;
+//       transition: all 0.2s;
+
+//       &[type="submit"] { 
+//         background: #6c63ff; 
+//         color: #fff; 
+//         border: none;
+//         &:disabled { background: #4a5568; cursor: not-allowed; opacity: 0.7; }
+//       }
+      
+//       &[type="button"] { background: transparent; color: #a0aec0; border: 1px solid #444; }
+//     }
+//   }
+// }
+
+// @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+// @keyframes slideUp { 
+//   from { transform: translateY(20px); opacity: 0; } 
+//   to { transform: translateY(0); opacity: 1; } 
+// }
+
+
+
+
+// :host {
+//   display: flex;
+//   flex-direction: column;
+//   width: 100%;
+//   height: 100vh;
+//   background-color: #121826;
+//   color: #fff;
+//   font-family: 'Roboto', sans-serif;
+//   box-sizing: border-box;
+//   padding: 0 !important;
+//   overflow: hidden;
+
+//   ::ng-deep {
+//     app-maintenance-layout {
+//       display: flex;
+//       flex-direction: column;
+//       width: 100%;
+//       flex: 1;
+//       height: 100%;
+//     }
+
+//     .maintenance-container {
+//       display: flex;
+//       flex-direction: column;
+//       width: 100%;
+//       height: 100%;
+//       padding: 0 !important;
+//       background-color: transparent;
+//       gap: 0;
+//     }
+
+//     .header { padding: 1.5rem; box-sizing: border-box; }
+
+//     .table-wrapper {
+//       flex: 1;
+//       width: 100%;
+//       overflow: auto;
+//       background-color: #1f2a38 !important;
+//       border-radius: 0;
+//     }
+
+//     .mat-mdc-table {
+//       width: 100% !important;
+//       background-color: transparent !important;
+//     }
+
+//     .mat-mdc-header-cell {
+//       background-color: #2c3e50 !important;
+//       color: #fff !important;
+//       border-bottom: 1px solid #444 !important;
+//     }
+
+//     .mat-mdc-cell {
+//       color: #cbd5e0 !important;
+//       border-bottom: 1px solid #334155 !important;
+//     }
+
+//     .mat-mdc-paginator {
+//       background-color: #1f2a38 !important;
+//       color: #fff !important;
+//       border-top: 1px solid #444;
+//     }
+//   }
+// }
+
+// /* ================= Modal Corregido y Validado ================= */
+// .modal {
+//   position: fixed;
+//   inset: 0;
+//   background: rgba(0, 0, 0, 0.85);
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   z-index: 1200;
+//   animation: fadeIn 0.2s ease-in-out;
+
+//   .modal-content {
+//     background: #1f2a38;
+//     padding: 2rem;
+//     border-radius: 8px;
+//     width: 480px; // Un poco más ancho para albergar errores largos
+//     max-width: 95%;
+//     max-height: 90vh;
+//     overflow-y: auto;
+//     color: #fff;
+//     box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+//     animation: slideUp 0.25s ease-in-out;
+//     border: 1px solid #444;
+//   }
+
+//   h3 { margin: 0 0 1.5rem 0; color: #6c63ff; font-size: 1.5rem; }
+
+//   .form-group {
+//     margin-bottom: 1rem; // Ajustado para dar espacio al error-container
+    
+//     label { display: block; margin-bottom: 0.5rem; color: #a0aec0; font-size: 0.9rem;}
+    
+//     input, textarea {
+//       width: 100%; 
+//       padding: 0.75rem; 
+//       background: #2c3e50;
+//       color: #fff; 
+//       border: 1px solid #444; 
+//       border-radius: 6px;
+//       box-sizing: border-box;
+//       font-family: inherit;
+//       transition: all 0.2s ease;
+
+//       &:focus { 
+//         border-color: #6c63ff; 
+//         outline: none; 
+//         box-shadow: 0 0 0 2px rgba(108, 99, 255, 0.15); 
+//       }
+
+//       /* Estilo para campos inválidos cuando han sido tocados */
+//       &.ng-invalid.ng-touched {
+//         border-color: #fc8181;
+//         background: rgba(252, 129, 129, 0.05);
+//         &:focus { box-shadow: 0 0 0 2px rgba(252, 129, 129, 0.2); }
+//       }
+//     }
+
+//     textarea {
+//       resize: vertical;
+//       min-height: 80px;
+//     }
+
+//     /* Contenedor de mensajes de error */
+//     .error-container {
+//       min-height: 20px;
+//       margin-top: 0.3rem;
+
+//       .error { 
+//         color: #fc8181; 
+//         font-size: 0.75rem; 
+//         font-weight: 500;
+//         display: block;
+//         animation: fadeIn 0.3s;
+//       }
+//     }
+//   }
+
+//   .modal-actions {
+//     display: flex; 
+//     justify-content: flex-end; 
+//     gap: 1rem; 
+//     margin-top: 1.5rem;
+    
+//     button {
+//       padding: 0.6rem 1.4rem; 
+//       border-radius: 4px; 
+//       cursor: pointer; 
+//       font-weight: 600;
+//       transition: all 0.2s;
+
+//       &[type="submit"] { 
+//         background: #6c63ff; 
+//         color: #fff; 
+//         border: none;
+        
+//         &:hover:not(:disabled) { background: #5a52e0; }
+        
+//         &:disabled { 
+//           background: #4a5568; 
+//           cursor: not-allowed; 
+//           opacity: 0.6; 
+//           filter: grayscale(1);
+//         }
+//       }
+      
+//       &[type="button"] { 
+//         background: transparent; 
+//         color: #a0aec0; 
+//         border: 1px solid #444;
+//         &:hover { background: rgba(255,255,255,0.05); color: #fff; }
+//       }
+//     }
+//   }
+// }
+
+// @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+// @keyframes slideUp { 
+//   from { transform: translateY(20px); opacity: 0; } 
+//   to { transform: translateY(0); opacity: 1; } 
+// }
+
+@use 'variables' as v;
+
+/* ==========================================================================
+   0. Configuración del Host (Tokens de Material 20 - Sin ng-deep)
+   ========================================================================== */
+:host {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  background-color: #121826;
+  color: #fff;
+  font-family: 'Roboto', sans-serif;
+  box-sizing: border-box;
+  padding: 0 !important;
+  overflow: hidden;
+
+  // TOKENS PARA COMPONENTES MATERIAL (Tablas, Paginador, Forms)
+  --mat-table-background-color: transparent;
+  --mat-table-header-container-background-color: #2c3e50;
+  --mat-table-header-headline-color: #ffffff;
+  --mat-table-row-item-label-text-color: #cbd5e0;
+  --mat-table-row-item-outline-color: #334155;
+
+  --mat-paginator-container-background-color: #1f2a38;
+  --mat-paginator-container-text-color: #ffffff;
+
+  // Tokens para inputs de material (si los usas en este componente)
+  --mdc-filled-text-field-container-color: #2c3e50;
+  --mdc-filled-text-field-input-text-color: #ffffff;
+  --mdc-filled-text-field-placeholder-text-color: rgba(255, 255, 255, 0.75);
+  --mdc-filled-text-field-focus-active-indicator-color: #{v.$brand-neon};
+
+  app-maintenance-layout {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    flex: 1;
+    height: 100%;
+  }
+}
+
+/* ==========================================================================
+   1. Estructura de Contenedores (Layout Principal)
+   ========================================================================== */
+.maintenance-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  padding: 0 !important;
+  background-color: transparent;
+  gap: 0;
+}
+
+.header { 
+  padding: 1.5rem; 
+  box-sizing: border-box; 
+  flex-shrink: 0;
+}
+
+.table-wrapper {
+  flex: 1;
+  width: 100%;
+  overflow: auto;
+  background-color: #1f2a38 !important;
+  border-radius: 0;
+
+  // Scrollbar personalizado para la tabla
+  &::-webkit-scrollbar { width: 8px; height: 8px; }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(v.$brand-neon, 0.2);
+    border-radius: 10px;
+    &:hover { background: v.$brand-neon; }
+  }
+}
+
+/* ==========================================================================
+   2. Modal Corregido (Estilo Unificado y Placeholders Claros)
+   ========================================================================== */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1200;
+  backdrop-filter: blur(8px);
+  animation: fadeIn 0.2s ease-in-out;
+
+  .modal-content {
+    background: #1f2a38;
+    padding: 2rem;
+    border-radius: 12px;
+    width: 480px; 
+    max-width: 95%;
+    max-height: 90vh;
+    overflow-y: auto;
+    color: #fff;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(v.$brand-neon, 0.2);
+    animation: slideUp 0.25s ease-in-out;
+
+    h3 { 
+      margin: 0 0 1.5rem 0; 
+      color: v.$brand-neon; 
+      font-size: 1.4rem; 
+      font-weight: 600;
+      border-bottom: 1px solid rgba(v.$brand-neon, 0.1);
+      padding-bottom: 0.5rem;
+    }
+  }
+
+  .form-group {
+    margin-bottom: 1.25rem;
+    
+    label { 
+      display: block; 
+      margin-bottom: 0.5rem; 
+      color: rgba(255, 255, 255, 0.7); 
+      font-size: 0.9rem;
+    }
+    
+    input, textarea {
+      width: 100%; 
+      padding: 0.75rem; 
+      background: #2c3e50;
+      color: #fff; 
+      border: 1px solid #444; 
+      border-radius: 8px;
+      box-sizing: border-box;
+      font-family: inherit;
+      transition: all 0.2s ease;
+
+      // PLACEHOLDER CLARO (Unificado)
+      &::placeholder {
+        color: rgba(255, 255, 255, 0.75);
+        opacity: 1;
+      }
+
+      &:focus { 
+        border-color: v.$brand-neon; 
+        outline: none; 
+        box-shadow: 0 0 0 2px rgba(v.$brand-neon, 0.15); 
+      }
+
+      &.ng-invalid.ng-touched {
+        border-color: #fc8181;
+        background: rgba(252, 129, 129, 0.05);
+      }
+    }
+  }
+
+  /* Acciones del Modal: Actualizar y Cerrar a la derecha */
+  .modal-actions {
+    display: flex; 
+    justify-content: flex-end; 
+    align-items: center;
+    gap: 1rem; 
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    
+    button {
+      padding: 0.7rem 1.5rem; 
+      border-radius: 8px; 
+      cursor: pointer; 
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+
+      // Botón Principal (Guardar / Submit)
+      &[type="submit"] { 
+        background: v.$brand-neon; 
+        color: #000; 
+        border: none;
+        &:hover:not(:disabled) { 
+          transform: translateY(-2px);
+          box-shadow: 0 5px 15px rgba(v.$brand-neon, 0.4); 
+        }
+        &:disabled { 
+          background: #4a5568; color: #a0aec0; cursor: not-allowed; opacity: 0.6; 
+        }
+      }
+      
+      // Botón Secundario (Cerrar / Cancelar)
+      &[type="button"] { 
+        background: rgba(255, 255, 255, 0.05); 
+        color: #fff; 
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        &:hover { background: rgba(255, 255, 255, 0.1); border-color: #fff; }
+      }
+    }
+  }
+}
+
+/* ================= ANIMACIONES ================= */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { 
+  from { transform: translateY(20px); opacity: 0; } 
+  to { transform: translateY(0); opacity: 1; } 
+}

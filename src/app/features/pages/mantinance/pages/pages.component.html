@@ -1,0 +1,277 @@
+<!-- <app-maintenance-layout
+  title="Gestión de Contenido (Pages)"
+  [columns]="columns"
+  [service]="pageService"
+  (onCreate)="createPage()"
+  (onEdit)="editPage($event)"
+  (onDelete)="deletePage($event)"
+  (onView)="viewPageAsStudent($event)"
+></app-maintenance-layout>
+
+@if (showModal) {
+<div class="modal">
+  <div class="modal-content large">
+    <div class="modal-header">
+      <h3>{{ isEditing ? 'Editar Página' : 'Nueva Página' }}</h3>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="savePage()">
+      <div class="form-grid">
+
+        <mat-form-field appearance="outline" class="full-width" floatLabel="always">
+          <mat-label>Título de la Página</mat-label>
+          <input matInput formControlName="title" placeholder="Ej: Introducción a los Streams">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width" floatLabel="always">
+          <mat-label>Formato de la Página</mat-label>
+          <mat-select formControlName="format">
+            <mat-option value="HTML">HTML (Renderizado)</mat-option>
+            <mat-option value="MARKDOWN">Markdown</mat-option>
+            <mat-option value="PLAIN_TEXT">Texto Plano</mat-option>
+            <mat-option value="PDF_URL">URL de PDF</mat-option>
+            <mat-option value="EXTERNAL_LINK">Enlace Externo</mat-option>
+          </mat-select>
+          <mat-hint>Indica cómo debe procesarse el contenido</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width" floatLabel="always">
+          <mat-label>Subtema Padre</mat-label>
+          <mat-select formControlName="subtopicId">
+            @for (s of subtopics; track s.id) {
+            <mat-option [value]="s.id">{{ s.title }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width content-area" floatLabel="always">
+          <mat-label>Contenido del Artículo</mat-label>
+          <textarea matInput formControlName="content" rows="12" placeholder="Escribe el contenido aquí..."
+            [class.warning-limit]="form.get('content')?.value?.length > 95000"
+            [class.error-limit]="form.get('content')?.value?.length > 100000"></textarea>
+
+          <mat-hint align="end" [class.color-warning]="form.get('content')?.value?.length > 95000"
+            [class.color-error]="form.get('content')?.value?.length > 100000">
+            {{form.get('content')?.value?.length || 0}} / 100,000
+          </mat-hint>
+        </mat-form-field>
+
+        <div class="resources-section">
+          <div class="section-header">
+            <h4><mat-icon>attachment</mat-icon> Materiales Adjuntos (Recursos)</h4>
+          </div>
+
+          @if (selectedId) {
+            <div class="resource-quick-add">
+              <input type="text" 
+                    [(ngModel)]="newResource.title" 
+                    [ngModelOptions]="{standalone: true}" 
+                    placeholder="Nombre del material">
+              
+              <select [(ngModel)]="newResource.type" [ngModelOptions]="{standalone: true}">
+                <option value="PDF">PDF</option>
+                <option value="VIDEO">VIDEO</option>
+                <option value="IMAGE">IMAGE</option>
+                <option value="LINK">LINK</option>
+              </select>
+
+              <input type="text" 
+                    [(ngModel)]="textUrl" 
+                    (ngModelChange)="autoDetectType($event)" 
+                    [ngModelOptions]="{standalone: true}" 
+                    placeholder="/pdf/archivo.pdf o https://...">
+              
+              <button type="button" 
+                      class="btn-add-inline" 
+                      (click)="saveNewResource()"
+                      [disabled]="!newResource.title || !textUrl">
+                <mat-icon>add</mat-icon>
+              </button>
+            </div>
+
+            <div class="resources-list">
+              @for (res of resources; track res.id) {
+              <div class="resource-item">
+                <div class="res-info">
+                  <span class="res-type" [attr.data-type]="res.type">{{ res.type }}</span>
+                  <span class="res-title">{{ res.title }}</span>
+                </div>
+                <button type="button" class="btn-delete-small" (click)="deleteResource(res.id!)">
+                  <mat-icon>delete_outline</mat-icon>
+                </button>
+              </div>
+              } @empty {
+              <p class="empty-resources">No hay materiales adjuntos en esta página.</p>
+              }
+            </div>
+          } @else {
+            <div class="resource-info-placeholder">
+              <mat-icon>info_outline</mat-icon>
+              <p>Podrás añadir materiales adjuntos una vez guardes la página por primera vez.</p>
+            </div>
+          }
+        </div>
+      </div>
+    </form>
+
+    <div class="modal-actions">
+      <div class="main-actions">
+        <button type="button" class="btn-cancel" (click)="closeModal()">
+          {{ isEditing ? 'Cerrar' : 'Cancelar' }}
+        </button>
+
+        <button type="button" class="btn-save" (click)="savePage()" [disabled]="form.invalid">
+          <mat-icon>{{ isEditing ? 'update' : 'save' }}</mat-icon>
+          {{ isEditing ? 'Actualizar' : 'Guardar Página' }}
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+} -->
+
+<app-maintenance-layout
+  title="Gestión de Contenido (Pages)"
+  [columns]="columns"
+  [service]="pageService"
+  (onCreate)="createPage()"
+  (onEdit)="editPage($event)"
+  (onDelete)="deletePage($event)"
+  (onView)="viewPageAsStudent($event)"
+></app-maintenance-layout>
+
+@if (showModal) {
+<div class="modal">
+  <div class="modal-content large" [class.preview-mode]="showPreview">
+    
+    <div class="modal-header">
+      <h3>
+        <mat-icon>{{ showPreview ? 'visibility' : (isEditing ? 'edit' : 'add_circle') }}</mat-icon>
+        {{ showPreview ? 'Vista Previa del Contenido' : (isEditing ? 'Editar Página' : 'Nueva Página') }}
+      </h3>
+    </div>
+
+    @if (!showPreview) {
+      <form [formGroup]="form">
+        <div class="form-grid">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <mat-form-field appearance="outline" floatLabel="always">
+              <mat-label>Título de la Página</mat-label>
+              <input matInput formControlName="title" placeholder="Ej: Introducción a los Streams">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" floatLabel="always">
+              <mat-label>Formato de la Página</mat-label>
+              <mat-select formControlName="format">
+                <mat-option value="HTML">HTML (Renderizado)</mat-option>
+                <mat-option value="MARKDOWN">Markdown</mat-option>
+                <mat-option value="PLAIN_TEXT">Texto Plano</mat-option>
+                <mat-option value="PDF_URL">URL de PDF</mat-option>
+                <mat-option value="EXTERNAL_LINK">Enlace Externo</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <mat-form-field appearance="outline" class="full-width" floatLabel="always">
+            <mat-label>Subtema Padre</mat-label>
+            <mat-select formControlName="subtopicId">
+              @for (s of subtopics; track s.id) {
+                <mat-option [value]="s.id">{{ s.title }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width content-area" floatLabel="always">
+            <mat-label>Contenido del Artículo (HTML/Markdown)</mat-label>
+            <textarea matInput formControlName="content" rows="12" 
+                      placeholder="Escribe el contenido aquí..."
+                      [class.warning-limit]="form.get('content')?.value?.length > 95000"
+                      [class.error-limit]="form.get('content')?.value?.length > 100000"></textarea>
+            <mat-hint align="end" [class.color-warning]="form.get('content')?.value?.length > 95000"
+                      [class.color-error]="form.get('content')?.value?.length > 100000">
+              {{form.get('content')?.value?.length || 0}} / 100,000
+            </mat-hint>
+          </mat-form-field>
+
+          <div class="resources-section">
+            <div class="section-header">
+              <h4><mat-icon>attachment</mat-icon> Materiales Adjuntos (Recursos)</h4>
+            </div>
+
+            @if (selectedId) {
+              <div class="resource-quick-add">
+                <input type="text" [(ngModel)]="newResource.title" [ngModelOptions]="{standalone: true}" placeholder="Nombre del material">
+                
+                <select [(ngModel)]="newResource.type" [ngModelOptions]="{standalone: true}">
+                  <option value="PDF">PDF</option>
+                  <option value="VIDEO">VIDEO</option>
+                  <option value="IMAGE">IMAGE</option>
+                  <option value="LINK">LINK</option>
+                </select>
+
+                <input type="text" [(ngModel)]="textUrl" (ngModelChange)="autoDetectType($event)" 
+                       [ngModelOptions]="{standalone: true}" placeholder="/pdf/archivo.pdf o https://...">
+                
+                <button type="button" class="btn-add-inline" (click)="saveNewResource()" [disabled]="!newResource.title || !textUrl">
+                  <mat-icon>add</mat-icon>
+                </button>
+              </div>
+
+              <div class="resources-list">
+                @for (res of resources; track res.id) {
+                  <div class="resource-item">
+                    <div class="res-info">
+                      <span class="res-type" [attr.data-type]="res.type">{{ res.type }}</span>
+                      <span class="res-title">{{ res.title }}</span>
+                    </div>
+                    <button type="button" class="btn-delete-small" (click)="deleteResource(res.id!)">
+                      <mat-icon>delete_outline</mat-icon>
+                    </button>
+                  </div>
+                } @empty {
+                  <p class="empty-resources">No hay materiales adjuntos.</p>
+                }
+              </div>
+            } @else {
+              <div class="resource-info-placeholder">
+                <mat-icon>info_outline</mat-icon>
+                <p>Guarda la página para empezar a añadir materiales.</p>
+              </div>
+            }
+          </div>
+        </div>
+      </form>
+    } @else {
+      <div class="preview-scroll-container">
+        <div class="preview-content-rendered">
+           <h1 style="color: #00d2ff">{{ form.get('title')?.value }}</h1>
+           <hr style="border-color: rgba(255,255,255,0.1)">
+           <div [innerHTML]="form.get('content')?.value"></div>
+        </div>
+      </div>
+    }
+
+    <div class="modal-actions">
+      <button type="button" class="btn-preview" (click)="showPreview = !showPreview" [disabled]="!form.get('content')?.value">
+        <mat-icon>{{ showPreview ? 'edit' : 'visibility' }}</mat-icon>
+        {{ showPreview ? 'Volver al Editor' : 'Vista Previa' }}
+      </button>
+
+      <div class="main-actions">
+        <button type="button" class="btn-cancel" (click)="closeModal()">
+          {{ isEditing ? 'Cerrar' : 'Cancelar' }}
+        </button>
+
+        @if (!showPreview) {
+          <button type="button" class="btn-save" (click)="savePage()" [disabled]="form.invalid">
+            <mat-icon>{{ isEditing ? 'update' : 'save' }}</mat-icon>
+            {{ isEditing ? 'Actualizar' : 'Guardar Página' }}
+          </button>
+        }
+      </div>
+    </div>
+
+  </div>
+</div>
+}

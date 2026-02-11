@@ -1,0 +1,248 @@
+<!-- <app-maintenance-layout
+  title="Control de Contribuciones"
+  icon="history_edu"
+  [columns]="columns"
+  [service]="contributionService"
+  (onCreate)="createContribution()"
+  (onEdit)="openViewModal($event)"
+  (onView)="openViewModal($event)"
+  (onDelete)="deleteContribution($event)">
+</app-maintenance-layout>
+
+@if (showModal) {
+<div class="modal-overlay" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    
+    <div class="modal-header">
+      <h3>
+        <mat-icon>{{ isEditing ? 'edit' : 'add_circle' }}</mat-icon> 
+        {{ isEditing ? 'Editar Aporte' : 'Nuevo Aporte' }}
+      </h3>
+      <button mat-icon-button (click)="closeModal()" [disabled]="isSaving()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="saveContribution()">
+      <fieldset [disabled]="isSaving()" style="border: none; padding: 0; margin: 0;">
+        <div class="modal-body">
+          <div class="info-grid">
+            <mat-form-field appearance="outline">
+              <mat-label>Autor</mat-label>
+              <input matInput formControlName="username" placeholder="Nombre del usuario">
+              @if (form.get('username')?.invalid && form.get('username')?.touched) {
+                <mat-error>El nombre es obligatorio (min. 3 caracteres)</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Página Destino</mat-label>
+              <input matInput formControlName="pageTitle" placeholder="Lección destino">
+              <mat-hint>Campo informativo</mat-hint>
+            </mat-form-field>
+          </div>
+
+          <div class="content-view">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Contenido Propuesto</mat-label>
+              <textarea #contentText matInput formControlName="content" rows="8" placeholder="Escribe el aporte detallado..."></textarea>
+              
+              <mat-hint align="end">
+                <span [class.text-neon]="form.get('content')?.value?.length >= 10">
+                  {{ form.get('content')?.value?.length || 0 }} / 5000
+                </span>
+              </mat-hint>
+
+              @if (form.get('content')?.hasError('required')) {
+                <mat-error>El contenido es obligatorio</mat-error>
+              }
+              @if (form.get('content')?.hasError('minlength')) {
+                <mat-error>El aporte es muy corto (mínimo 10 caracteres)</mat-error>
+              }
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" mat-button (click)="closeModal()" [disabled]="isSaving()">
+            CANCELAR
+          </button>
+          
+          @if (isEditing) {
+            <button type="button" 
+                    mat-raised-button 
+                    color="warn" 
+                    (click)="deleteContribution()" 
+                    [disabled]="isSaving()">
+              <mat-icon>delete</mat-icon> ELIMINAR
+            </button>
+          }
+
+          <button type="submit" mat-raised-button color="primary" 
+                  [disabled]="form.invalid || isSaving()">
+            <mat-icon>{{ isSaving() ? 'hourglass_empty' : 'save' }}</mat-icon> 
+            {{ isSaving() ? 'GUARDANDO...' : (isEditing ? 'GUARDAR CAMBIOS' : 'CREAR APORTE') }}
+          </button>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</div>
+} -->
+
+<app-maintenance-layout
+  [title]="mode === 'user' ? 'Mis Aportaciones' : 'Control de Contribuciones'"
+  [icon]="mode === 'user' ? 'person_pin' : 'history_edu'"
+  [columns]="columns"
+  [service]="contributionService"
+  (onCreate)="createContribution()"
+  (onEdit)="openViewModal($event)"
+  (onView)="openViewModal($event)"
+  (onDelete)="deleteContribution($event)">
+</app-maintenance-layout>
+
+@if (showModal) {
+<div class="modal-overlay" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    
+    <div class="modal-header">
+      <h3>
+        <mat-icon>{{ isEditing ? 'edit' : 'add_circle' }}</mat-icon> 
+        {{ isEditing ? 'Editar Aporte' : 'Nuevo Aporte' }}
+      </h3>
+      <button mat-icon-button (click)="closeModal()" [disabled]="isSaving()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="saveContribution()">
+      <fieldset [disabled]="isSaving()" style="border: none; padding: 0; margin: 0;">
+        <div class="modal-body">
+          <div class="info-grid">
+            
+            <mat-form-field appearance="outline">
+              <mat-label>Autor</mat-label>
+              <input matInput 
+                     formControlName="username" 
+                     [readonly]="mode === 'user'"
+                     placeholder="Nombre del usuario">
+              @if (form.get('username')?.invalid && form.get('username')?.touched) {
+                <mat-error>El nombre es obligatorio (min. 3 caracteres)</mat-error>
+              }
+              @if (mode === 'user') {
+                <mat-hint>Tu identidad de autor</mat-hint>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" #pageField>
+              <mat-label>Página Destino</mat-label>
+              <input type="text"
+                     matInput
+                     #trigger="matAutocompleteTrigger"
+                     (focus)="trigger.openPanel()"
+                     formControlName="pageTitle"
+                     [matAutocomplete]="auto"
+                     placeholder="Busca una lección...">
+              
+              <div matSuffix class="suffix-container">
+                @if ((trigger.panelOpen || form.get('pageTitle')?.value) && !isEditing) {
+                  <button type="button" mat-icon-button (click)="clearPageSelection($event)">
+                    <mat-icon style="color: #ff5252;">close</mat-icon>
+                  </button>
+                } @else {
+                  <mat-icon style="color: var(--v-brand-neon)">search</mat-icon>
+                }
+              </div>
+              
+              <mat-autocomplete #auto="matAutocomplete" 
+                                [displayWith]="displayFn"
+                                (optionSelected)="onPageSelected($event)">
+                @for (pagina of paginasFiltradas | async; track pagina.id) {
+                  <mat-option [value]="pagina">
+                    <div class="option-row">
+                      <span>{{ pagina.title }}</span>
+                      @if (pagina.slug) {
+                        <small>({{ pagina.slug }})</small>
+                      }
+                    </div>
+                  </mat-option>
+                } @empty {
+                    @if (form.get('pageTitle')?.value?.length > 0) {
+                      <mat-option class="no-results-option block-clicks">
+                        <div class="no-results-content">
+                          <mat-icon>search_off</mat-icon>
+                          <div class="text-wrapper">
+                            <span class="main-text">Sin coincidencias</span>
+                            <span class="sub-text">"{{ form.get('pageTitle')?.value }}"</span>
+                          </div>
+                        </div>
+                      </mat-option>
+                    }
+                  }
+              </mat-autocomplete>
+
+              @if (form.get('pageTitle')?.invalid && form.get('pageTitle')?.touched) {
+                <mat-error>Debes seleccionar una página válida</mat-error>
+              }
+              <mat-hint>Busca y selecciona la lección del sistema</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width slug-field">
+              <mat-label>Enlace permanente (Slug)</mat-label>
+              <mat-icon matPrefix style="margin-right: 8px; color: var(--v-brand-neon)">link</mat-icon>
+              <input matInput formControlName="slug" readonly placeholder="url-automatica">
+              <mat-hint>Ruta técnica vinculada a la página seleccionada</mat-hint>
+            </mat-form-field>
+          </div>
+
+          <div class="content-view">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Contenido Propuesto</mat-label>
+              <textarea #contentText 
+                        matInput 
+                        formControlName="content" 
+                        rows="8" 
+                        placeholder="Escribe el aporte detallado..."></textarea>
+              
+              <mat-hint align="end">
+                <span [class.text-neon]="form.get('content')?.value?.length >= 10">
+                  {{ form.get('content')?.value?.length || 0 }} / 5000
+                </span>
+              </mat-hint>
+
+              @if (form.get('content')?.hasError('required')) {
+                <mat-error>El contenido es obligatorio</mat-error>
+              }
+              @if (form.get('content')?.hasError('minlength')) {
+                <mat-error>El aporte es muy corto (mínimo 10 caracteres)</mat-error>
+              }
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" mat-button (click)="closeModal()" [disabled]="isSaving()">
+            CANCELAR
+          </button>
+          
+          @if (isEditing && mode === 'admin') {
+            <button type="button" 
+                    mat-raised-button 
+                    color="warn" 
+                    (click)="deleteContribution()" 
+                    [disabled]="isSaving()">
+              <mat-icon>delete</mat-icon> ELIMINAR
+            </button>
+          }
+
+          <button type="submit" mat-raised-button color="primary" 
+                  [disabled]="form.invalid || isSaving()">
+            <mat-icon>{{ isSaving() ? 'hourglass_empty' : 'save' }}</mat-icon> 
+            {{ isSaving() ? 'GUARDANDO...' : (isEditing ? 'GUARDAR CAMBIOS' : 'CREAR APORTE') }}
+          </button>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</div>
+}

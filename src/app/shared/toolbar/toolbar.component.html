@@ -1,0 +1,58 @@
+<mat-toolbar color="primary" class="toolbar">
+
+  <!-- Bloque logo + texto a la izquierda -->
+  <div class="logo-text">
+    <img [src]="logoUrl" alt="Logo" class="logo" />
+    @if (logoText()) {
+      <span class="logo-label">{{ logoText() }}</span>
+    }
+  </div>
+
+  <!-- Botón de menú opcional -->
+  @if (showMenuSignal()) {
+    <button mat-icon-button (click)="menuToggle.emit()">
+      <mat-icon>menu</mat-icon>
+    </button>
+  }
+
+  <!-- Botón de login solo si no está logueado y backend activo -->
+  <!-- Bloque derecha -->
+  <div class="right-group">
+      @if (!isLoggedInSignal() && showLoginButtonValue) {
+
+        @if (showTitleSignal()) {
+          <span class="title">{{ title() }}</span>
+        }
+
+        <button
+          mat-icon-button
+          (click)="onLoginClick()"
+          matTooltip="Iniciar sesión"
+          matTooltipPosition="below"
+          matTooltipShowDelay="300"
+          aria-label="Iniciar sesión"
+        >
+          <mat-icon class="login-icon">account_circle</mat-icon>
+        </button>
+      }
+  </div>
+
+  <!-- Controles del carrusel opcionales -->
+  @if (showCarouselControlsSignal()) {
+    <button class="carousel-control" (click)="onPrev()">&#10094;</button>
+    <button class="carousel-control" (click)="onNext()">&#10095;</button>
+  }
+
+  <!-- Perfil + logout -->
+  @if (isLoggedInSignal() && showProfileSignal()) {
+    @if (userNameSignal()) {
+      <span class="user-name">{{ userNameSignal() }}</span>
+    }
+    <button class="logout-btn-pill" mat-button (click)="onLogoutClick()">
+      <mat-icon>logout</mat-icon>
+      {{ logOutText() || 'Cerrar sesión' }}
+    </button>
+  }
+  
+</mat-toolbar>
+
