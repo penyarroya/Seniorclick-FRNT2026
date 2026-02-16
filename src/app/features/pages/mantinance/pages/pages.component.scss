@@ -319,33 +319,54 @@
 //   .resource-quick-add { grid-template-columns: 1fr !important; }
 // }
 
+
+
 @use 'variables' as v;
 
 /* ==========================================================================
    0. Configuración del Host (Tokens Material 20)
    ========================================================================== */
+// :host {
+//   display: flex;
+//   flex-direction: column;
+//   width: 100%;
+//   height: 100vh;
+//   background-color: #121826; 
+//   color: v.$text-color;
+//   overflow: hidden;
+
+//   --mdc-filled-text-field-container-color: #{v.$input-bg};
+//   --mdc-filled-text-field-input-text-color: #{v.$text-color};
+//   --mdc-filled-text-field-placeholder-text-color: rgba(255, 255, 255, 0.75);
+//   --mdc-filled-text-field-label-text-color: #{rgba(v.$text-color, 0.6)};
+//   --mdc-filled-text-field-focus-label-text-color: #{v.$brand-neon};
+//   --mdc-filled-text-field-focus-active-indicator-color: #{v.$brand-neon};
+//   --mdc-outlined-text-field-focus-outline-color: #{v.$brand-neon};
+  
+//   --mat-select-trigger-text-color: #{v.$text-color};
+//   --mat-select-placeholder-text-color: rgba(255, 255, 255, 0.75);
+
+//   app-maintenance-layout {
+//     flex: 1;
+//   }
+// }
+
 :host {
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100vh;
+  height: 100vh; // Obliga al componente a medir solo la pantalla
+  max-height: 100vh;
   background-color: #121826; 
   color: v.$text-color;
-  overflow: hidden;
+  overflow: hidden; // Evita que la página entera haga scroll
 
-  --mdc-filled-text-field-container-color: #{v.$input-bg};
-  --mdc-filled-text-field-input-text-color: #{v.$text-color};
-  --mdc-filled-text-field-placeholder-text-color: rgba(255, 255, 255, 0.75);
-  --mdc-filled-text-field-label-text-color: #{rgba(v.$text-color, 0.6)};
-  --mdc-filled-text-field-focus-label-text-color: #{v.$brand-neon};
-  --mdc-filled-text-field-focus-active-indicator-color: #{v.$brand-neon};
-  --mdc-outlined-text-field-focus-outline-color: #{v.$brand-neon};
-  
-  --mat-select-trigger-text-color: #{v.$text-color};
-  --mat-select-placeholder-text-color: rgba(255, 255, 255, 0.75);
-
+  // Esto asegura que el layout de mantenimiento ocupe el espacio disponible
   app-maintenance-layout {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0; // Secreto para que el hijo no desborde al padre
   }
 }
 

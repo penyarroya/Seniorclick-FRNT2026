@@ -100,10 +100,6 @@ export class MaintenanceLayoutComponent<T extends {
   filters = signal<Record<string, any>>({});
   width = signal(window.innerWidth);
 
-  //canCreate = computed(() => this.authz.has(Permission.CREATE)());
-  //canEdit = computed(() => this.authz.has(Permission.EDIT)());
-  //canDelete = computed(() => this.authz.has(Permission.DELETE)());
-
   // Ahora simplemente guardamos la referencia al computed que retorna el servicio
   canCreate = this.authz.has(Permission.CREATE);
   canEdit = this.authz.has(Permission.EDIT);

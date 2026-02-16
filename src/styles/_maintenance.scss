@@ -1,70 +1,450 @@
+// @use 'variables' as v;
+
+// /* ==========================================================================
+//    1. ESTILOS BASE PARA CONTENEDOR DE MANTENIMIENTO
+//    ========================================================================== */
+// .maintenance-container {
+//   display: flex;
+//   flex-direction: column;
+//   height: 100%; 
+
+//   .table-wrapper {
+//     flex: 1; 
+//     height: 100% !important; 
+//     overflow-y: auto !important; 
+//     background-color: #1f2a38 !important;
+//     position: relative;
+//     display: block;
+//     box-sizing: border-box;
+//     scrollbar-gutter: stable;
+//     -webkit-overflow-scrolling: touch;
+//   }
+
+//   .mat-mdc-paginator {
+//     position: relative; 
+//     z-index: 10;
+//     background-color: #1a222c !important; 
+//     margin-top: 0 !important; 
+//     border-top: 1px solid rgba(v.$brand-neon, 0.2) !important;
+
+//     .mat-mdc-paginator-container {
+//       min-height: 56px !important; 
+//       height: 56px !important;
+//       padding: 0 24px !important;
+//       display: flex;
+//       align-items: center;
+//     }
+
+//     .mat-mdc-select-value-text span,
+//     .mat-mdc-select-value {
+//       color: v.$brand-neon !important; 
+//       font-weight: 600;
+//     }
+
+//     .mat-mdc-select-arrow svg { fill: v.$brand-neon !important; }
+
+//     .mat-mdc-paginator-page-size-label,
+//     .mat-mdc-paginator-range-label {
+//       color: rgba(v.$text-color, 0.7) !important;
+//       font-size: 13px;
+//     }
+
+//     .mat-mdc-icon-button {
+//       color: v.$brand-neon !important;
+//       width: 40px !important;
+//       height: 40px !important;
+//       &:disabled { color: rgba(v.$text-color, 0.2) !important; }
+//       &:not(:disabled):hover { background-color: rgba(v.$brand-neon, 0.1) !important; }
+//     }
+//   }
+
+//   .mat-mdc-table {
+//     background-color: transparent !important;
+//     margin-bottom: 0 !important; 
+//     border-collapse: collapse !important; 
+//     width: 100%;
+
+//     .mat-mdc-header-row { height: 56px !important; }
+
+//     .mat-mdc-header-cell {
+//       position: sticky;
+//       top: 0;
+//       z-index: 100;
+//       background-color: #1f2a38 !important; 
+//       color: v.$brand-neon !important;
+//       font-weight: 600;
+//       text-transform: uppercase;
+//       letter-spacing: 0.5px;
+//       border-bottom: 2px solid rgba(v.$brand-neon, 0.4) !important;
+//     }
+
+//     .mat-mdc-row {
+//       height: 50px !important;
+//       transition: all 0.2s ease;
+//       &:hover { background-color: rgba(v.$brand-neon, 0.08) !important; }
+
+//       &.is-inactive {
+//         background-color: rgba(0, 0, 0, 0.2) !important;
+//         .mat-mdc-cell { color: rgba(v.$text-color, 0.35) !important; font-style: italic; }
+//         .actions .mat-mdc-icon-button {
+//           opacity: 0.4;
+//           filter: grayscale(0.5);
+//           &:hover { opacity: 1; filter: grayscale(0); color: v.$brand-neon !important; }
+//         }
+//       }
+//     }
+
+//     .mat-mdc-cell {
+//       height: 50px !important;
+//       color: v.$text-color;
+//       border-bottom: 1px solid rgba(v.$text-color, 0.05) !important;
+//     }
+//   }
+
+//   .status-pill {
+//     padding: 2px 10px;
+//     border-radius: 12px;
+//     font-size: 10px;
+//     font-weight: 800;
+//     text-transform: uppercase;
+//     display: inline-block;
+//     &.active {
+//       background: rgba(v.$brand-neon, 0.1);
+//       color: v.$brand-neon;
+//       border: 1px solid rgba(v.$brand-neon, 0.3);
+//     }
+//     &.inactive {
+//       background: rgba(255, 255, 255, 0.05);
+//       color: rgba(v.$text-color, 0.4);
+//       border: 1px solid rgba(255, 255, 255, 0.1);
+//     }
+//   }
+
+//   .filter-field {
+//     .mdc-text-field--outlined:not(.mdc-text-field--disabled) {
+//       .mdc-notched-outline__leading,
+//       .mdc-notched-outline__notch,
+//       .mdc-notched-outline__trailing { border-color: rgba(v.$brand-neon, 0.2) !important; }
+//     }
+//     input { color: v.$text-color !important; font-size: 12px; }
+//     .mat-mdc-form-field-focus-overlay { background-color: v.$input-bg; }
+//   }
+// }
+
+// /* ==========================================================================
+//    4. UNIFICACIÓN COMPONENTES (PAGINADOR ANCLADO)
+//    ========================================================================== */
+// app-user-progress, app-pages, app-coment, app-contribution, 
+// app-user-profiles, app-roles, app-permissions {
+//   display: flex !important;
+//   flex-direction: column !important;
+//   height: 100vh !important;
+//   overflow: hidden !important;
+
+//   .maintenance-container {
+//     flex: 1 !important;
+//     display: flex !important;
+//     flex-direction: column !important;
+//     height: 100% !important;
+//     position: relative !important; // Contenedor de referencia
+//     overflow: hidden !important;
+//   }
+
+//   .table-wrapper {
+//     flex: 1 !important;
+//     overflow-y: auto !important;
+//     padding-bottom: 60px !important; // Colchón para que el paginador no tape datos
+//     background-color: #1f2a38 !important;
+//   }
+
+//   .mat-mdc-paginator {
+//     /* POSICIONAMIENTO FIJO AL FINAL DEL CONTENEDOR */
+//     position: absolute !important;
+//     bottom: 0 !important;
+//     left: 0 !important;
+//     right: 0 !important;
+//     width: 100% !important;
+//     z-index: 1000 !important; 
+    
+//     background-color: #1a222c !important;
+//     border-top: 1px solid rgba(0, 242, 255, 0.2) !important;
+//     box-shadow: 0 -5px 20px rgba(0,0,0,0.5) !important;
+//     height: 56px !important;
+//   }
+// }
+
+// /* ==========================================================================
+//    5. PERSONALIZACIÓN SELECTOR DE USUARIOS (PERFILES) - ANGULAR 20
+//    ========================================================================== */
+// .custom-user-select-panel {
+//   background-color: #1f2a38 !important; // Fondo a juego con el modal
+//   border: 1px solid rgba(v.$brand-neon, 0.3) !important;
+//   border-radius: 8px !important;
+//   margin-top: 8px !important;
+//   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+
+//   // Ajuste para que el buscador sticky llegue hasta arriba
+//   .mat-mdc-select-panel-breadcrumb {
+//     padding-top: 0 !important;
+//   }
+
+//   // Estilo de las opciones
+//   mat-option {
+//     --mat-option-label-text-color: #{v.$text-color};
+//     --mat-option-selected-state-label-text-color: #{v.$brand-neon};
+    
+//     transition: all 0.2s ease;
+    
+//     &:hover:not(.mdc-list-item--disabled) {
+//       background-color: rgba(v.$brand-neon, 0.1) !important;
+//     }
+
+//     &.mdc-list-item--selected:not(.mdc-list-item--disabled) {
+//       background-color: rgba(v.$brand-neon, 0.15) !important;
+//     }
+
+//     small {
+//       color: rgba(v.$brand-neon, 0.5);
+//       margin-left: 8px;
+//     }
+//   }
+
+//   // Divider dentro del select
+//   mat-divider {
+//     border-top-color: rgba(v.$brand-neon, 0.2) !important;
+//     margin: 0 !important;
+//   }
+// }
+
+// /* AÑADIR AL FINAL DEL ARCHIVO .SCSS DEL COMPONENTE */
+
+// /* Capa de desenfoque para móviles */
+// .sidebar-overlay {
+//   position: absolute;
+//   inset: 0;
+//   background: rgba(0, 0, 0, 0.6);
+//   z-index: 1050;
+//   backdrop-filter: blur(4px); /* Efecto moderno de desenfoque */
+//   animation: fadeIn 0.3s ease;
+// }
+
+// /* Ajustes de transición para el Sidebar */
+// .sidebar {
+//   transform: translateX(-105%); /* Asegura que esté oculto */
+//   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+//   z-index: 1100;
+
+//   &.open {
+//     transform: translateX(0);
+//   }
+// }
+
+// /* Lógica de empuje de contenido */
+// .main-section {
+//   flex: 1;
+//   min-width: 0;
+//   transition: margin-left 0.3s ease;
+
+//   /* Solo empuja si NO es móvil y el sidebar está abierto */
+//   &.shifted {
+//     margin-left: 260px; 
+//   }
+// }
+
+// @media (max-width: 768px) {
+//   .sidebar {
+//     position: fixed; /* En móvil flota sobre el contenido */
+//     top: v.$toolbar-height;
+//     height: calc(100% - #{v.$toolbar-height});
+//   }
+
+//   .main-section.shifted {
+//     margin-left: 0 !important; /* En móvil NO debe haber margen */
+//   }
+// }
+
+// @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+
+// /* ==========================================================================
+//    6. CORRECCIÓN GLOBAL EQUILIBRADA (MATERIAL 20) - SIN FONDO
+//    ========================================================================== */
+
+// .mat-mdc-form-field {
+//   overflow: visible !important;
+
+//   .mat-mdc-text-field-wrapper,
+//   .mat-mdc-form-field-flex,
+//   .mat-mdc-form-field-infix {
+//     overflow: visible !important;
+//   }
+
+//   .mat-mdc-form-field-infix {
+//     padding-top: 18px !important; 
+//     padding-bottom: 4px !important;
+//     min-height: 48px !important; 
+//   }
+
+//   /* 1. Label flotando fuera del borde (sin fondo) */
+//   .mdc-floating-label--float-above {
+//     transform: translateY(-32px) scale(0.75) !important;
+//     width: auto !important;
+//     background: transparent !important; /* Quitamos el fondo */
+//   }
+
+//   /* 2. Evitar que el Placeholder y la Label choquen */
+//   /* Ocultamos el placeholder cuando el input NO tiene el foco para que no se pise con la label central */
+//   input.mat-mdc-input-element::placeholder {
+//     transition: opacity 0.2s ease;
+//     opacity: 0 !important;
+//   }
+
+//   /* Mostramos el placeholder solo cuando el usuario hace clic (focus) */
+//   .mat-mdc-form-field-focus-indicator + input.mat-mdc-input-element::placeholder,
+//   input.mat-mdc-input-element:focus::placeholder {
+//     opacity: 1 !important;
+//   }
+// }
+
+// .modal-content .info-grid {
+//   margin-top: 1.2rem !important; 
+//   gap: 1.2rem !important; 
+// }
+
+
+// /* EN TU ARCHIVO styles.scss GLOBAL para mensaje de no encontrado en Contributions */
+// .mat-mdc-autocomplete-panel {
+//   // Forzamos el color de fondo del panel
+//   background-color: #1f2a38 !important; 
+
+//   .no-results-option {
+//     // Esto evita que el usuario pueda seleccionarlo aunque no tenga el atributo 'disabled'
+//     pointer-events: none !important; 
+//     cursor: default !important;
+//     background-color: #263345 !important;
+//     opacity: 1 !important;
+//     height: auto !important;
+//     min-height: 70px !important;
+//     border-left: 4px solid #ff5252 !important;
+
+//     .mdc-list-item__content {
+//        opacity: 1 !important;
+//     }
+
+//     .no-results-content {
+//       display: flex;
+//       align-items: center;
+//       gap: 12px;
+//       padding: 0 16px;
+
+//       mat-icon {
+//         color: #ff5252 !important;
+//         font-size: 28px;
+//         width: 28px;
+//         height: 28px;
+//         opacity: 1 !important;
+//       }
+
+//       .text-wrapper {
+//         display: flex;
+//         flex-direction: column;
+
+//         .main-text {
+//           color: #ffffff !important; // Blanco puro e intenso
+//           font-weight: 800 !important;
+//           font-size: 1rem !important;
+//           text-transform: uppercase;
+//         }
+
+//         .sub-text {
+//           color: #00ffcc !important; 
+//           font-size: 1.2rem !important; 
+//           font-weight: 700 !important;
+//           display: block !important;
+//           margin-top: 4px !important;
+//           text-shadow: 0 0 8px rgba(0, 255, 204, 0.4);
+
+//           /* --- TRUNCADO MÁGICO --- */
+//           max-width: 200px;           // Ajusta este ancho según el tamaño de tu input
+//           white-space: nowrap;       // Evita que el texto salte a la siguiente línea
+//           overflow: hidden;          // Esconde lo que sobra
+//           text-overflow: ellipsis;   // Añade los "..." al final
+//         }
+//       }
+//     }
+//   }
+// }
+
+
 @use 'variables' as v;
 
 /* ==========================================================================
-   1. ESTILOS BASE PARA CONTENEDOR DE MANTENIMIENTO
+   1. ESTRUCTURA DE PANTALLA COMPLETA (LAYOUT)
+   ========================================================================== */
+app-user-progress, app-pages, app-coment, app-contribution, 
+app-user-profiles, app-roles, app-permissions {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100vh !important;
+  width: 100% !important;
+  overflow: hidden !important;
+
+  .maintenance-container {
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100% !important;
+    position: relative !important; // Referencia para el paginador absoluto
+    overflow: hidden !important;
+  }
+}
+
+/* ==========================================================================
+   2. TABLA Y PAGINADOR (CORRECCIÓN DE VISIBILIDAD)
    ========================================================================== */
 .maintenance-container {
-  display: flex;
-  flex-direction: column;
-  height: 100%; 
-
+  
   .table-wrapper {
-    flex: 1; 
-    height: 100% !important; 
-    overflow-y: auto !important; 
+    flex: 1 1 auto !important;
+    height: 0 !important; // Clave para que el scroll funcione
+    overflow-y: auto !important;
     background-color: #1f2a38 !important;
-    position: relative;
-    display: block;
-    box-sizing: border-box;
+    padding-bottom: 56px !important; // Espacio para que el paginador no tape datos
     scrollbar-gutter: stable;
-    -webkit-overflow-scrolling: touch;
   }
 
+  /* Paginador Anclado (Sin ::ng-deep por ser Global) */
   .mat-mdc-paginator {
-    position: relative; 
-    z-index: 10;
-    background-color: #1a222c !important; 
-    margin-top: 0 !important; 
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    z-index: 1000 !important; 
+    height: 56px !important;
+    background-color: #1a222c !important;
     border-top: 1px solid rgba(v.$brand-neon, 0.2) !important;
+    box-shadow: 0 -5px 20px rgba(0,0,0,0.5) !important;
+
+    // Tokens de Material 20 para colores
+    --mat-paginator-container-text-color: #{rgba(v.$text-color, 0.7)};
+    --mat-paginator-enabled-icon-color: #{v.$brand-neon};
 
     .mat-mdc-paginator-container {
-      min-height: 56px !important; 
-      height: 56px !important;
+      justify-content: flex-end !important;
       padding: 0 24px !important;
-      display: flex;
-      align-items: center;
+      height: 56px !important;
     }
 
-    .mat-mdc-select-value-text span,
-    .mat-mdc-select-value {
-      color: v.$brand-neon !important; 
-      font-weight: 600;
-    }
-
+    // Estilos de texto y select internos
+    .mat-mdc-select-value { color: v.$brand-neon !important; font-weight: 600; }
     .mat-mdc-select-arrow svg { fill: v.$brand-neon !important; }
-
-    .mat-mdc-paginator-page-size-label,
-    .mat-mdc-paginator-range-label {
-      color: rgba(v.$text-color, 0.7) !important;
-      font-size: 13px;
-    }
-
-    .mat-mdc-icon-button {
-      color: v.$brand-neon !important;
-      width: 40px !important;
-      height: 40px !important;
-      &:disabled { color: rgba(v.$text-color, 0.2) !important; }
-      &:not(:disabled):hover { background-color: rgba(v.$brand-neon, 0.1) !important; }
-    }
   }
 
+  /* Estilos de la Tabla */
   .mat-mdc-table {
     background-color: transparent !important;
-    margin-bottom: 0 !important; 
-    border-collapse: collapse !important; 
     width: 100%;
-
-    .mat-mdc-header-row { height: 56px !important; }
 
     .mat-mdc-header-cell {
       position: sticky;
@@ -74,301 +454,80 @@
       color: v.$brand-neon !important;
       font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
       border-bottom: 2px solid rgba(v.$brand-neon, 0.4) !important;
     }
 
-    .mat-mdc-row {
-      height: 50px !important;
-      transition: all 0.2s ease;
-      &:hover { background-color: rgba(v.$brand-neon, 0.08) !important; }
-
-      &.is-inactive {
-        background-color: rgba(0, 0, 0, 0.2) !important;
-        .mat-mdc-cell { color: rgba(v.$text-color, 0.35) !important; font-style: italic; }
-        .actions .mat-mdc-icon-button {
-          opacity: 0.4;
-          filter: grayscale(0.5);
-          &:hover { opacity: 1; filter: grayscale(0); color: v.$brand-neon !important; }
-        }
-      }
-    }
-
-    .mat-mdc-cell {
-      height: 50px !important;
-      color: v.$text-color;
-      border-bottom: 1px solid rgba(v.$text-color, 0.05) !important;
+    .mat-mdc-row:hover { background-color: rgba(v.$brand-neon, 0.08) !important; }
+    
+    .mat-mdc-row.is-inactive {
+      background-color: rgba(0, 0, 0, 0.2) !important;
+      .mat-mdc-cell { color: rgba(v.$text-color, 0.35) !important; font-style: italic; }
     }
   }
-
-  .status-pill {
-    padding: 2px 10px;
-    border-radius: 12px;
-    font-size: 10px;
-    font-weight: 800;
-    text-transform: uppercase;
-    display: inline-block;
-    &.active {
-      background: rgba(v.$brand-neon, 0.1);
-      color: v.$brand-neon;
-      border: 1px solid rgba(v.$brand-neon, 0.3);
-    }
-    &.inactive {
-      background: rgba(255, 255, 255, 0.05);
-      color: rgba(v.$text-color, 0.4);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-  }
-
-  .filter-field {
-    .mdc-text-field--outlined:not(.mdc-text-field--disabled) {
-      .mdc-notched-outline__leading,
-      .mdc-notched-outline__notch,
-      .mdc-notched-outline__trailing { border-color: rgba(v.$brand-neon, 0.2) !important; }
-    }
-    input { color: v.$text-color !important; font-size: 12px; }
-    .mat-mdc-form-field-focus-overlay { background-color: v.$input-bg; }
-  }
-}
-
-/* 4. UNIFICACIÓN COMPONENTES DE MANTENIMIENTO */
-app-user-progress, app-pages, app-coment, app-contribution,app-user-profiles, app-roles, app-permissions {
-  .maintenance-container {
-    height: 100% !important; 
-    display: flex;
-    flex-direction: column;
-    padding: 0 !important;
-    margin: 0 !important;
-  }
-  .table-wrapper {
-    flex: 1 !important;
-    height: auto !important;
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 0 !important;
-  }
-  .mat-mdc-paginator {
-    position: sticky;
-    bottom: 0;
-    z-index: 100;
-    width: 100%;
-    margin-top: auto; 
-    margin-bottom: 0 !important;
-    box-shadow: 0 -4px 15px rgba(0,0,0,0.4) !important;
-  }
-  mat-card, .mat-mdc-card {
-    padding: 0 !important;
-    margin: 0 !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    background: transparent !important;
-  }
-}
-
-app-user-progress {
-  .mat-mdc-fab.mat-primary, 
-  button[mat-fab][color="primary"],
-  .btn-create { display: none !important; }
 }
 
 /* ==========================================================================
-   5. PERSONALIZACIÓN SELECTOR DE USUARIOS (PERFILES) - ANGULAR 20
+   3. COMPONENTES DE UI (FORMS, PILLS, SELECTS)
    ========================================================================== */
-.custom-user-select-panel {
-  background-color: #1f2a38 !important; // Fondo a juego con el modal
-  border: 1px solid rgba(v.$brand-neon, 0.3) !important;
-  border-radius: 8px !important;
-  margin-top: 8px !important;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
 
-  // Ajuste para que el buscador sticky llegue hasta arriba
-  .mat-mdc-select-panel-breadcrumb {
-    padding-top: 0 !important;
+/* Pills de Estado */
+.status-pill {
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 10px;
+  font-weight: 800;
+  display: inline-block;
+  &.active { background: rgba(v.$brand-neon, 0.1); color: v.$brand-neon; border: 1px solid rgba(v.$brand-neon, 0.3); }
+  &.inactive { background: rgba(255, 255, 255, 0.05); color: rgba(v.$text-color, 0.4); border: 1px solid rgba(255, 255, 255, 0.1); }
+}
+
+/* Campos de Formulario (Label Flotante) */
+.mat-mdc-form-field {
+  .mdc-floating-label--float-above {
+    transform: translateY(-32px) scale(0.75) !important;
+    background: transparent !important;
   }
+  input.mat-mdc-input-element::placeholder { opacity: 0 !important; transition: opacity 0.2s; }
+  input.mat-mdc-input-element:focus::placeholder { opacity: 1 !important; }
+}
 
-  // Estilo de las opciones
+/* Panel de Perfiles (Selector de Usuarios) */
+.custom-user-select-panel {
+  background-color: #1f2a38 !important;
+  border: 1px solid rgba(v.$brand-neon, 0.3) !important;
   mat-option {
     --mat-option-label-text-color: #{v.$text-color};
     --mat-option-selected-state-label-text-color: #{v.$brand-neon};
-    
-    transition: all 0.2s ease;
-    
-    &:hover:not(.mdc-list-item--disabled) {
-      background-color: rgba(v.$brand-neon, 0.1) !important;
-    }
-
-    &.mdc-list-item--selected:not(.mdc-list-item--disabled) {
-      background-color: rgba(v.$brand-neon, 0.15) !important;
-    }
-
-    small {
-      color: rgba(v.$brand-neon, 0.5);
-      margin-left: 8px;
-    }
-  }
-
-  // Divider dentro del select
-  mat-divider {
-    border-top-color: rgba(v.$brand-neon, 0.2) !important;
-    margin: 0 !important;
+    &:hover:not(.mdc-list-item--disabled) { background-color: rgba(v.$brand-neon, 0.1) !important; }
   }
 }
 
-/* AÑADIR AL FINAL DEL ARCHIVO .SCSS DEL COMPONENTE */
-
-/* Capa de desenfoque para móviles */
-.sidebar-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.6);
-  z-index: 1050;
-  backdrop-filter: blur(4px); /* Efecto moderno de desenfoque */
-  animation: fadeIn 0.3s ease;
+/* Autocomplete (No Results en Contributions) */
+.mat-mdc-autocomplete-panel {
+  background-color: #1f2a38 !important;
+  .no-results-option {
+    pointer-events: none !important;
+    border-left: 4px solid #ff5252 !important;
+    .main-text { color: #ffffff !important; font-weight: 800; }
+    .sub-text { color: #00ffcc !important; font-weight: 700; text-overflow: ellipsis; overflow: hidden; }
+  }
 }
 
-/* Ajustes de transición para el Sidebar */
+/* ==========================================================================
+   4. SIDEBAR Y MÓVIL (Sidenav Lógica)
+   ========================================================================== */
 .sidebar {
-  transform: translateX(-105%); /* Asegura que esté oculto */
+  transform: translateX(-105%);
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 1100;
-
-  &.open {
-    transform: translateX(0);
-  }
+  &.open { transform: translateX(0); }
 }
 
-/* Lógica de empuje de contenido */
 .main-section {
   flex: 1;
-  min-width: 0;
   transition: margin-left 0.3s ease;
-
-  /* Solo empuja si NO es móvil y el sidebar está abierto */
-  &.shifted {
-    margin-left: 260px; 
-  }
+  &.shifted { margin-left: 260px; }
 }
 
 @media (max-width: 768px) {
-  .sidebar {
-    position: fixed; /* En móvil flota sobre el contenido */
-    top: v.$toolbar-height;
-    height: calc(100% - #{v.$toolbar-height});
-  }
-
-  .main-section.shifted {
-    margin-left: 0 !important; /* En móvil NO debe haber margen */
-  }
-}
-
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-
-/* ==========================================================================
-   6. CORRECCIÓN GLOBAL EQUILIBRADA (MATERIAL 20) - SIN FONDO
-   ========================================================================== */
-
-.mat-mdc-form-field {
-  overflow: visible !important;
-
-  .mat-mdc-text-field-wrapper,
-  .mat-mdc-form-field-flex,
-  .mat-mdc-form-field-infix {
-    overflow: visible !important;
-  }
-
-  .mat-mdc-form-field-infix {
-    padding-top: 18px !important; 
-    padding-bottom: 4px !important;
-    min-height: 48px !important; 
-  }
-
-  /* 1. Label flotando fuera del borde (sin fondo) */
-  .mdc-floating-label--float-above {
-    transform: translateY(-32px) scale(0.75) !important;
-    width: auto !important;
-    background: transparent !important; /* Quitamos el fondo */
-  }
-
-  /* 2. Evitar que el Placeholder y la Label choquen */
-  /* Ocultamos el placeholder cuando el input NO tiene el foco para que no se pise con la label central */
-  input.mat-mdc-input-element::placeholder {
-    transition: opacity 0.2s ease;
-    opacity: 0 !important;
-  }
-
-  /* Mostramos el placeholder solo cuando el usuario hace clic (focus) */
-  .mat-mdc-form-field-focus-indicator + input.mat-mdc-input-element::placeholder,
-  input.mat-mdc-input-element:focus::placeholder {
-    opacity: 1 !important;
-  }
-}
-
-.modal-content .info-grid {
-  margin-top: 1.2rem !important; 
-  gap: 1.2rem !important; 
-}
-
-
-/* EN TU ARCHIVO styles.scss GLOBAL para mensaje de no encontrado en Contributions */
-.mat-mdc-autocomplete-panel {
-  // Forzamos el color de fondo del panel
-  background-color: #1f2a38 !important; 
-
-  .no-results-option {
-    // Esto evita que el usuario pueda seleccionarlo aunque no tenga el atributo 'disabled'
-    pointer-events: none !important; 
-    cursor: default !important;
-    background-color: #263345 !important;
-    opacity: 1 !important;
-    height: auto !important;
-    min-height: 70px !important;
-    border-left: 4px solid #ff5252 !important;
-
-    .mdc-list-item__content {
-       opacity: 1 !important;
-    }
-
-    .no-results-content {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 0 16px;
-
-      mat-icon {
-        color: #ff5252 !important;
-        font-size: 28px;
-        width: 28px;
-        height: 28px;
-        opacity: 1 !important;
-      }
-
-      .text-wrapper {
-        display: flex;
-        flex-direction: column;
-
-        .main-text {
-          color: #ffffff !important; // Blanco puro e intenso
-          font-weight: 800 !important;
-          font-size: 1rem !important;
-          text-transform: uppercase;
-        }
-
-        .sub-text {
-          color: #00ffcc !important; 
-          font-size: 1.2rem !important; 
-          font-weight: 700 !important;
-          display: block !important;
-          margin-top: 4px !important;
-          text-shadow: 0 0 8px rgba(0, 255, 204, 0.4);
-
-          /* --- TRUNCADO MÁGICO --- */
-          max-width: 200px;           // Ajusta este ancho según el tamaño de tu input
-          white-space: nowrap;       // Evita que el texto salte a la siguiente línea
-          overflow: hidden;          // Esconde lo que sobra
-          text-overflow: ellipsis;   // Añade los "..." al final
-        }
-      }
-    }
-  }
+  .main-section.shifted { margin-left: 0 !important; }
 }

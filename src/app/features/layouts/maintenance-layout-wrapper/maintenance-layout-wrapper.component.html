@@ -20,9 +20,6 @@
       </div>
 
       <ul>
-        <!-- @for (item of menu(); track item.label) {
-          <ng-container *ngTemplateOutlet="menuItem; context: { $implicit: item }"></ng-container>
-        } -->
           @for (item of menu(); track item) {
             <ng-container *ngTemplateOutlet="menuItem; context: { $implicit: item }"></ng-container>
           }
