@@ -1,0 +1,96 @@
+@if (loading) {
+  <div class="loading-overlay">
+    <div class="loader-content">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p>Accediendo a la base de datos...</p>
+    </div>
+  </div>
+}
+
+@else if (profileData) {
+  <div class="profile-overlay"> 
+    <article class="profile-card">
+      
+      <header>
+        <div class="avatar-container">
+          <img [src]="profileData.avatarUrl || 'https://ui-avatars.com/api/?name=' + (profileData.firstName || 'User')" 
+               (error)="handleImageError($event)" 
+               alt="Avatar Usuario" 
+               class="profile-avatar" />
+        </div>
+        <h1>{{ profileData.firstName || 'Usuario' }} {{ profileData.lastName || 'Nuevo' }}</h1>
+        <p class="tagline">Mi Perfil Personal</p>
+      </header>
+
+      <section class="content">
+        <div class="info-list">
+          <div class="info-row">
+            <mat-icon>person</mat-icon>
+            <div class="text">
+              <span class="label">Nombre completo</span>
+              <p>{{ (profileData.firstName + ' ' + profileData.lastName).trim() || 'Sin completar' }}</p>
+            </div>
+          </div>
+
+          <div class="info-row">
+            <mat-icon>phone</mat-icon>
+            <div class="text">
+              <span class="label">Teléfono de contacto</span>
+              <p>{{ profileData.phone || 'No registrado' }}</p>
+            </div>
+          </div>
+
+          <div class="info-row">
+            <mat-icon>fingerprint</mat-icon>
+            <div class="text">
+              <span class="label">Identificador de usuario</span>
+              <p>ID-{{ profileData.userId }}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        <div class="status-line">
+          <mat-icon>verified</mat-icon> 
+          <span>Cuenta UniversiLab Activa</span>
+        </div>
+        <p class="help-text">Para cambios en estos datos, contacta con secretaría.</p>
+      </footer>
+
+      <button class="btn-close-large" (click)="goBack()" aria-label="Cerrar">
+        <mat-icon>close</mat-icon>
+      </button>
+      
+    </article>
+  </div>
+}
+
+@else {
+  <div class="profile-overlay">
+    <article class="profile-card error-state">
+      <header>
+        <div class="avatar-container error">
+           <mat-icon>account_circle_off</mat-icon>
+        </div>
+        <h1>Perfil No Encontrado</h1>
+        <p class="tagline">Servicio UniversiLab</p>
+      </header>
+
+      <section class="content">
+        <p class="error-msg">
+          No hemos podido recuperar tu información. Esto puede deberse a que tu sesión ha expirado o el servicio no está disponible.
+        </p>
+      </section>
+
+      <footer>
+        <button class="btn-action" (click)="goBack()">Entendido</button>
+        <p class="help-text">Contacta con el administrador si el problema persiste.</p>
+      </footer>
+
+      <button class="btn-close-large" (click)="goBack()" aria-label="Cerrar">
+        <mat-icon>close</mat-icon>
+      </button>
+    </article>
+  </div>
+}

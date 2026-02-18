@@ -6,7 +6,7 @@
       { 
         "label": "Mi Perfil", 
         "icon": "person_outline", 
-        "route": "/perfil", 
+        "route": "/inicio/perfil", 
         "description": "Gestionar datos personales" 
       },
       { 

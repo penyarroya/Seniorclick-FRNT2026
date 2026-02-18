@@ -376,6 +376,7 @@
 // }
 
 
+
 @use 'variables' as v;
 
 /* ==========================================================================
@@ -394,7 +395,7 @@ app-user-profiles, app-roles, app-permissions {
     display: flex !important;
     flex-direction: column !important;
     height: 100% !important;
-    position: relative !important; // Referencia para el paginador absoluto
+    position: relative !important; 
     overflow: hidden !important;
   }
 }
@@ -406,14 +407,17 @@ app-user-profiles, app-roles, app-permissions {
   
   .table-wrapper {
     flex: 1 1 auto !important;
-    height: 0 !important; // Clave para que el scroll funcione
+    height: 0 !important; // Clave para que el scroll Flexbox funcione
     overflow-y: auto !important;
     background-color: #1f2a38 !important;
-    padding-bottom: 56px !important; // Espacio para que el paginador no tape datos
+    padding-bottom: 60px !important; // Colchón para el paginador absoluto
     scrollbar-gutter: stable;
+    -webkit-overflow-scrolling: touch;
+    display: block;
+    position: relative;
   }
 
-  /* Paginador Anclado (Sin ::ng-deep por ser Global) */
+  /* Paginador Anclado */
   .mat-mdc-paginator {
     position: absolute !important;
     bottom: 0 !important;
@@ -426,9 +430,11 @@ app-user-profiles, app-roles, app-permissions {
     border-top: 1px solid rgba(v.$brand-neon, 0.2) !important;
     box-shadow: 0 -5px 20px rgba(0,0,0,0.5) !important;
 
-    // Tokens de Material 20 para colores
+    // Tokens de Material 20 para colores neón
     --mat-paginator-container-text-color: #{rgba(v.$text-color, 0.7)};
     --mat-paginator-enabled-icon-color: #{v.$brand-neon};
+    --mat-paginator-disabled-icon-color: #{rgba(v.$text-color, 0.2)};
+    --mat-select-trigger-text-color: #{v.$brand-neon};
 
     .mat-mdc-paginator-container {
       justify-content: flex-end !important;
@@ -436,7 +442,7 @@ app-user-profiles, app-roles, app-permissions {
       height: 56px !important;
     }
 
-    // Estilos de texto y select internos
+    // Estilos de texto y select internos (MDC)
     .mat-mdc-select-value { color: v.$brand-neon !important; font-weight: 600; }
     .mat-mdc-select-arrow svg { fill: v.$brand-neon !important; }
   }
@@ -445,6 +451,7 @@ app-user-profiles, app-roles, app-permissions {
   .mat-mdc-table {
     background-color: transparent !important;
     width: 100%;
+    border-collapse: collapse !important;
 
     .mat-mdc-header-cell {
       position: sticky;
@@ -457,17 +464,21 @@ app-user-profiles, app-roles, app-permissions {
       border-bottom: 2px solid rgba(v.$brand-neon, 0.4) !important;
     }
 
-    .mat-mdc-row:hover { background-color: rgba(v.$brand-neon, 0.08) !important; }
-    
-    .mat-mdc-row.is-inactive {
-      background-color: rgba(0, 0, 0, 0.2) !important;
-      .mat-mdc-cell { color: rgba(v.$text-color, 0.35) !important; font-style: italic; }
+    .mat-mdc-row {
+      height: 50px !important;
+      transition: all 0.2s ease;
+      &:hover { background-color: rgba(v.$brand-neon, 0.08) !important; }
+      
+      &.is-inactive {
+        background-color: rgba(0, 0, 0, 0.2) !important;
+        .mat-mdc-cell { color: rgba(v.$text-color, 0.35) !important; font-style: italic; }
+      }
     }
   }
 }
 
 /* ==========================================================================
-   3. COMPONENTES DE UI (FORMS, PILLS, SELECTS)
+   3. COMPONENTES DE UI (PILLS, FORMS, AUTOCOMPLETE)
    ========================================================================== */
 
 /* Pills de Estado */
@@ -477,12 +488,21 @@ app-user-profiles, app-roles, app-permissions {
   font-size: 10px;
   font-weight: 800;
   display: inline-block;
-  &.active { background: rgba(v.$brand-neon, 0.1); color: v.$brand-neon; border: 1px solid rgba(v.$brand-neon, 0.3); }
-  &.inactive { background: rgba(255, 255, 255, 0.05); color: rgba(v.$text-color, 0.4); border: 1px solid rgba(255, 255, 255, 0.1); }
+  &.active { 
+    background: rgba(v.$brand-neon, 0.1); 
+    color: v.$brand-neon; 
+    border: 1px solid rgba(v.$brand-neon, 0.3); 
+  }
+  &.inactive { 
+    background: rgba(255, 255, 255, 0.05); 
+    color: rgba(v.$text-color, 0.4); 
+    border: 1px solid rgba(255, 255, 255, 0.1); 
+  }
 }
 
-/* Campos de Formulario (Label Flotante) */
+/* Campos de Formulario (Label Flotante Moderno) */
 .mat-mdc-form-field {
+  overflow: visible !important;
   .mdc-floating-label--float-above {
     transform: translateY(-32px) scale(0.75) !important;
     background: transparent !important;
@@ -491,34 +511,43 @@ app-user-profiles, app-roles, app-permissions {
   input.mat-mdc-input-element:focus::placeholder { opacity: 1 !important; }
 }
 
-/* Panel de Perfiles (Selector de Usuarios) */
-.custom-user-select-panel {
+/* Selector de Usuarios (Panel de Perfiles) */
+.custom-user-select-panel, .mat-mdc-autocomplete-panel {
   background-color: #1f2a38 !important;
   border: 1px solid rgba(v.$brand-neon, 0.3) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+
   mat-option {
     --mat-option-label-text-color: #{v.$text-color};
     --mat-option-selected-state-label-text-color: #{v.$brand-neon};
     &:hover:not(.mdc-list-item--disabled) { background-color: rgba(v.$brand-neon, 0.1) !important; }
+    &.mdc-list-item--selected:not(.mdc-list-item--disabled) { background-color: rgba(v.$brand-neon, 0.15) !important; }
   }
 }
 
-/* Autocomplete (No Results en Contributions) */
-.mat-mdc-autocomplete-panel {
-  background-color: #1f2a38 !important;
-  .no-results-option {
-    pointer-events: none !important;
-    border-left: 4px solid #ff5252 !important;
-    .main-text { color: #ffffff !important; font-weight: 800; }
-    .sub-text { color: #00ffcc !important; font-weight: 700; text-overflow: ellipsis; overflow: hidden; }
+/* Mensaje "Sin resultados" en Autocomplete */
+.no-results-option {
+  pointer-events: none !important;
+  border-left: 4px solid #ff5252 !important;
+  background-color: #263345 !important;
+  .main-text { color: #ffffff !important; font-weight: 800; font-size: 1rem !important; }
+  .sub-text { 
+    color: #00ffcc !important; 
+    font-weight: 700; 
+    text-overflow: ellipsis; 
+    overflow: hidden; 
+    white-space: nowrap;
+    display: block;
   }
 }
 
 /* ==========================================================================
-   4. SIDEBAR Y MÓVIL (Sidenav Lógica)
+   4. NAVEGACIÓN (SIDEBAR Y MOBILE)
    ========================================================================== */
 .sidebar {
   transform: translateX(-105%);
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1100;
   &.open { transform: translateX(0); }
 }
 
@@ -528,6 +557,22 @@ app-user-profiles, app-roles, app-permissions {
   &.shifted { margin-left: 260px; }
 }
 
+.sidebar-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1050;
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.3s ease;
+}
+
 @media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    top: v.$toolbar-height;
+    height: calc(100% - #{v.$toolbar-height});
+  }
   .main-section.shifted { margin-left: 0 !important; }
 }
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }

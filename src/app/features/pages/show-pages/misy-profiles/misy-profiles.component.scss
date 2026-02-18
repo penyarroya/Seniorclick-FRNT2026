@@ -1,0 +1,636 @@
+// @use 'variables' as v;
+
+// :host {
+//   /* Cambio técnico: Permite que los elementos hijos con 'fixed' ignoren 
+//      cualquier restricción de tamaño del componente padre 'Inicio' */
+//   display: contents; 
+// }
+
+// /* 1. OVERLAYS - MODAL BLOQUEANTE */
+// .profile-overlay, .loading-overlay {
+//   position: fixed;
+//   top: 0; left: 0;
+//   width: 100vw;  
+//   height: 100vh; 
+//   display: flex; justify-content: center; align-items: center;
+  
+//   /* Subimos el z-index para asegurar que esté por encima del menú de inicio */
+//   z-index: 99999 !important; 
+  
+//   /* Bloqueo de interacción: Atrapa los clics aunque sea transparente */
+//   pointer-events: all; 
+// }
+
+// .profile-overlay {
+//   /* CAMBIO: Fondo totalmente transparente como solicitaste */
+//   background-color: transparent !important; 
+  
+//   /* Quitamos el desenfoque para que la página de inicio se vea nítida */
+//   backdrop-filter: none !important; 
+  
+//   animation: fadeIn 0.3s ease-out;
+// }
+
+// /* 2. LA TARJETA (PROFILE CARD) */
+// .profile-card {
+//   background: #ffffff;
+//   width: 90%;
+//   max-width: 460px;
+//   padding: 3.5rem 2.5rem 2.5rem; 
+//   border-radius: 32px;
+//   /* Mantenemos tu sombra original */
+//   box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.25);
+//   position: relative;
+//   animation: slideUp 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  
+//   /* Asegura que los clics funcionen dentro de la tarjeta */
+//   pointer-events: auto;
+
+//   header {
+//     text-align: center;
+//     margin-bottom: 2.5rem;
+//     display: flex;
+//     flex-direction: column;
+//     align-items: center;
+
+//     .avatar-container {
+//       margin-bottom: 1.5rem;
+//       display: flex; 
+//       justify-content: center;
+//       align-items: center;
+//       padding: 6px;
+//       border-radius: 50%;
+//       background: linear-gradient(135deg, #00f3ff 0%, #008c96 100%);
+//       box-shadow: 0 12px 24px rgba(0, 140, 150, 0.25);
+      
+//       /* TAMAÑO 150PX CONSERVADO */
+//       width: 150px; 
+//       height: 150px;
+//       flex-shrink: 0; 
+
+//       .profile-avatar {
+//         width: 100% !important;  
+//         height: 100% !important;
+//         min-width: 100% !important;
+//         min-height: 100% !important;
+//         border-radius: 50%;
+//         object-fit: cover;
+//         border: 6px solid #ffffff;
+//         display: block;
+//       }
+//     }
+
+//     h1 {
+//       color: #111827;
+//       font-size: 2.2rem;
+//       margin: 0;
+//       font-weight: 800;
+//       letter-spacing: -1px;
+//       line-height: 1.1;
+//     }
+
+//     .tagline {
+//       color: #008c96;
+//       font-size: 0.9rem;
+//       font-weight: 700;
+//       text-transform: uppercase;
+//       letter-spacing: 2.5px;
+//       margin-top: 10px;
+//     }
+//   }
+// }
+
+// /* 3. CONTENIDO */
+// .content {
+//   .info-list {
+//     display: flex;
+//     flex-direction: column;
+//     gap: 1.2rem;
+
+//     .info-row {
+//       display: flex;
+//       align-items: center;
+//       gap: 1.5rem;
+//       padding: 1.2rem 1.5rem;
+//       background: #f3f4f6;
+//       border-radius: 20px;
+//       border: 1px solid #e5e7eb;
+//       transition: all 0.25s ease;
+
+//       &:hover {
+//         background: #ffffff;
+//         border-color: #00f3ff;
+//         transform: scale(1.02);
+//         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+//       }
+
+//       mat-icon {
+//         color: #111827;
+//         font-size: 28px;
+//         width: 28px;
+//         height: 28px;
+//       }
+
+//       .text {
+//         text-align: left;
+//         .label {
+//           display: block;
+//           font-size: 0.75rem;
+//           color: #6b7280;
+//           text-transform: uppercase;
+//           font-weight: 700;
+//           letter-spacing: 0.5px;
+//           margin-bottom: 3px;
+//         }
+//         p {
+//           margin: 0;
+//           color: #111827;
+//           font-size: 1.15rem;
+//           font-weight: 700;
+//           line-height: 1.2;
+//         }
+//       }
+//     }
+//   }
+// }
+
+// /* 4. FOOTER */
+// footer {
+//   margin-top: 2.5rem;
+//   padding-top: 1.5rem;
+//   border-top: 2px solid #f3f4f6;
+//   text-align: center;
+
+//   .status-line {
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     gap: 8px;
+//     color: #059669;
+//     font-size: 1rem;
+//     font-weight: 800;
+//     margin-bottom: 12px;
+//   }
+
+//   .help-text {
+//     color: #6b7280;
+//     font-size: 0.85rem;
+//     font-weight: 500;
+//   }
+// }
+
+// /* 5. ESTADO DE ERROR */
+// .error-state {
+//   h1 { 
+//     color: #991b1b !important; 
+//     font-weight: 900;
+//   }
+  
+//   .error-msg {
+//     font-size: 1.1rem;
+//     color: #374151;
+//     font-weight: 500;
+//     text-align: center;
+//     padding: 1rem;
+//   }
+
+//   .btn-action {
+//     background: #111827;
+//     color: white;
+//     border: none;
+//     padding: 1rem 3rem;
+//     border-radius: 16px;
+//     font-size: 1rem;
+//     font-weight: 700;
+//     cursor: pointer;
+//     transition: all 0.3s;
+
+//     &:hover {
+//       background: #008c96;
+//       box-shadow: 0 8px 20px rgba(0, 140, 150, 0.3);
+//     }
+//   }
+// }
+
+// /* 6. BOTÓN CERRAR */
+// .btn-close-large {
+//   position: absolute;
+//   top: -20px;
+//   right: -20px;
+//   width: 52px;
+//   height: 52px;
+//   border-radius: 50%;
+//   background: #ffffff;
+//   border: 1px solid #e5e7eb;
+//   color: #111827;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   cursor: pointer;
+//   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+//   z-index: 100000; /* Un punto por encima de la card */
+//   transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+//   mat-icon {
+//     font-size: 30px;
+//     width: 30px;
+//     height: 30px;
+//     font-weight: 800;
+//   }
+
+//   &:hover {
+//     background: #111827;
+//     color: #ffffff;
+//     transform: rotate(90deg) scale(1.1);
+//   }
+// }
+
+// /* ANIMACIONES */
+// @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+// @keyframes slideUp {
+//   from { opacity: 0; transform: translateY(40px); }
+//   to { opacity: 1; transform: translateY(0); }
+// }
+
+// /* 7. RESPONSIVE DESIGN */
+// @media (max-width: 480px) {
+//   .profile-card {
+//     width: 95%; /* Un poco más ancha en móviles para aprovechar el espacio */
+//     padding: 2.5rem 1.5rem 1.5rem; /* Reducimos el padding interno */
+//     border-radius: 24px; /* Bordes un poco menos redondeados */
+//     max-height: 90vh;    /* Evita que la tarjeta sea más alta que la pantalla */
+//     overflow-y: auto;    /* Permite hacer scroll interno si el contenido no cabe */
+
+//     header {
+//       margin-bottom: 1.5rem;
+
+//       .avatar-container {
+//         /* Reducimos el avatar de 150px a 120px en móviles */
+//         width: 120px;
+//         height: 120px;
+//         margin-bottom: 1rem;
+        
+//         .profile-avatar {
+//           border-width: 4px; /* Borde blanco más fino */
+//         }
+//       }
+
+//       h1 {
+//         font-size: 1.75rem; /* Título más pequeño para que no rompa en dos líneas */
+//       }
+
+//       .tagline {
+//         font-size: 0.8rem;
+//         letter-spacing: 1.5px;
+//       }
+//     }
+
+//     .content {
+//       .info-list {
+//         gap: 0.8rem; /* Menos espacio entre filas */
+
+//         .info-row {
+//           padding: 1rem;
+//           gap: 1rem;
+
+//           mat-icon {
+//             font-size: 24px;
+//             width: 24px;
+//             height: 24px;
+//           }
+
+//           .text {
+//             p {
+//               font-size: 1rem; /* Texto de info más ajustado */
+//             }
+//           }
+//         }
+//       }
+//     }
+
+//     footer {
+//       margin-top: 1.5rem;
+//       padding-top: 1rem;
+//     }
+//   }
+
+//   /* Ajustamos el botón de cerrar para que sea más fácil de pulsar pero no estorbe */
+//   .btn-close-large {
+//     top: 10px;
+//     right: 10px;
+//     width: 44px;
+//     height: 44px;
+    
+//     mat-icon {
+//       font-size: 24px;
+//       width: 24px;
+//       height: 24px;
+//     }
+//   }
+// }
+
+
+
+@use 'variables' as v;
+
+:host {
+  display: contents; 
+}
+
+/* 1. OVERLAYS - MODAL BLOQUEANTE */
+.profile-overlay, .loading-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;  
+  height: 100vh; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center;
+  z-index: 99999 !important; 
+  pointer-events: all; 
+}
+
+.profile-overlay {
+  background-color: transparent !important; 
+  backdrop-filter: none !important; 
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* 2. LA TARJETA (PROFILE CARD) */
+.profile-card {
+  background: #ffffff;
+  width: 90%;
+  // max-width: 460px;
+  max-width: 520px;
+  
+  /* --- CAMBIO ESTRATÉGICO PARA EL CONTENIDO --- */
+  max-height: 80vh;           // Altura máxima para no salirse de la pantalla
+  display: flex;
+  flex-direction: column;     // Permite que las partes internas se organicen
+  overflow: hidden;           // Importante: el scroll será interno
+  /* -------------------------------------------- */
+
+  padding: 3.5rem 2.5rem 2.5rem; 
+  border-radius: 32px;
+  box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.25);
+  position: relative;
+  animation: slideUp 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  pointer-events: auto;
+
+  header {
+    text-align: center;
+    margin-bottom: 2rem;      // Reducido ligeramente para ganar espacio
+    flex-shrink: 0;           // El header nunca se encoge
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .avatar-container {
+      margin-bottom: 1.5rem;
+      display: flex; 
+      justify-content: center;
+      align-items: center;
+      padding: 6px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #00f3ff 0%, #008c96 100%);
+      box-shadow: 0 12px 24px rgba(0, 140, 150, 0.25);
+      
+      width: 150px; 
+      height: 150px;
+      flex-shrink: 0; 
+
+      .profile-avatar {
+        width: 100% !important;  
+        height: 100% !important;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 6px solid #ffffff;
+        display: block;
+      }
+    }
+
+    h1 {
+      color: #111827;
+      font-size: 2.2rem;
+      margin: 0;
+      font-weight: 800;
+      letter-spacing: -1px;
+      line-height: 1.1;
+    }
+
+    .tagline {
+      color: #008c96;
+      font-size: 0.9rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      margin-top: 10px;
+    }
+  }
+}
+
+/* 3. CONTENIDO (CON SCROLL INTERNO) */
+.content {
+  /* --- ESTO HACE QUE LA LISTA SEA DESPLAZABLE --- */
+  flex: 1;                    // Toma el espacio sobrante
+  overflow-y: auto;           // Activa el scroll vertical
+  padding-right: 10px;        // Espacio para que el scroll no tape el texto
+  margin-bottom: 1rem;
+  
+  /* Scrollbar elegante */
+  &::-webkit-scrollbar { width: 6px; }
+  &::-webkit-scrollbar-track { background: transparent; }
+  &::-webkit-scrollbar-thumb { 
+    background: #e5e7eb; 
+    border-radius: 10px; 
+  }
+
+  .info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+
+    .info-row {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 1.2rem 1.5rem;
+      background: #f3f4f6;
+      border-radius: 20px;
+      border: 1px solid #e5e7eb;
+      transition: all 0.25s ease;
+
+      &:hover {
+        background: #ffffff;
+        border-color: #00f3ff;
+        transform: scale(1.01);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+      }
+
+      mat-icon {
+        color: #111827;
+        font-size: 28px;
+        width: 28px;
+        height: 28px;
+      }
+
+      .text {
+        text-align: left;
+        .label {
+          display: block;
+          font-size: 0.75rem;
+          color: #6b7280;
+          text-transform: uppercase;
+          font-weight: 700;
+          letter-spacing: 0.5px;
+          margin-bottom: 3px;
+        }
+        p {
+          margin: 0;
+          color: #111827;
+          font-size: 1.15rem;
+          font-weight: 700;
+          line-height: 1.2;
+        }
+      }
+    }
+  }
+}
+
+/* 4. FOOTER */
+footer {
+  flex-shrink: 0;             // El footer nunca se corta
+  margin-top: auto;           // Lo empuja al final
+  padding-top: 1.5rem;
+  border-top: 2px solid #f3f4f6;
+  text-align: center;
+
+  .status-line {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: #059669;
+    font-size: 1rem;
+    font-weight: 800;
+    margin-bottom: 8px;
+  }
+
+  .help-text {
+    color: #6b7280;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+}
+
+/* 5. ESTADO DE ERROR (Hereda el comportamiento de scroll) */
+.error-state {
+  h1 { color: #991b1b !important; font-weight: 900; }
+  .error-msg {
+    font-size: 1.1rem;
+    color: #374151;
+    font-weight: 500;
+    text-align: center;
+    padding: 1rem;
+  }
+  .btn-action {
+    background: #111827;
+    color: white;
+    padding: 1rem 3rem;
+    border-radius: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s;
+    &:hover {
+      background: #008c96;
+      box-shadow: 0 8px 20px rgba(0, 140, 150, 0.3);
+    }
+  }
+}
+
+/* 6. BOTÓN CERRAR - CENTRADO PERFECTO */
+.btn-close-large {
+  position: absolute;
+  top: 1.5rem;    
+  right: 1.5rem;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  color: #111827;
+  
+  /* Centrado Flexbox */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  cursor: pointer;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  mat-icon { 
+    /* Forzamos que el contenedor del icono coincida con el tamaño de la fuente */
+    width: 30px; 
+    height: 30px;
+    font-size: 30px; 
+    
+    /* Reseteamos posibles márgenes del componente mat-icon */
+    margin: 0;
+    padding: 0;
+    line-height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    font-weight: 800; 
+  }
+
+  &:hover {
+    background: #111827;
+    color: #ffffff;
+    transform: rotate(90deg) scale(1.1); 
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+  }
+}
+
+/* 7. RESPONSIVE DESIGN */
+@media (max-width: 480px) {
+  .profile-card {
+    width: 92%;
+    padding: 2.5rem 1.2rem 1.5rem;
+    max-height: 90vh; // Más margen en móviles
+    border-radius: 24px;
+
+    header {
+      margin-bottom: 1.2rem;
+      .avatar-container {
+        width: 110px; height: 110px;
+        .profile-avatar { border-width: 4px; }
+      }
+      h1 { font-size: 1.6rem; }
+    }
+
+    .btn-close-large {
+      top: 10px;
+      right: 10px;
+      width: 42px;
+      height: 42px;
+      mat-icon { font-size: 24px; }
+    }
+  }
+
+  .content .info-list .info-row {
+    padding: 0.8rem 1rem;
+    .text p { font-size: 1rem; }
+  }
+}
+
+/* ANIMACIONES */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}

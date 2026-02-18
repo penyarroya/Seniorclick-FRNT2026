@@ -323,74 +323,47 @@
 
 @use 'variables' as v;
 
-/* ==========================================================================
-   0. Configuración del Host (Tokens Material 20)
-   ========================================================================== */
-// :host {
-//   display: flex;
-//   flex-direction: column;
-//   width: 100%;
-//   height: 100vh;
-//   background-color: #121826; 
-//   color: v.$text-color;
-//   overflow: hidden;
-
-//   --mdc-filled-text-field-container-color: #{v.$input-bg};
-//   --mdc-filled-text-field-input-text-color: #{v.$text-color};
-//   --mdc-filled-text-field-placeholder-text-color: rgba(255, 255, 255, 0.75);
-//   --mdc-filled-text-field-label-text-color: #{rgba(v.$text-color, 0.6)};
-//   --mdc-filled-text-field-focus-label-text-color: #{v.$brand-neon};
-//   --mdc-filled-text-field-focus-active-indicator-color: #{v.$brand-neon};
-//   --mdc-outlined-text-field-focus-outline-color: #{v.$brand-neon};
-  
-//   --mat-select-trigger-text-color: #{v.$text-color};
-//   --mat-select-placeholder-text-color: rgba(255, 255, 255, 0.75);
-
-//   app-maintenance-layout {
-//     flex: 1;
-//   }
-// }
-
 :host {
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100vh; // Obliga al componente a medir solo la pantalla
+  height: 100vh; 
   max-height: 100vh;
   background-color: #121826; 
   color: v.$text-color;
-  overflow: hidden; // Evita que la página entera haga scroll
+  overflow: hidden;
+  position: relative; // Necesario para que el modal se centre en el espacio disponible
 
-  // Esto asegura que el layout de mantenimiento ocupe el espacio disponible
   app-maintenance-layout {
     flex: 1;
     display: flex;
     flex-direction: column;
-    min-height: 0; // Secreto para que el hijo no desborde al padre
+    min-height: 0;
   }
 }
 
 /* ==========================================================================
-   1. Modal de Edición
+   1. Modal de Edición (CORREGIDO: Centrado sin borrar nada)
    ========================================================================== */
 .modal {
-  position: fixed;
+  position: absolute; // Cambiado a absolute para centrarse en el espacio libre bajo la toolbar
   inset: 0;
   background: rgba(0, 0, 0, 0.85); 
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: center;      // Centrado vertical real
+  justify-content: center;   // Centrado horizontal real
   z-index: 1200;
   backdrop-filter: blur(8px);
 
   .modal-content {
+    margin-bottom: 65px; // Sube el formulario exactamente 20px
     background-color: v.$card-bg !important; 
     padding: 1.5rem;
     border-radius: 12px;
     width: 550px; 
     border: 1px solid rgba(v.$brand-neon, 0.4); 
     box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8);
-    max-height: 85vh;
+    max-height: 90%; // Ajustado para que no toque los bordes del área disponible
     overflow-y: auto;
     display: flex;
     flex-direction: column;
@@ -429,7 +402,7 @@
 }
 
 /* ==========================================================================
-   2. Contenedor de Vista Previa
+   2. Contenedor de Vista Previa (RECUPERADO)
    ========================================================================== */
 .preview-scroll-container {
   flex: 1;
@@ -447,7 +420,7 @@
 }
 
 /* ==========================================================================
-   3. Formulario y Recursos (Editor Optimizado)
+   3. Formulario y Recursos (RECUPERADO)
    ========================================================================== */
 .form-grid {
   display: flex;
@@ -455,7 +428,7 @@
   gap: 0.8rem;
 
   .content-area textarea {
-    min-height: 350px; // Aumentado para ver mejor el HTML largo
+    min-height: 350px; 
     background-color: v.$input-bg !important; 
     color: v.$text-color !important;
     font-family: 'Fira Code', 'Consolas', monospace; 
@@ -467,7 +440,6 @@
 
     &::placeholder { color: rgba(255, 255, 255, 0.4); }
 
-    // Scrollbar neon para el área de texto
     &::-webkit-scrollbar { width: 6px; }
     &::-webkit-scrollbar-thumb {
       background: rgba(v.$brand-neon, 0.3);
@@ -482,7 +454,6 @@
   }
 }
 
-// Estilos de advertencia para el mat-hint del contador
 .color-warning { color: #ffca28 !important; text-shadow: 0 0 5px rgba(255, 202, 40, 0.2); }
 .color-error   { color: #ff5252 !important; font-weight: bold; text-shadow: 0 0 5px rgba(255, 82, 82, 0.2); }
 
@@ -535,6 +506,8 @@
     transition: all 0.2s;
     &:hover { background: rgba(255, 255, 255, 0.06); transform: translateX(5px); }
 
+    .res-info { display: flex; align-items: center; gap: 10px; }
+
     .res-type {
       font-size: 0.65rem; font-weight: bold; padding: 2px 6px; border-radius: 4px;
       background: rgba(0,0,0,0.3); border: 1px solid transparent;
@@ -545,6 +518,11 @@
     }
   }
 
+  .btn-delete-small {
+    background: transparent; border: none; color: v.$secondary-color; cursor: pointer;
+    &:hover { color: #ff5252; }
+  }
+
   .empty-resources {
     text-align: center; padding: 1rem; font-size: 0.8rem;
     color: rgba(v.$text-color, 0.3); font-style: italic;
@@ -552,7 +530,7 @@
 }
 
 /* ==========================================================================
-   4. Acciones Finales
+   4. Acciones Finales (RECUPERADO)
    ========================================================================== */
 .modal-actions {
   display: flex;
@@ -613,7 +591,7 @@
 }
 
 /* ==========================================================================
-   6. Animaciones
+   6. Animaciones (RECUPERADO)
    ========================================================================== */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
@@ -621,7 +599,7 @@
 }
 
 /* ==========================================================================
-   7. Adaptabilidad (Responsive)
+   7. Adaptabilidad (Responsive - RECUPERADO)
    ========================================================================== */
 @media (max-width: 768px) {
   .modal .modal-content {

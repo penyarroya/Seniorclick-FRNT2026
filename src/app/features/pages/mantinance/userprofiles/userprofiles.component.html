@@ -85,7 +85,7 @@
         }
 
         <div class="row">
-          <mat-form-field appearance="outline">
+          <mat-form-field appearance="outline" floatLabel="always">
             <mat-label>Nombre</mat-label>
             <input matInput formControlName="firstName" placeholder="Ej. Juan">
             <mat-icon matPrefix>person</mat-icon>
@@ -94,7 +94,7 @@
             }
           </mat-form-field>
 
-          <mat-form-field appearance="outline">
+          <mat-form-field appearance="outline" floatLabel="always">
             <mat-label>Apellido</mat-label>
             <input matInput formControlName="lastName" placeholder="Ej. Pérez">
             @if (form.get('lastName')?.hasError('required')) {
@@ -103,7 +103,7 @@
           </mat-form-field>
         </div>
 
-        <mat-form-field appearance="outline" class="full-width">
+        <mat-form-field appearance="outline" class="full-width" floatLabel="always">
           <mat-label>Teléfono</mat-label>
           <input 
             matInput 
@@ -113,7 +113,7 @@
           <mat-icon matSuffix>phone</mat-icon>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" class="full-width">
+        <mat-form-field appearance="outline" class="full-width" floatLabel="always">
           <mat-label>URL del Avatar</mat-label>
           <input matInput formControlName="avatarUrl" placeholder="https://ejemplo.com/foto.jpg">
           <mat-icon matSuffix>link</mat-icon>
@@ -135,7 +135,7 @@
 } -->
 
 <app-maintenance-layout
-  title="Gestión de Usuarios (Perfiles)"
+  title="Gestión de Perfiles"
   [columns]="columns"
   [showViewAction]="false"
   [service]="profileService"
@@ -158,10 +158,14 @@
 <div class="modal" (click)="closeModal()">
   <div class="modal-content" (click)="$event.stopPropagation()">
     
-    <h3>{{ isEdit ? 'Editar Perfil de Usuario' : 'Crear Nuevo Perfil' }}</h3>
+    <button type="button" class="btn-close-large" (click)="closeModal()">
+      <mat-icon>close</mat-icon>
+    </button>
+    
+    <h3>{{ isEdit || selectedId ? 'Gestionar Perfil de Usuario' : 'Seleccionar Usuario' }}</h3>
 
     <div class="avatar-preview">
-      @if (form.get('avatarUrl')?.value && !form.get('avatarUrl')?.errors) {
+      @if (form.get('avatarUrl')?.value) {
         <img [src]="form.get('avatarUrl')?.value" alt="Avatar" (error)="handleImageError($event)">
       } @else {
         <div class="avatar-placeholder">
@@ -170,12 +174,31 @@
       }
     </div>
 
+    <div class="avatar-presets">
+      <p class="presets-label">Recursos de la aplicación</p>
+      <div class="presets-grid">
+        @for (avatar of PRESET_AVATARS; track avatar.url) {
+          <div 
+            class="preset-item" 
+            [class.active]="form.get('avatarUrl')?.value === avatar.url"
+            (click)="selectPresetAvatar(avatar.url)">
+            <img [src]="avatar.url" [title]="avatar.name" (error)="handleImageError($event)">
+            @if (form.get('avatarUrl')?.value === avatar.url) {
+              <div class="check-badge">
+                <mat-icon>check</mat-icon>
+              </div>
+            }
+          </div>
+        }
+      </div>
+    </div>
+
     <form [formGroup]="form" (ngSubmit)="saveProfile()">
       <div class="form-grid">
         
         @if (!isEdit) {
           <mat-form-field appearance="outline" class="full-width" floatLabel="always">
-            <mat-label>Seleccionar Usuario</mat-label>
+            <mat-label>Usuario a gestionar</mat-label>
             <mat-select 
               (selectionChange)="onUserChange($event.value)" 
               (openedChange)="onSelectOpened($event)"
@@ -186,7 +209,7 @@
                 <input 
                   #searchInput
                   type="text"
-                  placeholder="Buscar por usuario o email..." 
+                  placeholder="Buscar por nombre o email..." 
                   [(ngModel)]="searchQuery"
                   [ngModelOptions]="{standalone: true}"
                   (input)="filterUsers($event)"
@@ -194,11 +217,7 @@
                   (keydown)="$event.stopPropagation()">
                 
                 @if (searchQuery) {
-                  <mat-icon 
-                    class="clear-search-icon"
-                    (click)="resetSearch($event)">
-                    close
-                  </mat-icon>
+                  <mat-icon class="clear-search-icon" (click)="resetSearch($event)">close</mat-icon>
                 }
               </div>
 
@@ -209,60 +228,53 @@
                   {{ user.username }} <small style="opacity: 0.7">({{ user.email }})</small>
                 </mat-option>
               }
-
-              @if (filteredUsers.length === 0) {
-                <mat-option disabled style="font-style: italic; opacity: 0.6;">
-                  No se encontraron coincidencias para "{{searchQuery}}"
-                </mat-option>
-              }
             </mat-select>
-            <mat-hint>Vincula este perfil a una cuenta existente</mat-hint>
           </mat-form-field>
+        } @else {
+          <div class="user-locked-info">
+            <mat-icon>lock</mat-icon>
+            <span>Editando perfil del usuario ID: <strong>{{selectedId}}</strong></span>
+          </div>
         }
 
         <div class="row">
           <mat-form-field appearance="outline" floatLabel="always">
             <mat-label>Nombre</mat-label>
-            <input matInput formControlName="firstName" placeholder="Ej. Juan">
+            <input matInput formControlName="firstName" placeholder="Nombre real">
             <mat-icon matPrefix>person</mat-icon>
-            @if (form.get('firstName')?.hasError('required')) {
-              <mat-error>El nombre es obligatorio</mat-error>
-            }
           </mat-form-field>
 
           <mat-form-field appearance="outline" floatLabel="always">
             <mat-label>Apellido</mat-label>
-            <input matInput formControlName="lastName" placeholder="Ej. Pérez">
-            @if (form.get('lastName')?.hasError('required')) {
-              <mat-error>El apellido es obligatorio</mat-error>
-            }
+            <input matInput formControlName="lastName" placeholder="Apellidos">
           </mat-form-field>
         </div>
 
         <mat-form-field appearance="outline" class="full-width" floatLabel="always">
           <mat-label>Teléfono</mat-label>
-          <input 
-            matInput 
-            formControlName="phone" 
-            placeholder="+34 600 000 000"
-            (input)="onPhoneInput($event)"> 
+          <input matInput formControlName="phone" placeholder="+34 600 000 000" (input)="onPhoneInput($event)"> 
           <mat-icon matSuffix>phone</mat-icon>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width" floatLabel="always">
-          <mat-label>URL del Avatar</mat-label>
-          <input matInput formControlName="avatarUrl" placeholder="https://ejemplo.com/foto.jpg">
-          <mat-icon matSuffix>link</mat-icon>
-          <mat-hint>Enlace directo (.jpg, .png, .webp)</mat-hint>
+          <mat-label>URL de imagen externa</mat-label>
+          <input matInput formControlName="avatarUrl" placeholder="https://...">
+          <mat-icon matPrefix>link</mat-icon>
+          
+          @if (form.get('avatarUrl')?.value) {
+            <button type="button" matSuffix mat-icon-button (click)="removeImage()">
+              <mat-icon>clear</mat-icon>
+            </button>
+          }
         </mat-form-field>
+
       </div>
 
       <div class="modal-actions">
-        <button type="button" class="btn-cancel" (click)="closeModal()">
-          Cancelar
-        </button>
-        <button type="submit" class="btn-save" [disabled]="form.invalid || (!isEdit && !selectedId)">
-          {{ isEdit ? 'Actualizar Perfil' : 'Guardar Perfil' }}
+        <button type="button" class="btn-cancel" (click)="closeModal()">Cancelar</button>
+        <button type="submit" class="btn-save" [disabled]="form.invalid || !selectedId">
+          <mat-icon>save</mat-icon>
+          Guardar Cambios
         </button>
       </div>
     </form>

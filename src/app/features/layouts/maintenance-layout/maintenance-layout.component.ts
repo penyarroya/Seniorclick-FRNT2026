@@ -45,7 +45,7 @@ export enum Permission { CREATE = 'CREATE', EDIT = 'EDIT', DELETE = 'DELETE' }
     CommonModule, 
     MatTableModule, 
     CdkTableModule,
-     MatPaginatorModule,
+    MatPaginatorModule,
     MatIconModule, 
     MatButtonModule,
     MatMenuModule,

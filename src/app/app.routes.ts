@@ -44,6 +44,12 @@ export const routes: Routes = [
           import('./features/pages/project-page/project-page.component').then(m => m.ProjectPageComponent)
       },
       {
+        path: 'perfil', // URL: /inicio/perfil
+        loadComponent: () => 
+          import('./features/pages/show-pages/misy-profiles/misy-profiles.component').then(m => m.MisyProfilesComponent),
+        title: 'Mi Perfil'
+      },
+      {
         path: 'mis-inscripciones',
         loadComponent: () => 
           import('./features/pages/show-pages/mis-inscripciones/mis-inscripciones.component').then(m => m.MisInscripcionesComponent)
