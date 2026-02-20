@@ -566,8 +566,10 @@ import { ViewerCommunicationService } from '../../services/viewers/viewer-commun
 import { ProgressService } from '../../services/academics/progress.service';
 import { AuthService } from '../../../core/services/auth/auth.service';
 import { MatMenu, MatMenuModule } from "@angular/material/menu";
-import { MisCommnetsComponent } from "../../pages/show-pages/mis-commnets/mis-commnets.component";
+// import { MisCommnetsComponent } from "../../pages/show-pages/mis-commnets/mis-commnets.component";
 import { MatBadgeModule } from '@angular/material/badge';
+import { MisCommnetsComponent } from '../../pages/show-pages/coments/mis-commnets/mis-commnets.component';
+import { MisPreguntasComponent } from "../../pages/show-pages/coments/mis-preguntas/mis-preguntas.component";
 
 @Component({
   selector: 'app-academic-workspace',
@@ -575,8 +577,7 @@ import { MatBadgeModule } from '@angular/material/badge';
   imports: [
     CommonModule, RouterModule, MatToolbarModule, MatSidenavModule,
     MatExpansionModule, MatListModule, MatProgressBarModule, MatMenuModule, MatBadgeModule, MatIconModule,
-    MatProgressSpinnerModule, MatTooltipModule,
-    MisCommnetsComponent
+    MatProgressSpinnerModule, MatTooltipModule
 ],
   templateUrl: './academic-workspace.component.html',
   styleUrls: ['./academic-workspace.component.scss']
@@ -609,6 +610,7 @@ export class AcademicWorkspaceComponent implements OnInit {
   //nuevos cambios
   // 1. Define el signal
   cantidadComentarios = signal<number>(0);
+
   public showCommentsModal = signal<boolean>(false); 
 
   // 2. Ejemplo de cómo podrías actualizarlo (opcional)

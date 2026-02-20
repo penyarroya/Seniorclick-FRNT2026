@@ -1,0 +1,287 @@
+// :host {
+//   display: block;
+//   --text-dark-extreme: #0f172a; /* Negro azulado profundo */
+//   --text-muted-dark: #334155;    /* Gris muy oscuro para fechas */
+//   --accent-pink: #f90593;       /* El rosa de tu header */
+//   --resolved-green: #16a34a;
+// }
+
+// /* 1. TARJETA Y ESTRUCTURA */
+// .comment-wrapper {
+//   margin-top: 1.5rem;
+
+//   &.is-reply {
+//     margin-left: 2.5rem;
+//     border-left: 2px solid #e2e8f0;
+//     padding-left: 1.5rem;
+//     position: relative;
+
+//     &::before {
+//       content: "";
+//       position: absolute;
+//       top: 25px;
+//       left: 0;
+//       width: 15px;
+//       height: 2px;
+//       background: #e2e8f0;
+//     }
+//   }
+// }
+
+// .comment-card {
+//   background: #ffffff;
+//   border: 1px solid #e2e8f0;
+//   border-radius: 12px;
+//   padding: 1.25rem;
+//   transition: transform 0.2s, box-shadow 0.2s;
+
+//   &:hover {
+//     box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+//   }
+
+//   &.resolved {
+//     border-left: 5px solid var(--resolved-green);
+//     background-color: #f0fdf4;
+//   }
+// }
+
+// /* 2. CABECERA (RECUPERANDO DISEÑO) */
+// .comment-header {
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   margin-bottom: 1rem;
+
+//   .user-info {
+//     display: flex;
+//     align-items: center;
+//     gap: 10px;
+
+//     mat-icon {
+//       color: var(--accent-pink); /* Recuperamos el color del icono */
+//       font-size: 28px;
+//       width: 28px;
+//       height: 28px;
+//     }
+//   }
+
+//   .username {
+//     font-weight: 800 !important;
+//     color: var(--text-dark-extreme) !important;
+//     font-size: 1.05rem;
+//   }
+
+//   .date {
+//     color: var(--text-muted-dark) !important;
+//     font-weight: 600 !important;
+//     font-size: 0.85rem;
+//   }
+// }
+
+// /* 3. CONTENIDO (MANTENIENDO OSCURIDAD) */
+// .comment-content {
+//   color: var(--text-dark-extreme) !important;
+//   line-height: 1.6;
+//   font-size: 1.1rem !important;
+//   font-weight: 500 !important;
+//   margin-bottom: 1.25rem;
+//   display: block;
+//   white-space: pre-wrap;
+// }
+
+// /* 4. ACCIONES (RECUPERANDO BOTONES MATERIAL) */
+// .comment-actions {
+//   display: flex;
+//   gap: 8px;
+//   border-top: 1px solid #f1f5f9;
+//   padding-top: 0.8rem;
+
+//   button {
+//     /* Aquí permitimos que 'primary' y 'accent' funcionen */
+//     font-weight: 700 !important;
+    
+//     mat-icon {
+//       margin-right: 4px;
+//     }
+//   }
+// }
+
+// /* 5. BADGE DE RESUELTO */
+// .resolved-badge {
+//   color: var(--resolved-green);
+//   background: #dcfce7;
+//   padding: 6px 12px;
+//   border-radius: 20px;
+//   font-size: 0.75rem;
+//   font-weight: 800;
+//   display: flex;
+//   align-items: center;
+//   gap: 5px;
+//   text-transform: uppercase;
+//   border: 1px solid #bbf7d0;
+// }
+
+/* ==========================================================================
+   CONFIGURACIÓN DE MARCA APLICADA A COMENTARIOS
+   ========================================================================== */
+:host {
+  display: block;
+  --primary-color: #f90593; // Tu Fucsia
+  --primary-hover: #d1047b;
+}
+
+.comment-wrapper {
+  width: 100%;
+  margin-bottom: 12px;
+
+  &.is-reply {
+    padding-left: 16px; 
+    border-left: 2px solid #e2e8f0;
+    margin-top: 8px;
+    // Un pequeño toque: las respuestas tienen un fondo sutilmente distinto
+    .comment-card { background-color: #fcfcfd; }
+  }
+}
+
+.comment-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px; // Un poco más redondeado para el look moderno
+  padding: 16px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border-color: #cbd5e1;
+  }
+
+  &.resolved {
+    background-color: #f0fdf4; // Verde muy suave para fondo
+    border-left: 4px solid #10b981; 
+  }
+}
+
+/* AVATAR STYLE (Añadido para el icono o inicial) */
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  .avatar-container {
+    width: 32px;
+    height: 32px;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.8rem;
+    overflow: hidden;
+
+    mat-icon { 
+      color: white !important; 
+      font-size: 20px !important; 
+    }
+  }
+
+  .username {
+    font-weight: 700;
+    color: #1e293b;
+    font-size: 0.9rem;
+  }
+
+  .date {
+    font-size: 0.75rem;
+    color: #94a3b8;
+  }
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.comment-content {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #334155;
+  margin-bottom: 12px;
+  padding-left: 2px;
+  white-space: pre-wrap;
+}
+
+/* BOTONES CON TU COLOR PRIMARIO */
+.comment-actions {
+  display: flex;
+  gap: 8px;
+  border-top: 1px solid #f1f5f9;
+  padding-top: 8px;
+
+  button[color="primary"] {
+    color: var(--primary-color) !important;
+    font-weight: 700;
+    
+    &:hover { background-color: rgba(249, 5, 147, 0.05); }
+  }
+
+  button[color="accent"] {
+    font-weight: 600;
+    // El botón de resolver puede ser un gris azulado que cambie a verde
+  }
+}
+
+.resolved-badge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #059669;
+  font-size: 0.7rem;
+  font-weight: 800;
+  background: #dcfce7;
+  padding: 4px 10px;
+  border-radius: 20px; // Estilo píldora
+  text-transform: uppercase;
+
+  mat-icon {
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+  }
+}
+
+
+
+/* ==========================================================================
+   BOTÓN ELIMINAR (ESTILO INTERNO DEL COMENTARIO)
+   ========================================================================== */
+button[color="warn"] {
+  --mdc-text-button-label-text-color: #dc2626;
+  color: #dc2626 !important;
+  font-weight: 700 !important;
+  background-color: rgba(220, 38, 38, 0.05) !important;
+  border-radius: 8px !important;
+  transition: all 0.2s ease-in-out !important;
+
+  &:hover {
+    background-color: #dc2626 !important;
+    color: #ffffff !important;
+    --mdc-text-button-label-text-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3) !important;
+    transform: translateY(-1px);
+
+    mat-icon {
+      color: #ffffff !important;
+    }
+  }
+
+  mat-icon {
+    font-size: 20px !important;
+    width: 20px !important;
+    height: 20px !important;
+    color: inherit;
+  }
+}

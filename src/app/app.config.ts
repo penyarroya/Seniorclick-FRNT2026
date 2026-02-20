@@ -1,5 +1,5 @@
 import { ApplicationConfig, APP_INITIALIZER, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
-import { provideRouter, withComponentInputBinding } from '@angular/router';
+import { provideRouter, withComponentInputBinding, withRouterConfig } from '@angular/router';
 import { routes } from './app.routes';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
@@ -24,7 +24,13 @@ export const appConfig: ApplicationConfig = {
     provideZonelessChangeDetection(),
     provideNoopAnimations(),
     provideAnimationsAsync(),
-    provideRouter(routes, withComponentInputBinding()),
+    //provideRouter(routes, withComponentInputBinding()),
+    provideRouter(
+      routes, 
+      withComponentInputBinding(), 
+      withRouterConfig({ onSameUrlNavigation: 'ignore' }) // Esto va DENTRO de los paréntesis de provideRouter
+    ),
+    
     provideHttpClient(
       withFetch(), 
       withInterceptors([

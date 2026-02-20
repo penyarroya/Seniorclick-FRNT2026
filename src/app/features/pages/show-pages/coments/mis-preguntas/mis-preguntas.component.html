@@ -1,0 +1,186 @@
+<!-- <header class="top-composer">
+  <button mat-icon-button 
+    class="btn-back" 
+    (click)="volverALaleccion()" 
+    matTooltip="Volver a la lección">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+
+  <div class="brand-badge">
+    <mat-icon class="brand-icon">forum</mat-icon>
+  </div>
+  
+  <div class="input-wrapper textarea-mode">
+    <textarea
+        #dudaTextarea
+        [(ngModel)]="nuevaDuda"
+        maxlength="250" 
+        cdkTextareaAutosize
+        #autosize="cdkTextareaAutosize"
+        cdkAutosizeMinRows="1"
+        cdkAutosizeMaxRows="4"
+        (keydown.enter)="$event.preventDefault(); publicarDuda()"
+        placeholder="¿Tienes una nueva duda? Escríbela aquí...">
+    </textarea>
+    
+    <div class="actions-row">
+      @if (nuevaDuda().length > 0) {
+        <span class="char-counter" [class.limit-near]="nuevaDuda().length > 220">
+          {{ 250 - nuevaDuda().length }}
+        </span>
+      }
+
+      <div class="actions">
+        @if (nuevaDuda().trim()) {
+          <button mat-button class="cancel-btn" (click)="nuevaDuda.set('')">
+            CANCELAR
+          </button>
+        }
+
+        <button mat-flat-button color="primary" class="publish-btn" 
+                [disabled]="!nuevaDuda().trim()"
+                (click)="publicarDuda()">
+          <mat-icon>send</mat-icon>
+          <span>PUBLICAR</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+ -->
+
+
+
+<div class="consultas-wrapper">
+  
+  <div class="header-section">
+    <header class="top-composer">
+      <button mat-icon-button 
+        class="btn-back" 
+        (click)="volverALaleccion()" 
+        matTooltip="Volver a la lección">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+
+      <div class="brand-badge">
+        <mat-icon class="brand-icon">forum</mat-icon>
+      </div>
+      
+      <div class="input-wrapper textarea-mode">
+        <textarea
+            #dudaTextarea
+            [ngModel]="nuevaDuda()"
+            (ngModelChange)="nuevaDuda.set($event)"
+            maxlength="250" 
+            cdkTextareaAutosize
+            #autosize="cdkTextareaAutosize"
+            cdkAutosizeMinRows="1"
+            cdkAutosizeMaxRows="4"
+            (keydown.enter)="$event.preventDefault(); publicarDuda()"
+            placeholder="¿Tienes una nueva duda? Escríbela aquí...">
+        </textarea>
+        
+        <div class="actions-row">
+          @if (nuevaDuda().length > 0) {
+            <span class="char-counter" [class.limit-near]="nuevaDuda().length > 220">
+              {{ 250 - nuevaDuda().length }}
+            </span>
+          }
+
+          <div class="actions">
+            @if (nuevaDuda().trim()) {
+              <button mat-button class="cancel-btn" (click)="nuevaDuda.set('')">
+                CANCELAR
+              </button>
+            }
+
+            <button mat-flat-button color="primary" class="publish-btn" 
+                    [disabled]="!nuevaDuda().trim()"
+                    (click)="publicarDuda()">
+              <mat-icon>send</mat-icon>
+              <span>PUBLICAR</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+  </div>
+
+  <div class="body-section">
+    @if (misComentarios().length > 0) {
+      <div class="full-screen-layout">
+        
+        <aside class="questions-panel">
+          <div class="panel-header">Preguntas Recientes</div>
+          <div class="scroll-area">
+            @for (c of misComentarios(); track c.id) {
+              <div class="question-card" 
+                   [class.active]="selectedQuestion()?.id === c.id"
+                   (click)="selectQuestion(c)">
+                <div class="card-info">
+                  <span class="username">{{ c.username }}</span>
+                  <span class="date">{{ c.createdAt | date:'dd/MM/yyyy' }}</span>
+                </div>
+                <p class="excerpt">{{ c.content }}</p>
+              </div>
+            }
+          </div>
+        </aside>
+
+        <main class="detail-panel">
+          @if (selectedQuestion()) {
+            <div class="conversation-view">
+              
+              <div class="detail-header">
+                <span class="detail-title">Conversación</span>
+                <button mat-icon-button (click)="cerrarPregunta()" matTooltip="Cerrar detalle">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </div>
+
+              <div class="conversation-scroll-area">
+                <div class="main-question-display">
+                  <app-comment-item 
+                      [comment]="selectedQuestion()!" 
+                      [isAdmin]="true"
+                      (replyEvent)="manejarReplyDesdeHijo($event)"
+                      (resolveEvent)="manejarResolucion($event)"
+                      (deleteEvent)="borrarPregunta($event)">
+                  </app-comment-item>
+                </div>
+              </div>
+
+              <div class="bottom-reply-box">
+                  <textarea 
+                    #respuestaTextarea
+                    [ngModel]="nuevaRespuesta()" 
+                    (ngModelChange)="nuevaRespuesta.set($event)"
+                    (keydown.enter)="$event.preventDefault(); publicarRespuesta()"
+                    placeholder="Escribe una respuesta...">
+                  </textarea>
+                  <button mat-flat-button color="primary" 
+                          [disabled]="!nuevaRespuesta().trim()"
+                          (click)="publicarRespuesta()">
+                    RESPONDER
+                  </button>
+              </div>
+            </div>
+          } @else {
+            <div class="no-selection">
+              <mat-icon>chat_bubble_outline</mat-icon>
+              <p>Selecciona una pregunta de la lista para ver la conversación</p>
+            </div>
+          }
+        </main>
+
+      </div>
+    } @else {
+      <div class="empty-state-full">
+        <mat-icon>forum</mat-icon>
+        <p>No hay preguntas registradas en esta lección.</p>
+        <span>¡Sé el primero en preguntar algo usando el cuadro superior!</span>
+      </div>
+    }
+  </div>
+
+</div>

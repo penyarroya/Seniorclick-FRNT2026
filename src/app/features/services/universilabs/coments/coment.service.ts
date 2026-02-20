@@ -124,4 +124,8 @@ export class CommentService {
   delete(id: number | string): Observable<void> {
     return this.http.delete<void>(`${this.API_URL}/${id}`);
   }
+
+  public eliminarComentario(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.API_URL}/${id}`);
+  }
 }

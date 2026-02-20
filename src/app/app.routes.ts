@@ -82,6 +82,11 @@ export const routes: Routes = [
         loadComponent: () => 
           import('./features/pages/page-viewer/page-viewer.component').then(m => m.PageViewerComponent)
       },
+    {
+        path: 'consultas/:pageId',
+        loadComponent: () => 
+          import('./features/pages/show-pages/coments/mis-preguntas/mis-preguntas.component').then(m => m.MisPreguntasComponent)
+      },
       // Si entran sin ID de página, podrías redirigir o mostrar una intro
       { path: '', redirectTo: 'intro', pathMatch: 'full' }
     ]

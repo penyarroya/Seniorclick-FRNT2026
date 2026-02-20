@@ -3,7 +3,13 @@
     
     <div class="comment-header">
       <div class="user-info">
-        <mat-icon>account_circle</mat-icon>
+        <div class="avatar-container">
+          @if (comment.userAvatar) {
+            <img [src]="comment.userAvatar" alt="avatar user" style="width:100%; height:100%; object-fit:cover;">
+          } @else {
+            <mat-icon>account_circle</mat-icon>
+          }
+        </div>
         <span class="username">{{ comment.username }}</span>
         <span class="date">{{ comment.createdAt | date:'short' }}</span>
       </div>
@@ -29,6 +35,10 @@
           <mat-icon>{{ comment.resolved ? 'history' : 'done' }}</mat-icon>
           {{ comment.resolved ? 'Reabrir' : 'Marcar Resuelto' }}
         </button>
+
+        <button mat-button color="warn" (click)="onDelete()">
+          <mat-icon>delete_outline</mat-icon> Eliminar
+        </button>
       }
     </div>
   </div>
@@ -41,8 +51,8 @@
           [isReply]="true"
           [isAdmin]="isAdmin"
           (replyEvent)="replyEvent.emit($event)"
-          (resolveEvent)="resolveEvent.emit($event)">
-        </app-comment-item>
+          (resolveEvent)="resolveEvent.emit($event)"
+          (deleteEvent)="deleteEvent.emit($event)"> </app-comment-item>
       }
     </div>
   }
