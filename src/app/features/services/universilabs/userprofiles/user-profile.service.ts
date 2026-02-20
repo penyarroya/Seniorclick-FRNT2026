@@ -146,7 +146,7 @@
 
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { catchError, map, Observable, of, throwError } from 'rxjs';
+import { catchError, map, Observable, of, tap, throwError } from 'rxjs';
 import { environment } from '../../../../../environments/environment';
 import { UserProfileDTO } from '../../../models/universilabas/userprofiles/userprofile.model';
 
@@ -161,11 +161,14 @@ export class UserProfileService {
    */
   getMe(): Observable<UserProfileDTO> {
     return this.http.get<UserProfileDTO>(`${this.apiUrl}/me`).pipe(
-      map(profile => this.mapId(profile)),
+      tap(data => console.log('Respuesta cruda del servidor:', data)), // <--- MIRA ESTO EN CONSOLA
+      map(profile => {
+        // Si llega un objeto pero viene vacío de campos, mapId lo arreglará
+        return this.mapId(profile);
+      }),
       catchError(err => {
-        console.error('Error al obtener mi perfil:', err);
-        // Devolvemos un objeto vacío en lugar de romper el flujo si el perfil no existe
-        return of(this.mapId(null));
+        console.error('Error en la petición /me:', err);
+        return throwError(() => err);
       })
     );
   }

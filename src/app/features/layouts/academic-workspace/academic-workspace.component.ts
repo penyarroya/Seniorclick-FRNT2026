@@ -565,15 +565,19 @@ import { ProjectService } from '../../services/universilabs/projects/project.ser
 import { ViewerCommunicationService } from '../../services/viewers/viewer-communication.service';
 import { ProgressService } from '../../services/academics/progress.service';
 import { AuthService } from '../../../core/services/auth/auth.service';
+import { MatMenu, MatMenuModule } from "@angular/material/menu";
+import { MisCommnetsComponent } from "../../pages/show-pages/mis-commnets/mis-commnets.component";
+import { MatBadgeModule } from '@angular/material/badge';
 
 @Component({
   selector: 'app-academic-workspace',
   standalone: true,
   imports: [
-    CommonModule, RouterModule, MatToolbarModule, MatSidenavModule, 
-    MatExpansionModule, MatListModule, MatProgressBarModule, MatIconModule,
-    MatProgressSpinnerModule, MatTooltipModule
-  ],
+    CommonModule, RouterModule, MatToolbarModule, MatSidenavModule,
+    MatExpansionModule, MatListModule, MatProgressBarModule, MatMenuModule, MatBadgeModule, MatIconModule,
+    MatProgressSpinnerModule, MatTooltipModule,
+    MisCommnetsComponent
+],
   templateUrl: './academic-workspace.component.html',
   styleUrls: ['./academic-workspace.component.scss']
 })
@@ -601,6 +605,19 @@ export class AcademicWorkspaceComponent implements OnInit {
   // Control de flujo
   public isInitialLoad = true;
   private reportedPages = new Set<number>();
+
+  //nuevos cambios
+  // 1. Define el signal
+  cantidadComentarios = signal<number>(0);
+  public showCommentsModal = signal<boolean>(false); 
+
+  // 2. Ejemplo de cómo podrías actualizarlo (opcional)
+  // Podrías llamar a esto cuando cargues la página o mediante un servicio
+  actualizarContador(total: number) {
+    this.cantidadComentarios.set(total);
+  }
+
+  //fin nuevo codigo 
 
   ngOnInit() {
     this.authService.getUserId().pipe(take(1)).subscribe({
@@ -765,6 +782,41 @@ export class AcademicWorkspaceComponent implements OnInit {
   /**
    * El "Guardián" de la UI. Evita actualizaciones redundantes.
    */
+  // private updateActivePageFromRoute() {
+  //   let child = this.route.firstChild;
+  //   while (child?.firstChild) child = child.firstChild;
+    
+  //   const pageId = child?.snapshot.paramMap.get('pageId');
+  //   if (!pageId) return;
+
+  //   const numericPageId = Number(pageId);
+  //   const currentProject = this.project();
+
+  //   if (numericPageId && currentProject) {
+  //     // FRENO: Evitar procesar si ya estamos en esta página
+  //     if (this.activePage()?.id === numericPageId) return;
+
+  //     const foundPage = this.findPageById(numericPageId);
+      
+  //     if (foundPage) {
+  //       this.activePage.set(foundPage);
+  //       this.navService.setCurrentPage(numericPageId);
+
+  //       // Si no es la carga inicial (o reanudación), reportamos al backend
+  //       if (!this.isInitialLoad) {
+  //         this.syncProgressWithBackend();
+  //       } else {
+  //         this.isInitialLoad = false; // Liberamos el bloqueo tras la primera carga exitosa
+  //       }
+        
+  //       this.isEmpty.set(false);
+  //       this.cdr.detectChanges();
+  //     }
+  //   }
+  // }
+
+
+
   private updateActivePageFromRoute() {
     let child = this.route.firstChild;
     while (child?.firstChild) child = child.firstChild;
@@ -782,6 +834,11 @@ export class AcademicWorkspaceComponent implements OnInit {
       const foundPage = this.findPageById(numericPageId);
       
       if (foundPage) {
+        // --- CAMBIO AQUÍ ---
+        // Limpiamos el contador al cambiar de página para evitar "fantasmas" de la lección anterior
+        this.cantidadComentarios.set(0); 
+        // --------------------
+
         this.activePage.set(foundPage);
         this.navService.setCurrentPage(numericPageId);
 
@@ -789,7 +846,7 @@ export class AcademicWorkspaceComponent implements OnInit {
         if (!this.isInitialLoad) {
           this.syncProgressWithBackend();
         } else {
-          this.isInitialLoad = false; // Liberamos el bloqueo tras la primera carga exitosa
+          this.isInitialLoad = false; 
         }
         
         this.isEmpty.set(false);
@@ -798,6 +855,7 @@ export class AcademicWorkspaceComponent implements OnInit {
     }
   }
 
+  //
   private findPageById(id: number): PageSummaryNode | null {
     const data = this.project();
     if (!data || !data.modules) return null;

@@ -1,6 +1,6 @@
 // import { Injectable } from '@angular/core';
 // import { HttpClient } from "@angular/common/http";
-// import { Observable, map } from "rxjs"; // <-- Importante: añadir map
+// import { Observable, map } from "rxjs";
 // import { environment } from "../../../../../environments/environment";
 // import { CommentResponseDTO } from "../../../models/universilabas/coments/coments-respose.model";
 
@@ -13,29 +13,46 @@
 
 //   /**
 //    * MÉTODO REQUERIDO POR EL MAINTENANCE LAYOUT
-//    * Envuelve el array de comentarios en un objeto con la propiedad 'content'
 //    */
 //   list(params?: any): Observable<any> {
 //     return this.getAllComments().pipe(
 //       map(data => ({
-//         content: data,          // El layout espera los datos aquí
+//         content: data,
 //         totalElements: data.length 
 //       }))
 //     );
 //   }
 
-//   // Obtener todos los comentarios (Vista de Admin)
 //   getAllComments(): Observable<CommentResponseDTO[]> {
 //     return this.http.get<CommentResponseDTO[]>(this.API_URL);
 //   }
 
-//   // Obtener comentarios de una página específica
+//   // --- NUEVOS MÉTODOS PARA CREAR Y ACTUALIZAR ---
+
+//   /**
+//    * Crea un nuevo comentario
+//    * @param data Objeto con username, content y pageId
+//    */
+//   create(data: any): Observable<CommentResponseDTO> {
+//     return this.http.post<CommentResponseDTO>(this.API_URL, data);
+//   }
+
+//   /**
+//    * Actualiza un comentario existente
+//    * @param id ID del comentario
+//    * @param data Datos a actualizar
+//    */
+//   update(id: number | string, data: any): Observable<CommentResponseDTO> {
+//     return this.http.put<CommentResponseDTO>(`${this.API_URL}/${id}`, data);
+//   }
+
+//   // ----------------------------------------------
+
 //   getByPage(pageId: number): Observable<CommentResponseDTO[]> {
 //     return this.http.get<CommentResponseDTO[]>(`${this.API_URL}/page/${pageId}`);
 //   }
 
-//   // Eliminar comentario
-//   delete(id: number): Observable<void> {
+//   delete(id: number | string): Observable<void> {
 //     return this.http.delete<void>(`${this.API_URL}/${id}`);
 //   }
 // }
@@ -69,29 +86,39 @@ export class CommentService {
     return this.http.get<CommentResponseDTO[]>(this.API_URL);
   }
 
-  // --- NUEVOS MÉTODOS PARA CREAR Y ACTUALIZAR ---
+  // --- MÉTODOS ACTUALIZADOS Y NUEVOS ---
 
   /**
-   * Crea un nuevo comentario
-   * @param data Objeto con username, content y pageId
+   * Crea un nuevo comentario o respuesta.
+   * Recuerda que el 'data' (CommentRequestDTO) ahora puede incluir 'parentId'.
    */
   create(data: any): Observable<CommentResponseDTO> {
     return this.http.post<CommentResponseDTO>(this.API_URL, data);
   }
 
   /**
-   * Actualiza un comentario existente
-   * @param id ID del comentario
-   * @param data Datos a actualizar
+   * NUEVO: Cambia el estado de resolución de un comentario.
+   * Corresponde al @PatchMapping en tu controlador de Java.
    */
-  update(id: number | string, data: any): Observable<CommentResponseDTO> {
-    return this.http.put<CommentResponseDTO>(`${this.API_URL}/${id}`, data);
+  toggleResolved(id: number | string): Observable<void> {
+    return this.http.patch<void>(`${this.API_URL}/${id}/toggle-resolved`, {});
+  }
+
+  /**
+   * NUEVO: Obtiene comentarios no resueltos para el dashboard de administración.
+   */
+  getUnresolved(): Observable<CommentResponseDTO[]> {
+    return this.http.get<CommentResponseDTO[]>(`${this.API_URL}/unresolved`);
   }
 
   // ----------------------------------------------
 
   getByPage(pageId: number): Observable<CommentResponseDTO[]> {
     return this.http.get<CommentResponseDTO[]>(`${this.API_URL}/page/${pageId}`);
+  }
+
+  update(id: number | string, data: any): Observable<CommentResponseDTO> {
+    return this.http.put<CommentResponseDTO>(`${this.API_URL}/${id}`, data);
   }
 
   delete(id: number | string): Observable<void> {

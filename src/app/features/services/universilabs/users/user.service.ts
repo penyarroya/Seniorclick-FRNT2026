@@ -158,23 +158,28 @@ export class UserService implements CrudService<UserDTO> {
     );
   }
 
+  //
   getAll(): Observable<UserDTO[]> {
     return this.http.get<UserDTO[]>(this.usersUrl);
   }
 
+  //
   getById(id: number): Observable<UserDTO> {
     return this.http.get<UserDTO>(`${this.usersUrl}/${id}`);
   }
 
+  //
   create(user: any): Observable<UserDTO> {
     // Coincide con tu createUserManual en Java
     return this.http.post<UserDTO>(this.usersUrl, user);
   }
-
+  
+  //
   update(id: number, user: any): Observable<UserDTO> {
     return this.http.put<UserDTO>(`${this.usersUrl}/${id}`, user);
   }
 
+  //
   delete(id: number | string): Observable<void> {
     return this.http.delete<void>(`${this.usersUrl}/${id}`);
   }

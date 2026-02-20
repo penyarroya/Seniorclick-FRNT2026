@@ -41,25 +41,6 @@ export class AuthService {
   constructor() {}
 
   // ================== LOGIN ==================
-  // loginWithUsername(username: string, password: string): Observable<AuthResponse> {
-  //   return this.http.post<AuthResponse>(
-  //     `${this.apiUrl}/login`,
-  //     { username, password },
-  //     { withCredentials: true }
-  //   ).pipe(
-  //     tap(() => {
-  //       this._authenticated.next(true);
-  //       this.scheduleAutoRefresh();
-  //     }),
-  //     catchError((error: HttpErrorResponse) => {
-  //       if (error.status === 401) {
-  //         return throwError(() => new Error('Credenciales inválidas. Por favor, verifica tu usuario y contraseña.'));
-  //       }
-  //       return throwError(() => error);
-  //     })
-  //   );
-  // }
-
   loginWithUsername(username: string, password: string): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(
       `${this.apiUrl}/login`,
@@ -131,26 +112,6 @@ export class AuthService {
       })
     );
   }
-
-  //
-  // loginWithEmail(email: string, password: string): Observable<AuthResponse> {
-  //   return this.http.post<AuthResponse>(
-  //     `${this.apiUrl}/login/email`,
-  //     { email, password },
-  //     { withCredentials: true }
-  //   ).pipe(
-  //     tap(() => {
-  //       this._authenticated.next(true);
-  //       this.scheduleAutoRefresh();
-  //     }),
-  //     catchError((error: HttpErrorResponse) => {
-  //       if (error.status === 401) {
-  //         return throwError(() => new Error('Credenciales inválidas. Por favor, verifica tu email y contraseña.'));
-  //       }
-  //       return throwError(() => error);
-  //     })
-  //   );
-  // }
 
   // ================== REGISTER ==================
   // ANTES: register(username: string, email: string, password: string)
@@ -275,39 +236,6 @@ export class AuthService {
   }
 
   //
-  // checkSession(): Observable<void> {
-  //   return this.http.get<{ authenticated: boolean }>(
-  //     `${this.apiUrl}/session`,
-  //     { withCredentials: true }
-  //   ).pipe(
-  //     switchMap(res => {
-  //       if (res.authenticated) {
-  //         return this.http.get<any>(`${this.apiUrl}/me`, { withCredentials: true }).pipe(
-  //           tap(userData => {
-  //             this._authenticated.next(true);
-  //             this._currentUser.next({ ...userData, id: userData.userId });
-  //             this.scheduleAutoRefresh();
-  //             this._isInitialized.next(true);
-  //           }),
-  //           catchError(() => {
-  //             this.handleInternalLogout(); 
-  //             return of(void 0);
-  //           })
-  //         );
-  //       } else {
-  //         this.handleInternalLogout();
-  //         return of(void 0);
-  //       }
-  //     }),
-  //     catchError((err) => {
-  //       // Si es un error de conexión (status 0), el interceptor ya llamó a setBackendDown(true)
-  //       // Solo nos aseguramos de limpiar el estado local y "desbloquear" la app
-  //       this.handleInternalLogout();
-  //       return of(void 0); // Permite que APP_INITIALIZER finalice y Angular renderice el @if
-  //     })
-  //   );
-  // }
-
   checkSession(): Observable<void> {
     return this.http.get<{ authenticated: boolean }>(
       `${this.apiUrl}/session`,
@@ -346,15 +274,25 @@ export class AuthService {
     );
   }
 
-// Método auxiliar para limpiar todo sin llamar al servidor (porque ya sabemos que falló)
-private handleInternalLogout() {
-  this._authenticated.next(false);
-  this._currentUser.next(null);
-  this._isInitialized.next(true);
-  this.clearAutoRefresh();
-  localStorage.clear();
-  sessionStorage.clear();
-}
+  //
+  private handleInternalLogout() {
+    // 1. Limpiamos el estado reactivo (esto quita el rastro en la consola)
+    this._authenticated.next(false);
+    this._currentUser.next(null);
+    this._isInitialized.next(true);
+
+    // 2. Detenemos procesos en segundo plano
+    this.clearAutoRefresh();
+
+    // 3. Borramos TODO el rastro físico
+    localStorage.clear();
+    sessionStorage.clear();
+
+    // 4. IMPORTANTE: Las cookies no se borran con localStorage.clear().
+    // Si sigues viendo al usuario viejo, es porque el servidor 
+    // no ha invalidado la cookie de sesión.
+    console.warn('Estado local limpiado. Si el usuario persiste, cierra sesión formalmente para borrar la Cookie.');
+  }
 
   // ================== GETTERS ==================
   getUserName(): Observable<string | undefined> {
@@ -372,20 +310,7 @@ private handleInternalLogout() {
     return this.getUserId();
   }
 
-  // // Opción B: Añadir lógica para evitar llamadas innecesarias
-  // getUserRoles(): Observable<string[]> {
-  //   // ESCUDO: Si localmente sabemos que no está autenticado, no molestamos al servidor
-  //   if (!this.isAuthenticated()) {
-  //     return of([]); // Retornamos un array vacío inmediatamente
-  //   }
-
-  //   return this.http.get<{ roles: string[] }>(`${this.apiUrl}/me`, { withCredentials: true })
-  //     .pipe(
-  //       map(res => res.roles?.map(r => r.toLowerCase()) ?? []),
-  //       catchError(() => of([])) // Si hay error, devolvemos vacío para no romper AuthzService
-  //     );
-  // }
-
+  //
   getUserRoles(): Observable<string[]> {
     // Eliminamos el "if (!this.isAuthenticated())" porque el BehaviorSubject 
     // suele estar en false al refrescar la página (F5) hasta que se valida la sesión.
@@ -422,45 +347,39 @@ private handleInternalLogout() {
 
   // ================== LOGOUT ==================
   logout(): Observable<void> {
-    // 1. Bloqueo inmediato: Antes de cualquier petición HTTP
     this.isLoggingOut = true; 
     this.clearAutoRefresh();
     
-    // Limpieza local PREVENTIVA (Antes de ir al servidor)
-    // Esto asegura que si una petición sale en paralelo, ya no tenga contexto
+    // Limpieza inmediata de la memoria de Angular (RxJS)
+    this._authenticated.next(false);
+    this._currentUser.next(null); 
+    this._isInitialized.next(true); 
+
     this.refreshQueue.forEach(cb => cb(false));
     this.refreshQueue = [];
-    this._authenticated.next(false);
 
     return this.http.post<{ message: string }>(`${this.apiUrl}/logout`, {}, { withCredentials: true }).pipe(
-      // 2. Limpieza al recibir respuesta exitosa
       tap(() => {
-        sessionStorage.clear();
-        localStorage.clear();
-        console.log('Sesión cerrada en servidor exitosamente');
+        this.handleInternalLogout(); 
       }),
-      // 3. Convertir {message: string} a void para evitar errores de tipo
-      map(() => undefined),
-      // 4. Limpieza incluso si el servidor falla (ej: la cookie ya había expirado)
+      map(() => {
+        // ESTO ES LO QUE SOLUCIONA TU PROBLEMA:
+        localStorage.clear();    // Borra tokens y perfiles del disco
+        sessionStorage.clear();   // Borra la sesión actual
+        return undefined;         // Arregla el error ts(2322)
+      }),
       catchError(err => {
-        sessionStorage.clear();
+        this.handleInternalLogout();
         localStorage.clear();
-        console.warn('Error en servidor al cerrar sesión, limpiando estado local igualmente');
-        return of(undefined); // Retornamos éxito para que la navegación continúe
+        return of(undefined);
       }),
-      // 5. El escudo de tiempo
       finalize(() => {
-        // Mantenemos isLoggingOut en true durante 2 segundos.
-        // Esto da tiempo a que el Router de Angular destruya los componentes
-        // que podrían tener peticiones HTTP pendientes.
-        setTimeout(() => {
-          this.isLoggingOut = false;
-          console.log('Escudo de logout desactivado');
-        }, 2000);
+        // RESET TOTAL: Recarga la web para que el nuevo usuario empiece de cero
+        window.location.href = '/auth/login'; 
+        setTimeout(() => { this.isLoggingOut = false; }, 2000);
       })
     );
   }
-
 
   // Añade este método para que el interceptor pueda consultar el estado
   getLoggingOutStatus(): boolean {
@@ -468,43 +387,6 @@ private handleInternalLogout() {
   }
 
   // ================== REFRESH TOKEN ==================
-  // refreshToken(): Observable<void> {
-  //   if (this.refreshing) {
-  //     return new Observable<void>(observer => {
-  //       this.refreshQueue.push(success => {
-  //         success ? observer.next() : observer.error(new Error('Refresh token expirado'));
-  //         observer.complete();
-  //       });
-  //     });
-  //   }
-
-  //   this.refreshing = true;
-
-  //   return this.http.post<void>(`${this.apiUrl}/refresh-token`, {}, { withCredentials: true }).pipe(
-  //     tap(() => {
-  //       this.refreshing = false;
-  //       this.processQueue(true);
-  //       this.scheduleAutoRefresh();
-  //     }),
-  //     catchError(err => {
-  //       // --- AQUÍ ESTÁ EL CAMBIO CLAVE ---
-  //       if (err.status === 409) {
-  //         console.warn('409 Conflict: El token ya fue refrescado por otra instancia.');
-  //         this.refreshing = false;
-  //         this.processQueue(true); // Liberamos la cola como éxito
-  //         this.scheduleAutoRefresh();
-  //         return of(undefined); // Retornamos éxito silencioso
-  //       }
-
-  //       // Si es cualquier otro error (401, 403, etc), procedemos al logout
-  //       this._authenticated.next(false);
-  //       this.processQueue(false);
-  //       this.refreshing = false;
-  //       return throwError(() => err);
-  //     })
-  //   );
-  // }
-
   refreshToken(): Observable<void> {
     if (this.refreshing) {
       return new Observable<void>(observer => {

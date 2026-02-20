@@ -1,0 +1,49 @@
+<div class="comment-wrapper" [class.is-reply]="isReply">
+  <div class="comment-card" [class.resolved]="comment.resolved">
+    
+    <div class="comment-header">
+      <div class="user-info">
+        <mat-icon>account_circle</mat-icon>
+        <span class="username">{{ comment.username }}</span>
+        <span class="date">{{ comment.createdAt | date:'short' }}</span>
+      </div>
+      
+      @if (comment.resolved) {
+        <span class="resolved-badge">
+          <mat-icon>check_circle</mat-icon> Resuelto
+        </span>
+      }
+    </div>
+
+    <div class="comment-content">
+      {{ comment.content }}
+    </div>
+
+    <div class="comment-actions">
+      <button mat-button color="primary" (click)="onReply()">
+        <mat-icon>reply</mat-icon> Responder
+      </button>
+      
+      @if (isAdmin) {
+        <button mat-button color="accent" (click)="onToggleResolved()">
+          <mat-icon>{{ comment.resolved ? 'history' : 'done' }}</mat-icon>
+          {{ comment.resolved ? 'Reabrir' : 'Marcar Resuelto' }}
+        </button>
+      }
+    </div>
+  </div>
+
+  @if (comment.replies && comment.replies.length > 0) {
+    <div class="replies-container">
+      @for (reply of comment.replies; track reply.id) {
+        <app-comment-item 
+          [comment]="reply" 
+          [isReply]="true"
+          [isAdmin]="isAdmin"
+          (replyEvent)="replyEvent.emit($event)"
+          (resolveEvent)="resolveEvent.emit($event)">
+        </app-comment-item>
+      }
+    </div>
+  }
+</div>

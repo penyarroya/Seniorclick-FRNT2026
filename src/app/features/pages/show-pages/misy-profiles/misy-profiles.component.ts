@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { CommonModule, Location } from '@angular/common';
 import { Router } from '@angular/router';
+import { filter, switchMap, take } from 'rxjs/operators';
 
 // Material
 import { MatIconModule } from "@angular/material/icon";
@@ -10,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 
 import { UserProfileService } from '../../../services/universilabs/userprofiles/user-profile.service';
 import { UserProfileDTO } from '../../../models/universilabas/userprofiles/userprofile.model';
+import { AuthService } from '../../../../core/services/auth/auth.service';
 
 @Component({
   selector: 'app-misy-profiles',
@@ -26,6 +28,7 @@ import { UserProfileDTO } from '../../../models/universilabas/userprofiles/userp
 })
 export class MisyProfilesComponent implements OnInit {
 //  
+  private authService = inject(AuthService);
   private profileService = inject(UserProfileService);
   private router = inject(Router);
   private cdr = inject(ChangeDetectorRef);
@@ -39,36 +42,69 @@ export class MisyProfilesComponent implements OnInit {
     this.loadMyProfile();
   }
 
-  /**
-   * Carga los datos del perfil desde el servicio.
-   * Maneja estados de carga, éxito y error 500.
-   */
+
+// ... dentro de tu clase MisyProfilesComponent
+
+  sessionUser: any = null;
+
   private loadMyProfile() {
     this.loading = true;
-    this.errorMessage = null;
 
-    this.profileService.getMe().subscribe({
-      next: (profile: UserProfileDTO) => {
+    this.authService.currentUser$.pipe(
+      // Solo procedemos si el usuario no es null
+      filter(user => user !== null),
+      // switchMap cancela la petición anterior si llega un nuevo usuario
+      switchMap(user => {
+        this.sessionUser = user;
+        console.log('Usuario detectado, cargando datos de:', user.username);
+        return this.profileService.getMe();
+      })
+    ).subscribe({
+      next: (profile) => {
+        console.log('Perfil cargado con éxito:', profile);
         this.profileData = profile;
         this.loading = false;
-        this.cdr.detectChanges(); // Asegura la actualización de la vista tras la respuesta
+        this.errorMessage = null;
+        this.cdr.detectChanges();
       },
       error: (err) => {
-        console.error('Error cargando perfil:', err);
-        this.profileData = null;
-        this.errorMessage = 'No se pudo encontrar tu perfil de usuario.';
+        console.error('Error al cargar perfil:', err);
+        this.errorMessage = "No se pudo cargar la información del perfil.";
+        this.loading = false;
+        this.cdr.detectChanges();
+      }
+    });
+
+    // Manejo de sesión no encontrada
+    this.authService.isInitialized$.pipe(take(1)).subscribe(isInit => {
+      if (isInit && !this.authService.currentUserValue) {
+        this.errorMessage = "No se ha encontrado ninguna sesión activa.";
         this.loading = false;
         this.cdr.detectChanges();
       }
     });
   }
 
-  /**
-   * Cierra el perfil y redirige siempre a la pantalla de inicio
-   */
-  goBack() {
-    this.router.navigate(['/inicio']);
+  private fetchProfileData() {
+    this.profileService.getMe().subscribe({
+      next: (profile) => {
+        this.profileData = profile;
+        this.loading = false;
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        this.errorMessage = "Error al cargar el perfil.";
+        this.loading = false;
+        this.cdr.detectChanges();
+      }
+    });
   }
+    /**
+     * Cierra el perfil y redirige siempre a la pantalla de inicio
+     */
+    goBack() {
+      this.router.navigate(['/inicio']);
+    }
 
   /**
    * Genera un avatar con iniciales si la imagen original falla.
@@ -84,11 +120,10 @@ export class MisyProfilesComponent implements OnInit {
   // }
 
   handleImageError(event: any) {
-  // Intentamos usar nombre completo, si no el username (si existe), si no 'U'
-  const nameLabel = this.profileData?.firstName 
-    ? `${this.profileData.firstName}+${this.profileData.lastName}`
-    : (this.profileData as any)?.username || 'User'; 
-  
-  event.target.src = `https://ui-avatars.com/api/?name=${nameLabel}&background=008c96&color=fff&size=128`;
-}
+    const name = this.profileData?.firstName ? 
+                `${this.profileData.firstName}+${this.profileData.lastName}` : 
+                'Usuario';
+                
+    event.target.src = `https://ui-avatars.com/api/?name=${name}&background=008c96&color=fff`;
+  }
 }

@@ -1,322 +1,4 @@
 <!-- <div class="academic-shell">
-  @if (userId !== null) {
-    
-    @if (project(); as p) {
-      
-      <mat-toolbar class="academic-toolbar">
-        <button mat-icon-button (click)="drawer.toggle()" class="menu-toggle-btn" matTooltip="Mostrar/Ocultar menú">
-          <mat-icon>menu</mat-icon>
-        </button>
-
-        <div class="project-info">
-          <h1 class="project-name">{{ p.title }}</h1>
-        </div>
-
-        <span class="spacer"></span>
-
-        <div class="progress-wrapper">
-          <div class="progress-bar-container">
-            <mat-progress-bar mode="determinate" [value]="navService.progress()"></mat-progress-bar>
-          </div>
-          <span class="progress-label">{{ navService.progress() }}%</span>
-        </div>
-
-        <span class="spacer"></span>
-        
-        <div class="utility-actions">
-          <button mat-icon-button (click)="exitToPlatform()" class="exit-btn" matTooltip="Volver a la Institución">
-            <mat-icon>arrow_back</mat-icon>
-          </button>
-          <button mat-icon-button matTooltip="Marcadores">
-            <mat-icon>bookmark_border</mat-icon>
-          </button>
-          <button mat-icon-button matTooltip="Ajustes de lectura">
-            <mat-icon>settings</mat-icon>
-          </button>
-        </div>
-      </mat-toolbar>
-
-      <mat-drawer-container class="academic-container">
-        
-        <mat-drawer #drawer mode="side" opened class="academic-sidebar">
-          <div class="sidebar-header">
-            <h3>Contenido del Proyecto</h3>
-          </div>
-          
-          @if (!isEmpty()) {
-            <mat-accordion multi class="hierarchy-accordion">
-              
-              @for (mod of p.modules; track mod.id) {
-                <mat-expansion-panel class="mat-elevation-z0" [expanded]="true">
-                  <mat-expansion-panel-header>
-                    <mat-panel-title>
-                      <strong>{{ mod.title }}</strong>
-                    </mat-panel-title>
-                  </mat-expansion-panel-header>
-
-                  @for (tema of mod.pages; track tema.id) {
-                    <div class="topic-group">
-                      <p class="topic-label">{{ tema.title }}</p>
-                      
-                      @for (sub of tema.subtopics; track sub.id) {
-                        <div class="subtopic-item">
-                          <span class="sub-title">{{ sub.title }}</span>
-                          
-                          <mat-nav-list class="pages-list">
-                            @for (pag of sub.pages; track pag.id) {
-                              <a mat-list-item 
-                                 [routerLink]="['/aula', rawProjectId, 'page', pag.id]" 
-                                 routerLinkActive="active-page"
-                                 #rla="routerLinkActive"
-                                 [routerLinkActiveOptions]="{exact: true}"
-                                 class="depth-level-5">
-                                
-                                <mat-icon matListItemIcon>
-                                  {{ rla.isActive ? 'play_circle_filled' : 'play_circle_outline' }}
-                                </mat-icon>
-                                
-                                <span matListItemTitle>{{ pag.title }}</span>
-                              </a>
-                            }
-                          </mat-nav-list>
-                        </div>
-                      }
-                    </div>
-                  }
-                </mat-expansion-panel>
-              }
-
-              <mat-expansion-panel class="mat-elevation-z0 resources-panel">
-                <mat-expansion-panel-header>
-                  <mat-panel-title class="resource-panel-header">
-                    <div class="title-with-icon">
-                      <mat-icon style="margin-right: 8px; color: #f39c12;">folder_open</mat-icon>
-                      <strong>Recursos y Descargas</strong>
-                    </div>
-                    
-                    @if (activePage()?.resources?.length) {
-                      <span class="resource-counter-badge">
-                        {{ activePage()?.resources?.length }}
-                      </span>
-                    }
-                  </mat-panel-title>
-                </mat-expansion-panel-header>
-                
-                <div class="resource-grid-sidebar">
-                  @for (res of activePage()?.resources; track res.url) {
-                    <div class="resource-card" 
-                        [class.active-resource]="navService.activeResource()?.url === res.url"
-                        (click)="onResourceClick(res)">
-                      
-                      <div class="resource-icon-wrapper" [ngClass]="res.type">
-                        <mat-icon>{{ getResourceIcon(res.type) }}</mat-icon>
-                      </div>
-                      
-                      <div class="res-info">
-                        <span class="res-name">{{ res.name }}</span>
-                        <span class="res-type">{{ res.type | uppercase }}</span>
-                      </div>
-
-                      @if (navService.activeResource()?.url === res.url) {
-                        <mat-icon class="active-indicator">visibility</mat-icon>
-                      }
-                    </div>
-                  }
-                </div>
-              </mat-expansion-panel>
-
-            </mat-accordion>
-          } @else {
-            <div class="sidebar-empty-notice">No hay lecciones disponibles.</div>
-          }
-        </mat-drawer>
-
-        <mat-drawer-content class="academic-content">
-          <div class="content-inner">
-            @if (isEmpty()) {
-              <div class="empty-project-state">
-                <mat-icon>layers_clear</mat-icon>
-                <h2>Este proyecto aún no tiene contenido</h2>
-                <p>Parece que todavía no se han cargado los módulos para este curso.</p>
-                <button mat-flat-button color="primary" (click)="exitToPlatform()">
-                  Volver al Panel de Inicio
-                </button>
-              </div>
-            } @else {
-              <router-outlet></router-outlet>
-            }
-          </div>
-        </mat-drawer-content>
-
-      </mat-drawer-container>
-
-    } @else {
-      <div class="loading-screen">
-        <mat-spinner diameter="50"></mat-spinner>
-        <p>Cargando contenidos...</p>
-      </div>
-    }
-
-  } @else {
-    <div class="loading-screen">
-      <mat-spinner diameter="50"></mat-spinner>
-      <p>Verificando identidad de estudiante...</p>
-    </div>
-  }
-</div> -->
-
-
-
-<!-- <div class="academic-shell">
-  @if (userId !== null) {
-    @if (project(); as p) {
-      
-      <mat-toolbar class="academic-toolbar">
-        <button mat-icon-button (click)="drawer.toggle()" class="menu-toggle-btn" matTooltip="Mostrar/Ocultar menú">
-          <mat-icon>menu</mat-icon>
-        </button>
-        
-        <div class="project-info">
-          <h1 class="project-name">{{ p.title }}</h1>
-        </div>
-
-        <span class="spacer"></span>
-
-        <div class="progress-wrapper">
-          <div class="progress-bar-container">
-            <mat-progress-bar mode="determinate" [value]="navService.progress()"></mat-progress-bar>
-          </div>
-          <span class="progress-label">{{ navService.progress() }}%</span>
-        </div>
-
-        <span class="spacer"></span>
-        
-        <div class="utility-actions">
-          <button mat-icon-button (click)="exitToPlatform()" class="exit-btn" matTooltip="Volver a la Institución">
-            <mat-icon>arrow_back</mat-icon>
-          </button>
-          <button mat-icon-button matTooltip="Marcadores">
-            <mat-icon>bookmark_border</mat-icon>
-          </button>
-          <button mat-icon-button matTooltip="Ajustes de lectura">
-            <mat-icon>settings</mat-icon>
-          </button>
-        </div>
-      </mat-toolbar>
-      
-      <mat-drawer-container class="academic-container">
-        
-        <mat-drawer #drawer mode="side" opened class="academic-sidebar">
-          <div class="sidebar-header">
-            <h3>Contenido del Proyecto</h3>
-          </div>
-          
-          @if (!isEmpty()) {
-            <mat-accordion multi class="hierarchy-accordion">
-              @for (mod of p.modules; track mod.id) {
-                <mat-expansion-panel class="mat-elevation-z0 module-panel" [expanded]="true">
-                  <mat-expansion-panel-header>
-                    <mat-panel-title>
-                      <strong>{{ mod.title }}</strong>
-                    </mat-panel-title>
-                  </mat-expansion-panel-header>
-
-                  <mat-nav-list class="pages-list">
-                    @for (tema of mod.pages; track tema.id) {
-                      <div mat-subheader class="topic-header">
-                        <mat-icon>{{ getTopicIcon(tema.title) }}</mat-icon>
-                        {{ tema.title }}
-                      </div>
-                      
-                      @for (sub of tema.subtopics; track sub.id) {
-                        @for (pag of sub.pages; track pag.id) {
-                          <a mat-list-item 
-                             [routerLink]="['/aula', rawProjectId, 'page', pag.id]" 
-                             routerLinkActive="active-page"
-                             #rla="routerLinkActive"
-                             [routerLinkActiveOptions]="{exact: true}"
-                             class="page-link">
-                            <mat-icon matListItemIcon>
-                              {{ rla.isActive ? 'play_circle_filled' : 'play_circle_outline' }}
-                            </mat-icon>
-                            <span matListItemTitle>{{ pag.title }}</span>
-                          </a>
-                        }
-                      }
-                    }
-                  </mat-nav-list>
-                </mat-expansion-panel>
-              }
-
-              <mat-expansion-panel class="mat-elevation-z0 resources-panel">
-                <mat-expansion-panel-header>
-                  <mat-panel-title class="resource-panel-header">
-                    <div class="title-with-icon">
-                      <mat-icon>attach_file</mat-icon>
-                      <strong>Recursos de la página</strong>
-                    </div>
-                    <span class="spacer"></span>
-                    @if (activePage()?.resources?.length) {
-                      <span class="resource-counter-badge">{{ activePage()?.resources?.length }}</span>
-                    }
-                  </mat-panel-title>
-                </mat-expansion-panel-header>
-                
-                <div class="resource-grid-sidebar">
-                  @for (res of activePage()?.resources; track res.url) {
-                    <div class="resource-card" (click)="onResourceClick(res)">
-                      <div class="resource-icon-wrapper" [ngClass]="res.type.toLowerCase()">
-                        <mat-icon>{{ getResourceIcon(res.type) }}</mat-icon>
-                      </div>
-                      <div class="res-info">
-                        <span class="res-name">{{ res.name }}</span>
-                        <span class="res-type">{{ res.type | uppercase }}</span>
-                      </div>
-                    </div>
-                  }
-                </div>
-              </mat-expansion-panel>
-            </mat-accordion>
-          } @else {
-            <div class="sidebar-empty-notice">No hay lecciones disponibles.</div>
-          }
-        </mat-drawer>
-
-        <mat-drawer-content class="academic-content">
-          <div class="content-inner">
-            @if (isEmpty()) {
-              <div class="empty-project-state">
-                <mat-icon>layers_clear</mat-icon>
-                <h2>Este proyecto aún no tiene contenido</h2>
-                <button mat-flat-button color="primary" (click)="exitToPlatform()">Volver</button>
-              </div>
-            } @else {
-
-              <router-outlet></router-outlet>
-              
-            }
-          </div>
-        </mat-drawer-content>
-
-      </mat-drawer-container>
-
-    } @else {
-      <div class="loading-screen">
-        <mat-spinner diameter="50"></mat-spinner>
-        <p>Cargando contenidos...</p>
-      </div>
-    }
-
-  } @else {
-    <div class="loading-screen">
-      <mat-spinner diameter="50"></mat-spinner>
-      <p>Verificando identidad de estudiante...</p>
-    </div>
-  }
-</div> -->
-
-
-<div class="academic-shell">
   @if (isInitialLoad && !isEmpty()) {
     <div class="loading-screen">
       <mat-spinner diameter="50"></mat-spinner>
@@ -465,4 +147,199 @@
       <button mat-button (click)="exitToPlatform()">Regresar</button>
     </div>
   }
+</div> -->
+
+
+<div class="academic-shell">
+  @if (isInitialLoad && !isEmpty()) {
+    <div class="loading-screen">
+      <mat-spinner diameter="50"></mat-spinner>
+      <p>
+        @if (userId === null) { Verificando identidad de estudiante... }
+        @else { Cargando contenidos del proyecto... }
+      </p>
+    </div>
+  }
+
+  @else if (isEmpty()) {
+    <div class="empty-project-state full-screen">
+      <div class="empty-card">
+        <mat-icon class="empty-icon">layers_clear</mat-icon>
+        <h2>Este proyecto no tiene contenido</h2>
+        <p>La estructura aún no ha sido completada o no hay páginas navegables.</p>
+        <button mat-flat-button color="primary" (click)="exitToPlatform()">
+          <mat-icon>arrow_back</mat-icon>
+          Volver a mis proyectos
+        </button>
+      </div>
+    </div>
+  }
+
+  @else if (project(); as p) {
+    <mat-toolbar class="academic-toolbar">
+      <button mat-icon-button (click)="drawer.toggle()" class="menu-toggle-btn" matTooltip="Mostrar/Ocultar menú">
+        <mat-icon>menu</mat-icon>
+      </button>
+      
+      <div class="project-info">
+        <h1 class="project-name">{{ p.title }}</h1>
+      </div>
+
+      <span class="spacer"></span>
+
+      <div class="progress-wrapper">
+        <div class="progress-bar-container">
+          <mat-progress-bar mode="determinate" [value]="navService.progress()"></mat-progress-bar>
+        </div>
+        <span class="progress-label">{{ navService.progress() }}%</span>
+      </div>
+
+      <span class="spacer"></span>
+      
+      <div class="utility-actions">
+        <button mat-icon-button (click)="exitToPlatform()" class="exit-btn" matTooltip="Volver a la Institución">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+
+        <!-- Botón que abre el modal de comentarios -->
+        <button mat-icon-button 
+                (click)="showCommentsModal.set(true)"
+                [matBadge]="cantidadComentarios()"
+                matTooltip="Consultas de la lección"
+                [matBadgeHidden]="cantidadComentarios() === 0">
+          <mat-icon>forum</mat-icon>
+        </button>
+
+        <button mat-icon-button matTooltip="Marcadores">
+          <mat-icon>bookmark_border</mat-icon>
+        </button>
+        <button mat-icon-button matTooltip="Ajustes de lectura">
+          <mat-icon>settings</mat-icon>
+        </button>
+      </div>
+
+    </mat-toolbar>
+    
+    <mat-drawer-container class="academic-container">
+      <mat-drawer #drawer mode="side" opened class="academic-sidebar">
+        <div class="sidebar-header">
+          <h3>Contenido del Proyecto</h3>
+        </div>
+        
+        <mat-accordion multi class="hierarchy-accordion">
+          @for (mod of p.modules; track mod.id) {
+            <mat-expansion-panel class="mat-elevation-z0 module-panel" [expanded]="true">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <strong>{{ mod.title }}</strong>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <mat-nav-list class="pages-list">
+                @for (tema of mod.pages; track tema.id) {
+                  <div mat-subheader class="topic-header">
+                    <mat-icon>{{ getTopicIcon(tema.title) }}</mat-icon>
+                    {{ tema.title }}
+                  </div>
+                  
+                  @for (sub of tema.subtopics; track sub.id) {
+                    @for (pag of sub.pages; track pag.id) {
+                      <a mat-list-item 
+                         [routerLink]="['/aula', rawProjectId, 'page', pag.id]" 
+                         routerLinkActive="active-page"
+                         #rla="routerLinkActive"
+                         [routerLinkActiveOptions]="{exact: true}"
+                         class="page-link">
+                        <mat-icon matListItemIcon>
+                          {{ rla.isActive ? 'play_circle_filled' : 'play_circle_outline' }}
+                        </mat-icon>
+                        <span matListItemTitle>{{ pag.title }}</span>
+                      </a>
+                    }
+                  }
+                }
+              </mat-nav-list>
+            </mat-expansion-panel>
+          }
+
+          @if (activePage()) {
+            <mat-expansion-panel class="mat-elevation-z0 resources-panel">
+              <mat-expansion-panel-header>
+                <mat-panel-title class="resource-panel-header">
+                  <div class="title-with-icon">
+                    <mat-icon>attach_file</mat-icon>
+                    <strong>Recursos</strong>
+                  </div>
+                  <span class="spacer"></span>
+                  @if (activePage()?.resources?.length; as total) {
+                    <span class="resource-counter-badge">{{ total }}</span>
+                  }
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              
+              <div class="resource-grid-sidebar">
+                @for (res of activePage()?.resources; track res.url) {
+                  <div class="resource-card" (click)="onResourceClick(res)">
+                    <div class="resource-icon-wrapper" [ngClass]="res.type.toLowerCase()">
+                      <mat-icon>{{ getResourceIcon(res.type) }}</mat-icon>
+                    </div>
+                    <div class="res-info">
+                      <span class="res-name">{{ res.name }}</span>
+                      <span class="res-type">{{ res.type | uppercase }}</span>
+                    </div>
+                  </div>
+                }
+              </div>
+            </mat-expansion-panel>
+          }
+        </mat-accordion>
+      </mat-drawer>
+
+      <mat-drawer-content class="academic-content">
+        <div class="content-inner">
+          <router-outlet></router-outlet>
+        </div>
+      </mat-drawer-content>
+    </mat-drawer-container>
+  }
+
+  @else if (!isInitialLoad && !project()) {
+    <div class="loading-screen">
+      <mat-icon color="warn" style="font-size: 48px; width: 48px; height: 48px;">error_outline</mat-icon>
+      <p>No se pudo cargar la información del proyecto.</p>
+      <button mat-button (click)="exitToPlatform()">Regresar</button>
+    </div>
+  }
 </div>
+
+<!-- MODAL DE COMENTARIOS (nuevo) -->
+@if (showCommentsModal()) {
+  <div class="modal-overlay" (click)="showCommentsModal.set(false)">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <div class="modal-title">
+          <mat-icon>forum</mat-icon>
+          <h3>Comentarios de la lección</h3>
+        </div>
+        <button mat-icon-button (click)="showCommentsModal.set(false)" class="close-btn">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      
+      <div class="modal-body">
+        @if (activePage(); as page) {
+          <app-mis-commnets 
+            [pageId]="page.id" 
+            [userId]="userId!"
+            (totalComments)="cantidadComentarios.set($event)">
+          </app-mis-commnets>
+        } @else {
+          <div class="empty-state">
+            <mat-icon>chat_bubble_outline</mat-icon>
+            <p>Selecciona una lección para comentar.</p>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+}

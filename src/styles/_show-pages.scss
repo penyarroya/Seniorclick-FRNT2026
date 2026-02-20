@@ -137,3 +137,35 @@
 .add-btn.edit-mode-btn:not(:disabled) {
   background-color: #3498db !important;
 }
+
+
+/* ==========================================================================
+   ESTILOS ESPECÍFICOS PARA EL COMPONENTE DE COMENTARIOS (MIS COMMNETS)
+   ========================================================================== */
+.custom-comments-panel {
+  .mat-mdc-menu-panel {
+    min-width: 850px !important;
+    max-width: 950px !important;
+  }
+}
+
+/* ==========================================================================
+   FORZAR COLOR NEGRO EN LABEL (MODO PLACEHOLDER) - MATERIAL 20
+   ========================================================================== */
+
+/* 1. Atacamos el label en estado normal y flotando */
+app-mis-commnets .main-form-card .mat-mdc-form-field .mdc-floating-label, 
+app-mis-commnets .main-form-card .mat-mdc-form-field .mdc-floating-label span {
+  color: #000000 !important;
+  opacity: 1 !important;
+}
+
+/* 2. Atacamos específicamente el texto cuando el campo está vacío (reposo) */
+app-mis-commnets .main-form-card .mat-mdc-form-field-appearance-outline:not(.mat-focused) .mdc-floating-label {
+  color: #000000 !important;
+}
+
+/* 3. Por si acaso el navegador intenta aplicar filtros de opacidad */
+app-mis-commnets .main-form-card .mat-mdc-form-field.mat-focused .mdc-floating-label {
+  color: #3f51b5 !important; /* O tu color primario */
+}

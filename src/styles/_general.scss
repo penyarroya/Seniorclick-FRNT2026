@@ -1,0 +1,83 @@
+/* ==========================================================================
+   ESTILOS GLOBALES PARA EL MODAL DE EDICIÓN
+   ========================================================================== */
+
+.global-material-styles {
+  
+  /* 1. TEXTO DEL INPUT Y PLACEHOLDER */
+  .mat-mdc-form-field {
+    .mdc-text-field__input {
+      color: #000000 !important;
+      -webkit-text-fill-color: #000000 !important;
+      font-weight: 500 !important;
+
+      &::placeholder {
+        color: #5f6368 !important;
+        opacity: 1 !important;
+      }
+    }
+
+    /* 2. ETIQUETAS (LABELS) */
+    .mdc-floating-label {
+      color: #2c3e50 !important;
+      opacity: 1 !important;
+      font-weight: 600 !important;
+
+      &.mdc-floating-label--float-above {
+        color: #3498db !important;
+        background-color: white; 
+        padding: 0 4px;
+        transform: translateY(-36px) scale(0.85) !important;
+      }
+    }
+
+    /* 3. SELECT (Valor visible dentro del input) */
+    .mat-mdc-select-value-text {
+      color: #000000 !important;
+      font-weight: 500 !important;
+    }
+
+    .mat-mdc-select-placeholder {
+      color: #5f6368 !important;
+      opacity: 1 !important;
+    }
+
+    /* 4. BORDES DEL INPUT */
+    .mdc-notched-outline__leading,
+    .mdc-notched-outline__notch,
+    .mdc-notched-outline__trailing {
+      border-color: #94a3b8 !important;
+    }
+
+    /* Color cuando el usuario hace clic en el campo (Focus) */
+    &.mat-focused {
+      .mdc-notched-outline__leading,
+      .mdc-notched-outline__notch,
+      .mdc-notched-outline__trailing {
+        border-color: #3498db !important;
+        border-width: 2px !important;
+      }
+
+      /* 4.1 ICONOS (Se vuelven azules junto con el borde y la etiqueta) */
+      .mat-icon-suffix {
+        color: #3498db !important;
+      }
+    }
+  }
+}
+
+/* 5. OPCIONES DEL DESPLEGABLE (SELECT PANEL) */
+.academic-select-panel {
+  background-color: #ffffff !important;
+  
+  .mat-mdc-option {
+    .mdc-list-item__primary-text {
+      color: #000000 !important;
+      font-weight: 500 !important;
+    }
+
+    &:hover:not(.mat-mdc-option-disabled) {
+      background-color: rgba(52, 152, 219, 0.08) !important;
+    }
+  }
+}
