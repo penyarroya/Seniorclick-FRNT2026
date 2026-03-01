@@ -1,57 +1,4 @@
-<!-- <header class="top-composer">
-  <button mat-icon-button 
-    class="btn-back" 
-    (click)="volverALaleccion()" 
-    matTooltip="Volver a la lección">
-    <mat-icon>arrow_back</mat-icon>
-  </button>
-
-  <div class="brand-badge">
-    <mat-icon class="brand-icon">forum</mat-icon>
-  </div>
-  
-  <div class="input-wrapper textarea-mode">
-    <textarea
-        #dudaTextarea
-        [(ngModel)]="nuevaDuda"
-        maxlength="250" 
-        cdkTextareaAutosize
-        #autosize="cdkTextareaAutosize"
-        cdkAutosizeMinRows="1"
-        cdkAutosizeMaxRows="4"
-        (keydown.enter)="$event.preventDefault(); publicarDuda()"
-        placeholder="¿Tienes una nueva duda? Escríbela aquí...">
-    </textarea>
-    
-    <div class="actions-row">
-      @if (nuevaDuda().length > 0) {
-        <span class="char-counter" [class.limit-near]="nuevaDuda().length > 220">
-          {{ 250 - nuevaDuda().length }}
-        </span>
-      }
-
-      <div class="actions">
-        @if (nuevaDuda().trim()) {
-          <button mat-button class="cancel-btn" (click)="nuevaDuda.set('')">
-            CANCELAR
-          </button>
-        }
-
-        <button mat-flat-button color="primary" class="publish-btn" 
-                [disabled]="!nuevaDuda().trim()"
-                (click)="publicarDuda()">
-          <mat-icon>send</mat-icon>
-          <span>PUBLICAR</span>
-        </button>
-      </div>
-    </div>
-  </div>
-</header>
- -->
-
-
-
-<div class="consultas-wrapper">
+<!-- <div class="consultas-wrapper">
   
   <div class="header-section">
     <header class="top-composer">
@@ -111,7 +58,14 @@
       <div class="full-screen-layout">
         
         <aside class="questions-panel">
-          <div class="panel-header">Preguntas Recientes</div>
+          <div class="panel-header">
+            <div class="header-title">Preguntas Recientes</div>
+            <div class="page-context">
+              <small>Lección:</small>
+              <h2 class="page-name">{{ pageTitle() }}</h2>
+            </div>
+          </div>
+
           <div class="scroll-area">
             @for (c of misComentarios(); track c.id) {
               <div class="question-card" 
@@ -180,6 +134,449 @@
         <p>No hay preguntas registradas en esta lección.</p>
         <span>¡Sé el primero en preguntar algo usando el cuadro superior!</span>
       </div>
+    }
+  </div>
+
+</div> -->
+
+
+<!-- <div class="consultas-wrapper">
+
+  <div class="header-section">
+    <header class="top-composer">
+      <button mat-icon-button class="btn-back" (click)="volverALaleccion()" matTooltip="Volver a la lección">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+
+      <div class="brand-badge">
+        <mat-icon class="brand-icon">forum</mat-icon>
+      </div>
+
+      <div class="input-wrapper textarea-mode">
+        <textarea #dudaTextarea [ngModel]="nuevaDuda()" (ngModelChange)="nuevaDuda.set($event)" maxlength="250"
+          cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="4"
+          (keydown.enter)="$event.preventDefault(); publicarDuda()"
+          placeholder="¿Tienes una nueva duda? Escríbela aquí...">
+        </textarea>
+
+        <div class="actions-row">
+          @if (nuevaDuda().length > 0) {
+          <span class="char-counter" [class.limit-near]="nuevaDuda().length > 220">
+            {{ 250 - nuevaDuda().length }}
+          </span>
+          }
+
+          <div class="actions">
+            @if (nuevaDuda().trim()) {
+            <button mat-button class="cancel-btn" (click)="nuevaDuda.set('')">
+              CANCELAR
+            </button>
+            }
+
+            <button mat-flat-button color="primary" class="publish-btn" [disabled]="!nuevaDuda().trim()"
+              (click)="publicarDuda()">
+              <mat-icon>send</mat-icon>
+              <span>PUBLICAR</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+  </div>
+
+  <div class="body-section">
+    @if (misComentarios().length > 0) {
+    <div class="full-screen-layout">
+
+      <aside class="questions-panel">
+        <div class="panel-header">
+          <div class="header-title">Preguntas Recientes</div>
+          <div class="page-context">
+            <small>Lección:</small>
+            <h2 class="page-name">{{ pageTitle() }}</h2>
+          </div>
+        </div>
+
+        <div class="scroll-area">
+          @for (c of misComentarios(); track c.id) {
+          <div class="question-card" [class.active]="selectedQuestion()?.id === c.id" (click)="selectQuestion(c)">
+            <div class="card-info">
+              <span class="username">{{ c.username }}</span>
+              <span class="date">{{ c.createdAt | date:'dd/MM/yyyy' }}</span>
+            </div>
+            <p class="excerpt">{{ c.content }}</p>
+          </div>
+          }
+        </div>
+      </aside>
+
+      <main class="detail-panel">
+        @if (selectedQuestion()) {
+        <div class="conversation-view">
+
+          <div class="detail-header">
+            <span class="detail-title">Conversación</span>
+            <button mat-icon-button (click)="cerrarPregunta()" matTooltip="Cerrar detalle">
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+
+          <div class="conversation-scroll-area">
+            <div class="main-question-display">
+              <app-comment-item [comment]="selectedQuestion()!" [isAdmin]="true"
+                (replyEvent)="manejarReplyDesdeHijo($event)" (resolveEvent)="manejarResolucion($event)"
+                (deleteEvent)="borrarPregunta($event)">
+              </app-comment-item>
+            </div>
+          </div>
+
+          <div class="bottom-reply-box">
+            <button mat-icon-button class="ai-btn" (click)="generarRespuestaIA()"
+              [disabled]="cargandoIA() || !selectedQuestion()" matTooltip="Regenerar sugerencia con IA">
+              <mat-icon [class.spinning]="cargandoIA()">
+                {{ cargandoIA() ? 'sync' : 'psychology' }}
+              </mat-icon>
+            </button>
+
+            <textarea #respuestaTextarea 
+              [ngModel]="nuevaRespuesta()" 
+              (ngModelChange)="nuevaRespuesta.set($event)"
+              (keydown.enter)="$event.preventDefault(); publicarRespuesta()" 
+              [placeholder]="cargandoIA() ? 'La IA está redactando una sugerencia...' : 'Escribe una respuesta...'"
+              [disabled]="cargandoIA()">
+            </textarea>
+
+            <button mat-flat-button color="primary" [disabled]="!nuevaRespuesta().trim() || cargandoIA()"
+              (click)="publicarRespuesta()">
+              RESPONDER
+            </button>
+          </div>
+        </div>
+        } @else {
+        <div class="no-selection">
+          <mat-icon>chat_bubble_outline</mat-icon>
+          <p>Selecciona una pregunta de la lista para ver la conversación</p>
+          <span>La IA te ayudará a redactar la respuesta ideal al instante.</span>
+        </div>
+        }
+      </main>
+
+    </div>
+    } @else {
+    <div class="empty-state-full">
+      <mat-icon>forum</mat-icon>
+      <p>No hay preguntas registradas en esta lección.</p>
+      <span>¡Sé el primero en preguntar algo usando el cuadro superior!</span>
+    </div>
+    }
+  </div>
+
+</div> -->
+
+
+<!-- <div class="consultas-wrapper">
+
+  <div class="header-section">
+    <header class="top-composer">
+      <button mat-icon-button class="btn-back" (click)="volverALaleccion()" matTooltip="Volver a la lección">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+
+      <div class="brand-badge">
+        <mat-icon class="brand-icon">forum</mat-icon>
+      </div>
+
+      <div class="input-wrapper textarea-mode">
+        <textarea #dudaTextarea [ngModel]="nuevaDuda()" (ngModelChange)="nuevaDuda.set($event)" maxlength="250"
+          cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="4"
+          (keydown.enter)="$event.preventDefault(); publicarDuda()"
+          placeholder="¿Tienes una nueva duda? Escríbela aquí...">
+        </textarea>
+
+        <div class="actions-row">
+          @if (nuevaDuda().length > 0) {
+          <span class="char-counter" [class.limit-near]="nuevaDuda().length > 220">
+            {{ 250 - nuevaDuda().length }}
+          </span>
+          }
+
+          <div class="actions">
+            @if (nuevaDuda().trim()) {
+            <button mat-button class="cancel-btn" (click)="nuevaDuda.set('')">
+              CANCELAR
+            </button>
+            }
+
+            <button mat-flat-button color="primary" class="publish-btn" [disabled]="!nuevaDuda().trim()"
+              (click)="publicarDuda()">
+              <mat-icon>send</mat-icon>
+              <span>PUBLICAR</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+  </div>
+
+  <div class="body-section">
+    @if (misComentarios().length > 0) {
+    <div class="full-screen-layout">
+
+      <aside class="questions-panel">
+        <div class="panel-header">
+          <div class="header-title">Preguntas Recientes</div>
+          <div class="page-context">
+            <small>Lección:</small>
+            <h2 class="page-name">{{ pageTitle() }}</h2>
+          </div>
+        </div>
+
+        <div class="scroll-area">
+          @for (c of misComentarios(); track c.id) {
+          <div class="question-card" [class.active]="selectedQuestion()?.id === c.id" (click)="selectQuestion(c)">
+            <div class="card-info">
+              <span class="username">{{ c.username }}</span>
+              <span class="date">{{ c.createdAt | date:'dd/MM/yyyy' }}</span>
+            </div>
+            <p class="excerpt">{{ c.content }}</p>
+          </div>
+          }
+        </div>
+      </aside>
+
+      <main class="detail-panel">
+        @if (selectedQuestion()) {
+        <div class="conversation-view">
+
+          <div class="detail-header">
+            <span class="detail-title">Conversación</span>
+            <button mat-icon-button (click)="cerrarPregunta()" matTooltip="Cerrar detalle">
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+
+          <div class="conversation-scroll-area">
+            <div class="main-question-display">
+              <app-comment-item 
+                [comment]="selectedQuestion()!" 
+                [isAdmin]="true"
+                [canReply]="false"   
+                (replyEvent)="manejarReplyDesdeHijo($event)" 
+                (resolveEvent)="manejarResolucion($event)"
+                (deleteEvent)="borrarPregunta($event)">
+              </app-comment-item>
+            </div>
+          </div>
+
+          @if (selectedQuestion()?.replies?.length === 0) {
+            <div class="bottom-reply-box">
+              @if (cargandoIA()) {
+                <div class="ia-loading">
+                  <mat-spinner diameter="24"></mat-spinner>
+                  <span>Generando sugerencia...</span>
+                </div>
+              } @else {
+                <button mat-icon-button class="ai-btn" (click)="generarRespuestaIA()"
+                  [disabled]="!selectedQuestion()" matTooltip="Regenerar sugerencia con IA">
+                  <mat-icon>psychology</mat-icon>
+                </button>
+              }
+
+              <textarea #respuestaTextarea 
+                [ngModel]="nuevaRespuesta()" 
+                (ngModelChange)="nuevaRespuesta.set($event)"
+                (keydown.enter)="$event.preventDefault(); publicarRespuesta()" 
+                placeholder="Escribe una respuesta..."
+                [disabled]="cargandoIA()">
+              </textarea>
+
+              <button mat-flat-button color="primary" 
+                [disabled]="!nuevaRespuesta().trim() || cargandoIA()"
+                (click)="publicarRespuesta()">
+                RESPONDER
+              </button>
+            </div>
+          } @else {
+            <div class="already-answered-message">
+              <mat-icon>check_circle</mat-icon>
+              <span>Esta pregunta ya tiene una respuesta.</span>
+            </div>
+          }
+
+        </div>
+        } @else {
+        <div class="no-selection">
+          <mat-icon>chat_bubble_outline</mat-icon>
+          <p>Selecciona una pregunta de la lista para ver la conversación</p>
+          <span>La IA te ayudará a redactar la respuesta ideal al instante.</span>
+        </div>
+        }
+      </main>
+
+    </div>
+    } @else {
+    <div class="empty-state-full">
+      <mat-icon>forum</mat-icon>
+      <p>No hay preguntas registradas en esta lección.</p>
+      <span>¡Sé el primero en preguntar algo usando el cuadro superior!</span>
+    </div>
+    }
+  </div>
+
+</div> -->
+
+<div class="consultas-wrapper">
+
+  <div class="header-section">
+    <header class="top-composer">
+      <button mat-icon-button class="btn-back" (click)="volverALaleccion()" matTooltip="Volver a la lección">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+
+      <div class="brand-badge">
+        <mat-icon class="brand-icon">forum</mat-icon>
+      </div>
+
+      <div class="input-wrapper textarea-mode">
+        <textarea #dudaTextarea [ngModel]="nuevaDuda()" (ngModelChange)="nuevaDuda.set($event)" maxlength="250"
+          cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="4"
+          (keydown.enter)="$event.preventDefault(); publicarDuda()"
+          placeholder="¿Tienes una nueva duda? Escríbela aquí...">
+        </textarea>
+
+        <div class="actions-row">
+          @if (nuevaDuda().length > 0) {
+          <span class="char-counter" [class.limit-near]="nuevaDuda().length > 220">
+            {{ 250 - nuevaDuda().length }}
+          </span>
+          }
+
+          <div class="actions">
+            @if (nuevaDuda().trim()) {
+            <button mat-button class="cancel-btn" (click)="nuevaDuda.set('')">
+              CANCELAR
+            </button>
+            }
+
+            <button mat-flat-button color="primary" class="publish-btn" [disabled]="!nuevaDuda().trim()"
+              (click)="publicarDuda()">
+              <mat-icon>send</mat-icon>
+              <span>PUBLICAR</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+  </div>
+
+  <div class="body-section">
+    @if (misComentarios().length > 0) {
+    <div class="full-screen-layout">
+
+      <aside class="questions-panel">
+        <div class="panel-header">
+          <div class="header-title">Preguntas Recientes</div>
+          <div class="page-context">
+            <small>Lección:</small>
+            <h2 class="page-name">{{ pageTitle() }}</h2>
+          </div>
+        </div>
+
+        <div class="scroll-area">
+          @for (c of misComentarios(); track c.id) {
+          <div class="question-card" [class.active]="selectedQuestion()?.id === c.id" (click)="selectQuestion(c)">
+            <div class="card-info">
+              <span class="username">{{ c.username }}</span>
+              <span class="date">{{ c.createdAt | date:'dd/MM/yyyy' }}</span>
+            </div>
+            <p class="excerpt">{{ c.content }}</p>
+          </div>
+          }
+        </div>
+      </aside>
+
+      <main class="detail-panel">
+        @if (selectedQuestion()) {
+        <div class="conversation-view">
+
+          <div class="detail-header">
+            <span class="detail-title">Conversación</span>
+            <button mat-icon-button (click)="cerrarPregunta()" matTooltip="Cerrar detalle">
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+
+          <div class="conversation-scroll-area">
+            <div class="main-question-display">
+              <!-- CAMBIO 1: Usar lógica condicional en canReply -->
+              <app-comment-item 
+                [comment]="selectedQuestion()!" 
+                [isAdmin]="true"
+                [canReply]="selectedQuestion()?.replies?.length === 0"
+                (replyEvent)="manejarReplyDesdeHijo($event)" 
+                (resolveEvent)="manejarResolucion($event)"
+                (deleteEvent)="borrarPregunta($event)">
+              </app-comment-item>
+            </div>
+          </div>
+
+          <!-- Aquí empiezan los cambios -->
+          @if (selectedQuestion()?.replies?.length === 0) {
+            <!-- La pregunta no tiene respuestas: mostramos caja de respuesta con IA y spinner -->
+            <div class="bottom-reply-box">
+              <!-- Botón de IA o spinner mientras carga -->
+              @if (cargandoIA()) {
+                <div class="ia-loading">
+                  <mat-spinner diameter="24"></mat-spinner>
+                  <span>Generando sugerencia...</span>
+                </div>
+              } @else {
+                <button mat-icon-button class="ai-btn" (click)="generarRespuestaIA()"
+                  [disabled]="!selectedQuestion()" matTooltip="Regenerar sugerencia con IA">
+                  <mat-icon>psychology</mat-icon>
+                </button>
+              }
+
+              <textarea #respuestaTextarea 
+                [ngModel]="nuevaRespuesta()" 
+                (ngModelChange)="nuevaRespuesta.set($event)"
+                (keydown.enter)="$event.preventDefault(); publicarRespuesta()" 
+                placeholder="Escribe una respuesta..."
+                [disabled]="cargandoIA()">
+              </textarea>
+
+              <button mat-flat-button color="primary" 
+                [disabled]="!nuevaRespuesta().trim() || cargandoIA()"
+                (click)="publicarRespuesta()">
+                RESPONDER
+              </button>
+            </div>
+          } @else {
+            <!-- La pregunta ya tiene respuestas: mostramos mensaje informativo -->
+            <div class="already-answered-message">
+              <mat-icon>check_circle</mat-icon>
+              <span>Esta pregunta ya tiene una respuesta.</span>
+            </div>
+          }
+          <!-- Fin de cambios -->
+
+        </div>
+        } @else {
+        <div class="no-selection">
+          <mat-icon>chat_bubble_outline</mat-icon>
+          <p>Selecciona una pregunta de la lista para ver la conversación</p>
+          <span>La IA te ayudará a redactar la respuesta ideal al instante.</span>
+        </div>
+        }
+      </main>
+
+    </div>
+    } @else {
+    <div class="empty-state-full">
+      <mat-icon>forum</mat-icon>
+      <p>No hay preguntas registradas en esta lección.</p>
+      <span>¡Sé el primero en preguntar algo usando el cuadro superior!</span>
+    </div>
     }
   </div>
 

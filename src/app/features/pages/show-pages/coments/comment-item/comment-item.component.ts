@@ -16,6 +16,7 @@ export class CommentItemComponent {
   @Input() comment!: CommentResponseDTO;
   @Input() isReply: boolean = false;
   @Input() isAdmin: boolean = false;
+  @Input() canReply: boolean = true;
 
   @Output() replyEvent = new EventEmitter<CommentResponseDTO>();
   @Output() resolveEvent = new EventEmitter<number>();

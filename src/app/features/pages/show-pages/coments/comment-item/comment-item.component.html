@@ -26,9 +26,16 @@
     </div>
 
     <div class="comment-actions">
-      <button mat-button color="primary" (click)="onReply()">
+
+      <!-- <button mat-button color="primary" (click)="onReply()" [disabled]="!canReply">
         <mat-icon>reply</mat-icon> Responder
-      </button>
+      </button> -->
+
+      @if (canReply) {
+        <button mat-button color="primary" (click)="onReply()">
+          <mat-icon>reply</mat-icon> Responder
+        </button>
+      }
       
       @if (isAdmin) {
         <button mat-button color="accent" (click)="onToggleResolved()">
@@ -50,6 +57,7 @@
           [comment]="reply" 
           [isReply]="true"
           [isAdmin]="isAdmin"
+          [canReply]="false" 
           (replyEvent)="replyEvent.emit($event)"
           (resolveEvent)="resolveEvent.emit($event)"
           (deleteEvent)="deleteEvent.emit($event)"> </app-comment-item>

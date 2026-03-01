@@ -1,5 +1,179 @@
+// // @use "sass:color";
+// // @use 'variables' as v;
+
+// // .snack-wrapper {
+// //     display: flex;
+// //     flex-direction: column;
+// //     align-items: center;
+// //     text-align: center;
+// //     gap: 1.5rem;
+// //     width: 100%;
+// //     // Añadimos un pequeño padding interno para que el contenido no pegue al borde neón
+// //     padding: 0.5rem;
+// // }
+
+// // .message {
+// //     font-size: 1.1rem;
+// //     color: #ffffff !important; // Texto blanco brillante sobre fondo oscuro
+// //     font-weight: 500;
+// //     line-height: 1.5;
+// //     margin: 0;
+// // }
+
+// // .actions {
+// //     display: flex;
+// //     gap: 12px;
+// //     width: 100%;
+// //     justify-content: center;
+
+// //     button {
+// //         font-weight: 700;
+// //         border-radius: 10px;
+// //         text-transform: uppercase;
+// //         padding: 0.7rem 1.2rem;
+// //         flex: 1;
+// //         max-width: 160px;
+// //         transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+// //         border: none;
+// //         cursor: pointer;
+
+// //         // Botón Principal: INSCRIBIRME (Fondo Neón)
+// //         &[color="accent"] {
+// //             background-color: v.$brand-neon;
+// //             color: #000000; // Texto negro para legibilidad sobre neón
+// //             box-shadow: 0 4px 15px rgba(v.$brand-neon, 0.3);
+            
+// //             &:hover {
+// //                 // background-color: darken(v.$brand-neon, 10%);
+// //                 background-color: color.adjust(v.$brand-neon, $lightness: -10%); // 2. Usa color.adjust
+// //                 transform: translateY(-2px) scale(1.05);
+// //                 box-shadow: 0 6px 20px rgba(v.$brand-neon, 0.5);
+// //             }
+
+// //             &:active {
+// //                 transform: translateY(0) scale(1);
+// //             }
+// //         }
+
+// //         // Botón Secundario: CANCELAR (Transparente/Gris)
+// //         &:not([color="accent"]) {
+// //             background-color: rgba(255, 255, 255, 0.08);
+// //             color: #ffffff;
+// //             border: 1px solid rgba(255, 255, 255, 0.2);
+
+// //             &:hover {
+// //                 background-color: rgba(255, 255, 255, 0.15);
+// //                 border-color: rgba(255, 255, 255, 0.4);
+// //             }
+// //         }
+// //     }
+
+// //     // Mejora para móviles muy pequeños
+// //     @media (max-width: 400px) {
+// //         flex-direction: column;
+// //         button {
+// //             max-width: 100%;
+// //             width: 100%;
+// //         }
+// //     }
+// // }
+
+// @use "sass:color";
+// @use 'variables' as v;
+
+// .snack-wrapper {
+//     display: flex;
+//     flex-direction: column;
+//     align-items: center;
+//     text-align: center;
+//     gap: 1.5rem;
+//     width: 100%;
+//     padding: 1rem; // Aumentamos un poco el padding para mejor espaciado
+//     background-color: #ffffff; // Aseguramos fondo blanco si no lo tiene
+//     border-radius: 8px; // Opcional, para que se vea mejor
+//     box-shadow: 0 4px 20px rgba(0,0,0,0.15); // Sombra para destacar
+// }
+
+// .message {
+//     font-size: 1.1rem;
+//     color: #1e293b !important; // Texto oscuro para fondo claro
+//     font-weight: 500;
+//     line-height: 1.5;
+//     margin: 0;
+// }
+
+// .actions {
+//     display: flex;
+//     gap: 12px;
+//     width: 100%;
+//     justify-content: center;
+
+//     button {
+//         font-weight: 700;
+//         border-radius: 10px;
+//         text-transform: uppercase;
+//         padding: 0.7rem 1.2rem;
+//         flex: 1;
+//         max-width: 160px;
+//         transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+//         border: none;
+//         cursor: pointer;
+
+//         // Botón Principal: ELIMINAR (Fondo Neón)
+//         &[color="accent"] {
+//             background-color: v.$brand-neon;
+//             color: #000000; // Texto negro sobre neón
+//             box-shadow: 0 4px 15px rgba(v.$brand-neon, 0.3);
+            
+//             &:hover {
+//                 background-color: color.adjust(v.$brand-neon, $lightness: -10%);
+//                 transform: translateY(-2px) scale(1.05);
+//                 box-shadow: 0 6px 20px rgba(v.$brand-neon, 0.5);
+//             }
+
+//             &:active {
+//                 transform: translateY(0) scale(1);
+//             }
+//         }
+
+//         // Botón Secundario: CANCELAR (Fondo gris claro, texto oscuro, más presencia)
+//         &:not([color="accent"]) {
+//             background-color: #e2e8f0; // Gris claro
+//             color: #1e293b; // Texto oscuro
+//             border: 1px solid #cbd5e1;
+
+//             &:hover {
+//                 background-color: #cbd5e1; // Un poco más oscuro al hover
+//                 border-color: #94a3b8;
+//             }
+
+//             // Estilo para el foco (cuando está seleccionado con tab)
+//             &:focus {
+//                 outline: 2px solid v.$brand-neon;
+//                 outline-offset: 2px;
+//             }
+//         }
+//     }
+
+//     // Mejora para móviles muy pequeños
+//     @media (max-width: 400px) {
+//         flex-direction: column;
+//         button {
+//             max-width: 100%;
+//             width: 100%;
+//         }
+//     }
+// }
+
 @use "sass:color";
 @use 'variables' as v;
+
+// 1. Definimos la animación de rebote para el éxito visual
+@keyframes rebote-foco {
+    0% { transform: scale(0.95); }
+    50% { transform: scale(1.15); } // Estiramiento elástico
+    100% { transform: scale(1.1) translateY(-4px); } // Posición final
+}
 
 .snack-wrapper {
     display: flex;
@@ -8,13 +182,29 @@
     text-align: center;
     gap: 1.5rem;
     width: 100%;
-    // Añadimos un pequeño padding interno para que el contenido no pegue al borde neón
-    padding: 0.5rem;
+    padding: 1.5rem;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}
+
+.content-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+
+    .info-icon {
+        color: #94a3b8;
+        font-size: 32px;
+        width: 32px;
+        height: 32px;
+    }
 }
 
 .message {
     font-size: 1.1rem;
-    color: #ffffff !important; // Texto blanco brillante sobre fondo oscuro
+    color: #000000 !important;
     font-weight: 500;
     line-height: 1.5;
     margin: 0;
@@ -26,54 +216,53 @@
     width: 100%;
     justify-content: center;
 
-    button {
+    button.mat-mdc-button-base {
         font-weight: 700;
         border-radius: 10px;
         text-transform: uppercase;
-        padding: 0.7rem 1.2rem;
+        padding: 0.8rem 1.4rem;
         flex: 1;
         max-width: 160px;
         transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-        border: none;
         cursor: pointer;
+        
+        // Importante: Borde transparente para reservar espacio y evitar saltos
+        border: 3px solid transparent !important;
 
-        // Botón Principal: INSCRIBIRME (Fondo Neón)
-        &[color="accent"] {
-            background-color: v.$brand-neon;
-            color: #000000; // Texto negro para legibilidad sobre neón
-            box-shadow: 0 4px 15px rgba(v.$brand-neon, 0.3);
+        // --- ESTADO APAGADO (Sin foco) ---
+        background-color: #f1f5f9 !important;
+        color: #94a3b8 !important;
+        opacity: 0.5;
+        transform: scale(0.95);
+        box-shadow: none !important;
+
+        // --- ESTADO ENCENDIDO (Con foco o Hover) ---
+        &:focus, &:focus-visible, &.cdk-focused {
+            outline: none !important;
+            opacity: 1 !important;
             
-            &:hover {
-                // background-color: darken(v.$brand-neon, 10%);
-                background-color: color.adjust(v.$brand-neon, $lightness: -10%); // 2. Usa color.adjust
-                transform: translateY(-2px) scale(1.05);
-                box-shadow: 0 6px 20px rgba(v.$brand-neon, 0.5);
-            }
-
-            &:active {
-                transform: translateY(0) scale(1);
-            }
-        }
-
-        // Botón Secundario: CANCELAR (Transparente/Gris)
-        &:not([color="accent"]) {
-            background-color: rgba(255, 255, 255, 0.08);
-            color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-
-            &:hover {
-                background-color: rgba(255, 255, 255, 0.15);
-                border-color: rgba(255, 255, 255, 0.4);
-            }
+            // Aplicamos el rebote
+            animation: rebote-foco 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform: scale(1.1) translateY(-4px) !important;
+            
+            // Tu indicador clave: Borde negro
+            border: 3px solid #000000 !important; 
         }
     }
 
-    // Mejora para móviles muy pequeños
-    @media (max-width: 400px) {
-        flex-direction: column;
-        button {
-            max-width: 100%;
-            width: 100%;
-        }
+    // ELIMINAR (Rojo con foco)
+    button[color="accent"]:focus, 
+    button[color="accent"].cdk-focused {
+        background-color: #e74c3c !important; 
+        color: #ffffff !important;
+        box-shadow: 0 10px 15px rgba(231, 76, 60, 0.4) !important;
+    }
+
+    // CANCELAR (Azul con foco)
+    button:not([color="accent"]):focus, 
+    button:not([color="accent"].cdk-focused) {
+        background-color: #3498db !important; 
+        color: #ffffff !important;
+        box-shadow: 0 10px 15px rgba(52, 152, 219, 0.4) !important;
     }
 }

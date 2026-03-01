@@ -8,9 +8,7 @@ export interface CommentResponseDTO {
   userId: number;
   username: string; // Cambia userName por username (todo en minúsculas)
   userAvatar?: string;
-
   resolved: boolean;
-
   /** * Lista de respuestas al comentario actual. 
    * Al ser del mismo tipo (CommentResponseDTO), permite la anidación infinita.
    */

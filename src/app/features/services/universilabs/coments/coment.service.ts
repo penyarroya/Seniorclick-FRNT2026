@@ -57,6 +57,8 @@
 //   }
 // }
 
+
+
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Observable, map } from "rxjs";
@@ -128,4 +130,12 @@ export class CommentService {
   public eliminarComentario(id: number): Observable<void> {
     return this.http.delete<void>(`${this.API_URL}/${id}`);
   }
+
+  /**
+ * Solicita una sugerencia de respuesta a la IA basada en una duda específica
+ */
+getIASuggestion(commentId: number): Observable<{ content: string }> {
+  // Esta ruta debe coincidir con la que crees en tu controlador de Spring Boot
+  return this.http.get<{ content: string }>(`${this.API_URL}/${commentId}/ai-suggestion`);
+}
 }

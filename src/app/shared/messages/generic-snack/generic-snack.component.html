@@ -1,4 +1,4 @@
-<div class="snack-wrapper">
+<!-- <div class="snack-wrapper">
     <div class="content-area">
         <mat-icon class="info-icon">info</mat-icon>
         <span class="message">{{ data.message }}</span>
@@ -9,7 +9,36 @@
                 {{ data.actionLabel }}
             </button>
         }
-        <button mat-stroked-button (click)="cancel()">
+        <button mat-stroked-button (click)="cancel()" #cancelButton cdkFocusInitial>
+            {{ data.cancelLabel || 'CERRAR' }}
+        </button>
+    </div>
+</div> -->
+
+<div class="snack-wrapper" cdkTrapFocus [cdkTrapFocusAutoCapture]="true">
+    <div class="content-area">
+        <mat-icon class="info-icon">info</mat-icon>
+        <span class="message">{{ data.message }}</span>
+    </div>
+
+    <div class="actions">
+        @if (data.actionLabel) {
+            <button 
+                mat-flat-button 
+                color="accent" 
+                #confirmButton
+                (mouseenter)="moveFocus(confirmButton._elementRef.nativeElement)"
+                (click)="confirm()">
+                {{ data.actionLabel }}
+            </button>
+        }
+
+        <button 
+            mat-flat-button 
+            type="button"
+            #cancelButton
+            (mouseenter)="moveFocus(cancelButton._elementRef.nativeElement)"
+            (click)="cancel()">
             {{ data.cancelLabel || 'CERRAR' }}
         </button>
     </div>
